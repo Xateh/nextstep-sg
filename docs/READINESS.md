@@ -25,7 +25,7 @@ For the agentic demonstration, replace only the mode with Bedrock after access, 
 - [x] Complete organizer sign-in; verify access to the existing active lease and CloudShell on 6 September 2026.
 - [x] Inspect account limits and candidate profile: Lambda total/unreserved concurrency 10; Nova Lite US profile active. These observations do not prove model invocation or deployment permission.
 - [ ] Resolve AWS account-verification denial and pass one bounded Nova invocation. Haiku was not invoked because its model agreement was unavailable; no new agreement was accepted.
-- [ ] Obtain explicit approval to upload the sanitized project source to organizer CloudShell and create the scoped execution role/function/authenticated URL. Automated source upload was stopped by the approval reviewer; no workaround was attempted.
+- [ ] Obtain explicit source-transfer approval for the sanitized project upload to organizer CloudShell, plus the browser workflow's separate action-time confirmation for creating the scoped execution role/function/authenticated URL. Broad deployment authorization already exists; automated source upload was stopped by the approval reviewer and was not bypassed.
 - [ ] Run the uploaded read-only preflight, recheck the live usable budget immediately before writes, and verify caller permissions.
 - [ ] Deploy one `AWS_IAM` Function URL; verify unsigned rejection, signed health/resources, one live synthetic plan, review/export and failure handling.
 - [ ] Verify a teammate's organizer session can use that exact endpoint. Do not infer access from the leader's session.

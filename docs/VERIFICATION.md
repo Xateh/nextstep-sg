@@ -16,7 +16,7 @@ Live observations from the signed-in organizer account on 6 September, before 06
 - Automated upload of the reviewed preflight script to organizer CloudShell was blocked by the approval reviewer because exporting that private source file to that destination needs explicit approval. The upload was not bypassed. The complete deployment script has therefore **not run in CloudShell**, even in preflight mode.
 - No IAM role, Lambda function or Function URL was created. Deployment write permissions, endpoint authentication and a teammate session remain unverified.
 
-Readiness remains **local synthetic demo available; shared cloud/agentic MVP incomplete**. The current blockers are AWS account verification and explicit approval for source upload/resource creation. Browser rendering remains unverified for the reason below.
+Readiness remains **local synthetic demo available; shared cloud/agentic MVP incomplete**. The current blockers are AWS account verification, explicit source-transfer approval and the browser workflow's action-time resource-creation confirmation. Broad organizer-resource deployment authorization already exists; these are execution gates, not a missing architecture decision. Browser rendering remains unverified for the reason below.
 
 ## Earlier verification — 5 September 2026
 

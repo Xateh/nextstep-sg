@@ -6,6 +6,8 @@ Architecture: continue the bounded single-Python-application recommendation. Kee
 
 Tech stack: Python 3.12 standard library for validation, HTTP, domain logic and tests; boto3 only for Bedrock and AWS request signing. This deliberately replaces the suggested Pydantic dependency with small explicit validators so the Lambda artifact needs no platform-specific packages. Spec: `../../outputs/simplifynext-hackathon-2026/ARCHITECTURE.md` plus this deployment refinement. User authorized implementation and organizer-resource deployment on 5 September.
 
+That existing deployment authorization remains in force. Two execution gates are separate: the upload reviewer requires explicit permission to transfer the sanitized source to organizer CloudShell, and this browser-automation workflow requires action-time confirmation immediately before creating the execution role/access permissions and authenticated endpoint. Neither gate is a request to redesign the project or expand its budget.
+
 ## Global constraints
 
 - Fictional profiles only; no diagnoses, certificates, real identities or employer records.
