@@ -1,0 +1,13 @@
+{
+  "mode": "offline",
+  "profile": {
+    "goal": "Explore office skills at my own pace",
+    "strengths": "Organising files and following a checklist",
+    "interests": ["office", "organising", "computers"],
+    "full_time_student": false,
+    "weekly_hours": 3,
+    "budget_sgd": 0,
+    "supporter_goal": "",
+    "synthetic": true
+  }
+}

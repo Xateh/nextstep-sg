@@ -1,0 +1,162 @@
+[
+  {
+    "id": "sg-enable-school-to-work",
+    "title": "SG Enable School-to-Work Transition Programme",
+    "type": "transition_service",
+    "provider": "SG Enable",
+    "source_url": "https://www.enablingguide.sg/im-looking-for-disability-support/training-employment/school-to-work-%28s2w%29-transition-programme",
+    "checked_date": "2026-09-05",
+    "summary": "A transition programme with customised training, work pathways and internships for SPED-school graduates; participating schools submit suitable applications.",
+    "eligibility": "Published information describes SPED-school graduates and applications submitted through participating schools.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm whether the participant's school participates and can submit an application.",
+      "Confirm current intake, pathway availability and accessibility support with the provider."
+    ],
+    "next_step": "Review the official programme page with the participant and ask their school about the current route.",
+    "keywords": ["transition", "supported work", "internship", "school", "work pathway"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "sg-enable-sector-train-place",
+    "title": "SG Enable Sector-specific Train-and-Place Programme",
+    "type": "training_and_employment_support",
+    "provider": "SG Enable",
+    "source_url": "https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place",
+    "checked_date": "2026-09-05",
+    "summary": "A sector-focused training and employment-support programme with published general participation criteria.",
+    "eligibility": "Published general criteria include Singapore citizenship or permanent residence, verified permanent disability, and not being a full-time student.",
+    "excluded_if_full_time_student": true,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm current programme availability and all eligibility criteria with SG Enable.",
+      "Confirm schedule, cost and accessibility support before deciding whether to apply."
+    ],
+    "next_step": "Read the current criteria on the official page and list questions for SG Enable; this plan does not determine eligibility.",
+    "keywords": ["training", "employment support", "sector", "career", "skills"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "skillsfuture-careersfinder",
+    "title": "CareersFinder and Careers & Skills Passport",
+    "type": "career_and_skills_service",
+    "provider": "Singapore Workforce Development Agency",
+    "source_url": "https://www.swda.gov.sg/about-swda/career-health-individuals",
+    "checked_date": "2026-09-05",
+    "summary": "Public career services offering personalised career and upskilling recommendations plus a repository for employment, skills, qualifications and certifications.",
+    "eligibility": "Access requirements and suitability for this fictional profile were not established in the reviewed source.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm current access requirements and service availability on the official site.",
+      "Check whether the recommendations and accessibility options meet the participant's needs."
+    ],
+    "next_step": "Open the official service page with the participant and verify current access requirements before using it.",
+    "keywords": ["career", "administration", "administrative", "digital skills", "upskilling", "qualifications"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "career-kaki",
+    "title": "Career Kaki",
+    "type": "career_guidance_service",
+    "provider": "Career Kaki",
+    "source_url": "https://careerkaki.gov.sg/",
+    "checked_date": "2026-09-05",
+    "summary": "A Singapore-focused AI career-guidance and job-search service with optional resume or background personalisation.",
+    "eligibility": "Current access requirements and suitability for this fictional profile require verification on the service.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm current access requirements, data handling and accessibility options before entering information.",
+      "Review any guidance with the participant rather than treating it as an eligibility decision."
+    ],
+    "next_step": "Review the official service and its data choices with the participant before deciding whether to try it.",
+    "keywords": ["career", "job search", "administration", "administrative", "digital skills", "guidance"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "mentra-partner-platform",
+    "title": "Mentra Partner Platform",
+    "type": "commercial_platform_reference",
+    "provider": "Mentra",
+    "source_url": "https://www.mentra.com/partners",
+    "checked_date": "2026-09-05",
+    "summary": "A partner platform advertising candidate profiles, upskilling, job matches, progress tracking and digital-readiness guidance.",
+    "eligibility": "No account, partnership, local availability or integration rights were verified.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm local availability, access terms, costs and accessibility directly with the provider.",
+      "Do not assume access to the provider's candidate pool or partner features."
+    ],
+    "next_step": "Use the official page only as a reference and verify access terms before considering the service.",
+    "keywords": ["career", "upskilling", "job matching", "digital readiness", "supporter"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "inclusively-retain-navigator",
+    "title": "Inclusively Retain Navigator",
+    "type": "commercial_support_navigation_reference",
+    "provider": "Inclusively",
+    "source_url": "https://inclusively.com/",
+    "checked_date": "2026-09-05",
+    "summary": "A workplace service advertising natural-language discovery of employer-provided support within workplace systems.",
+    "eligibility": "This is an enterprise workplace service; individual access, local availability and integration rights were not verified.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": null,
+    "cost_sgd": null,
+    "unknowns": [
+      "Confirm whether a current or prospective employer provides access.",
+      "Confirm local availability, data handling and accessibility before use."
+    ],
+    "next_step": "Treat the official page as a reference and ask a relevant employer or supporter whether an equivalent support directory exists.",
+    "keywords": ["workplace support", "employer", "accessibility", "supporter", "accommodation"],
+    "provenance": "reviewed_public"
+  },
+  {
+    "id": "fictional-office-skills-taster",
+    "title": "Fictional demo: Community office-skills taster slot",
+    "type": "fictional_course_slot",
+    "provider": "Demo provider (fictional)",
+    "source_url": "https://example.invalid/fictional-office-skills-taster",
+    "checked_date": "2026-09-05",
+    "summary": "Fictional no-cost, two-hour weekly office-skills taster created only to demonstrate planning behavior; it is not a real opening or course.",
+    "eligibility": "Fictional demo slot with no real eligibility, enrolment or availability.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": 2,
+    "cost_sgd": 0,
+    "unknowns": [
+      "This fictional slot cannot be enrolled in or contacted.",
+      "Replace it with a reviewed real option before any real-world use."
+    ],
+    "next_step": "Use this fictional slot only to rehearse the plan-review conversation.",
+    "keywords": ["office", "administration", "administrative", "digital skills", "organising", "taster"],
+    "provenance": "fictional_demo"
+  },
+  {
+    "id": "fictional-software-practice",
+    "title": "Fictional demo: Specialist software practice slot",
+    "type": "fictional_course_slot",
+    "provider": "Demo provider (fictional)",
+    "source_url": "https://example.invalid/fictional-software-practice",
+    "checked_date": "2026-09-05",
+    "summary": "Fictional S$25, one-hour weekly software-practice slot created only to test budget handling; it is not a real opening or course.",
+    "eligibility": "Fictional demo slot with no real eligibility, enrolment or availability.",
+    "excluded_if_full_time_student": false,
+    "required_weekly_hours": 1,
+    "cost_sgd": 25,
+    "unknowns": [
+      "This fictional slot cannot be enrolled in or contacted.",
+      "Replace it with a reviewed real option before any real-world use."
+    ],
+    "next_step": "Use this fictional slot only to test plan budget handling.",
+    "keywords": ["specialist software", "software", "digital skills", "practice"],
+    "provenance": "fictional_demo"
+  }
+]
