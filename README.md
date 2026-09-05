@@ -8,7 +8,7 @@ Private repository: [Xateh/simplifynext-mvp](https://github.com/Xateh/simplifyne
 
 - Local offline workflow: implemented, including profile form, source cards, questions, review, export and trace.
 - Bedrock tool loop and AWS authenticated client: implemented and tested with test doubles; **not live-verified**.
-- Shared AWS endpoint: **not deployed**. Organizer browser sign-in, current balance, model access and teammate permissions remain verification gates.
+- Shared AWS endpoint: **not deployed**. Organizer sign-in and CloudShell work. The 6 September Nova probe was denied because AWS is verifying the sandbox account; source upload, resource creation and teammate access still need their respective checks/approval.
 - Real participant use: **not approved**. Use invented profiles only. No clinical, employment-outcome or accessibility-conformance claim.
 
 ## Run the demo

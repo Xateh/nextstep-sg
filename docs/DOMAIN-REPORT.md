@@ -18,6 +18,7 @@ The first MVP domain slice is implemented in `planner.py`, backed by a versioned
 - Missing weekly availability or budget produces a clarification question. Profile input is capped at 168 weekly hours and S$100,000.
 - Every action's ID, title, next step, URL, and checks are hydrated from the catalog. Bedrock may select resource IDs but cannot supply these facts.
 - Bedrock Converse uses only four allowlisted tools: `search_resources`, `inspect_resource`, `finish_plan`, and `clarification`. Search is local catalog search; there is no web, messaging, submission, execution, or arbitrary-URL tool.
+- Outbound tool-input schemas use only the Nova v1-supported top-level fields `type`, `properties`, and `required`, following the [official Amazon Nova tool-definition documentation](https://docs.aws.amazon.com/nova/latest/userguide/tool-use-definition.html). Exact-key and type checks remain enforced by application code, including rejection of unknown arguments.
 - Model arguments are validated with exact keys, bounded strings and catalog IDs. One invalid response may be repaired; a second stops with `partial`.
 - Model-authored question text is never returned. `finish_plan` and `clarification` accept only allowlisted question keys, which the server hydrates to trusted text; generated links, email addresses, or requests for identity data cannot pass through those tools.
 - Unknown tool names and unknown resource IDs are recorded only as generic failure types, so invented or adversarial labels are not echoed into the plan trace.
@@ -52,12 +53,13 @@ python -m unittest discover -s tests -p test_planner.py -v
 python -m py_compile planner.py tests/test_planner.py
 ```
 
-Result after the constraint and safety review: 24 tests passed. Tests cover catalog provenance and structured constraints, profile validation and upper bounds, missing inputs, supporter conflict, student/time/budget exclusions, offline labelling, source hydration, allowlisted question hydration, rejection of model-authored phishing/identity prompts, non-echoing unknown tools/resources, strict model arguments including unhashable values, malformed response shapes and repair transcripts, global call/tool caps, explicit model configuration, and sanitized live failure.
+Result after the constraint, safety, and Nova-schema review: 25 tests passed. Tests cover catalog provenance and structured constraints, profile validation and upper bounds, missing inputs, supporter conflict, student/time/budget exclusions, offline labelling, source hydration, Nova-compatible outbound tool schemas, allowlisted question hydration, rejection of model-authored phishing/identity prompts, non-echoing unknown tools/resources, strict model arguments including unknown and unhashable values, malformed response shapes and repair transcripts, global call/tool caps, explicit model configuration, and sanitized live failure.
 
 ## Integration notes and remaining checks
 
 - Required profile fields are `strengths`, `interests`, `full_time_student`, `weekly_hours`, `budget_sgd`, and `synthetic`; `goal` may be absent or blank to trigger clarification; `supporter_goal` is optional.
 - The API should map domain `ValueError` to HTTP 400 and Bedrock `RuntimeError` to HTTP 503, as agreed with the API owner.
 - Live mode requires an explicit `BEDROCK_MODEL_ID` before creating an SDK client. Deployment should set the organizer-approved model or inference-profile ID only after account, region, access, and budget verification; there is no implicit model fallback.
+- No model-routing layer was added. This domain task did not invoke Nova, Haiku, or any other live model; the deployment owner controls the explicit Nova inference-profile setting.
 - No live Bedrock request, AWS balance check, access check, deployment, UI test, or external write was performed in this domain task.
 - A live smoke test still needs to confirm that the selected model accepts the tool schemas and that the chosen region/inference profile is available within the organizer lease and budget.

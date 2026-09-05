@@ -24,14 +24,14 @@ Tech stack: Python 3.12 standard library for validation, HTTP, domain logic and 
 
 ## Execution checklist
 
-1. [x] Domain: red-green tests and independent review completed; 24 domain tests cover constraints, trusted questions and bounded failures. Model behavior is replaced by deterministic test responses, not claimed live.
+1. [x] Domain: red-green tests and independent review completed; 25 domain tests cover constraints, trusted questions, Nova-compatible tool schemas and bounded failures. Model behavior is replaced by deterministic test responses, not claimed live.
 2. [x] API: signed document envelopes and local HTTP/Lambda adapters implemented. Real HTTP create-review-export, tamper, expiry, caller binding and origin/header checks pass.
 3. [ ] Interface: create native labelled controls and review/export flow against documented contracts. Browser-test happy path, unknown eligibility, edit invalidation, error and keyboard flow.
 4. [ ] AWS: access organizer portal through saved browser sign-in; verify balance/role/region; deploy minimal Lambda+AWS_IAM URL if permitted. Do not create public unauthenticated model endpoints. Test unsigned rejection plus signed health, resource listing and one live planner request.
 5. [ ] Handoff: teammate/API/deployment/reference docs complete with explicit pending endpoint. Private GitHub publication tracked in README; live endpoint documentation requires actual verification. Private coordination records stay outside repository.
-6. [x] Review: independent security/domain review found no remaining Critical/Important local-scope findings after fixes. Fresh suite: 51 Python tests plus 2 UI-state tests pass. Rendered browser and live AWS verification remain separate unchecked gates.
+6. [x] Review: independent security/domain review found no remaining Critical/Important local-scope findings after fixes. Fresh suite on 6 September: 58 Python tests plus 2 UI-state tests pass. Rendered browser and live AWS verification remain separate unchecked gates.
 
-Interface implementation in step 3 is complete and served in the HTTP test. Browser client blocked local navigation, so rendered/keyboard checks remain pending. Step 4 is blocked at organizer password/MFA login; no AWS writes or live model calls have occurred.
+Interface implementation in step 3 is complete and served in the HTTP test. Browser client blocked local navigation, so rendered/keyboard checks remain pending. Step 4 advanced on 6 September: organizer login, active lease and CloudShell verified; existing Lambda account concurrency is 10. A minimal Nova request was denied because the AWS account is still being verified. No successful live model response, IAM/Lambda creation, or endpoint test has occurred. Sanitized source upload to organizer CloudShell was stopped pending explicit destination/file approval; finish that approval and resource-creation approval before proceeding.
 
 Deliberate engineering refinement for this minimal slice: review is bound to an immutable expiring document snapshot. UI edits discard the active review, but retained older reviewed snapshots are not revoked server-side. This narrows the research skeleton's latest-revision-only guarantee; see `docs/ARCHITECTURE.md` and `docs/API.md`.
 

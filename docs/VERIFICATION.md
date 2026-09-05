@@ -1,4 +1,24 @@
-# Verification record — 5 September 2026
+# Verification record — 6 September 2026
+
+## Current verification
+
+Fresh root verification after the deployment-preflight and Nova-schema changes: **58 Python tests and 2 interface-state tests passed**. Independent review of the changed deployment and planner paths reported no actionable Important findings. Whitespace checks passed. Tests still use test doubles for cloud operations.
+
+Current deterministic Lambda archive SHA-256: `8715edab2cd8c2985966052c3d25fb4dc46a787bc5a7201803cefa57589fa336`. The archive contains only the same four allowlisted application files.
+
+Live observations from the signed-in organizer account on 6 September, before 06:50 SGT:
+
+- Existing organizer lease active; portal displayed $0 spent before the single bounded model probe. Retain the organizer's previously documented US$20 usable cap despite the portal's larger displayed lease allocation. The display is not a real-time billing guarantee.
+- Organizer console and CloudShell work without extracting credentials. Target region selected: `us-east-1`.
+- Lambda account limits: total concurrency 10, unreserved 10, function count 0. Default reserved-concurrency-one deployment cannot use this quota; the explicit verified account-ceiling mode is prepared. It is not a per-function-one or monetary cap.
+- `us.amazon.nova-lite-v1:0` profile reported active across the three allowed US destinations. One synthetic Converse request, capped at 8 output tokens, returned `AccessDeniedException`: the account is currently being verified. No model answer or usage result was returned. AWS's error says verification normally takes less than two hours; that is not a promised completion time.
+- Haiku's US profile was active, but its access agreement reported `NOT_AVAILABLE`. No Haiku invocation, new agreement acceptance or provider substitution occurred.
+- Automated upload of the reviewed preflight script to organizer CloudShell was blocked by the approval reviewer because exporting that private source file to that destination needs explicit approval. The upload was not bypassed. The complete deployment script has therefore **not run in CloudShell**, even in preflight mode.
+- No IAM role, Lambda function or Function URL was created. Deployment write permissions, endpoint authentication and a teammate session remain unverified.
+
+Readiness remains **local synthetic demo available; shared cloud/agentic MVP incomplete**. The current blockers are AWS account verification and explicit approval for source upload/resource creation. Browser rendering remains unverified for the reason below.
+
+## Earlier verification — 5 September 2026
 
 Fresh local run after the independent review fixes:
 

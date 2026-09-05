@@ -24,17 +24,30 @@ Deployment changes the shared organizer AWS account. Before running it, verify a
 1. The temporary organizer AWS session is active and includes a session token. Permanent access keys are rejected.
 2. The exact intended 12-digit account ID is known privately. Do not commit or paste it into shared documentation.
 3. The intended region is `us-east-1`, `us-east-2`, or `us-west-2`.
-4. The exact organizer-approved Bedrock model or inference profile ID is known. Wildcards and model ARNs are rejected.
+4. The exact organizer-approved US geographic system inference profile ID is known. It must start with `us.`; direct model IDs, global profiles, application profiles, wildcards, and ARNs are rejected.
 5. The live shared balance has been manually checked immediately before deployment. `--budget-verified` records that manual check; it does not enforce or guarantee a budget.
-6. The caller already has the required deployment permissions. The script does not broaden the caller's permissions.
+6. The caller already has the required read-only preflight and deployment permissions. The script does not broaden the caller's permissions.
 
-Then run, replacing every placeholder locally:
+Run the read-only preflight before requesting approval to create resources. It does not build a package or write to AWS. It checks the STS account, fixed-name availability, Lambda account concurrency, and the exact active Bedrock profile and destination model ARNs. It prints no account ID, credentials, or ARNs.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\deploy.py --preflight `
+  --expected-account 123456789012 `
+  --region us-east-1 `
+  --model-id us.APPROVED_SYSTEM_PROFILE_ID `
+  --account-concurrency-ceiling 10
+```
+
+By default, preflight requires at least 101 unreserved concurrency units so the function can reserve 1 while AWS leaves 100 unreserved. On 6 September 2026, the organizer account was separately observed with a total and unreserved concurrency limit of 10. Recheck it each time; do not request a quota increase for this MVP. The explicit `--account-concurrency-ceiling 10` mode acknowledges that verified account-level limit, requires the live positive account limit to be no higher than the supplied integer from 1 through 10, and skips per-function reserved concurrency. It does not claim the function itself is limited to one concurrent execution: all functions in the account can collectively use up to the account limit.
+
+After preflight passes, recheck the live budget, obtain immediate approval for the AWS writes, then run with the same values:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\deploy.py --apply `
   --expected-account 123456789012 `
   --region us-east-1 `
-  --model-id APPROVED_MODEL_OR_INFERENCE_PROFILE_ID `
+  --model-id us.APPROVED_SYSTEM_PROFILE_ID `
+  --account-concurrency-ceiling 10 `
   --budget-verified
 ```
 
@@ -50,11 +63,11 @@ Exact names and bounds:
 - Runtime: Python 3.12
 - Timeout: 90 seconds
 - Memory: 256 MB
-- Reserved concurrency: 1
+- Concurrency: reserved concurrency 1 by default; no per-function reservation only when an explicit verified account ceiling is acknowledged
 - Function URL authentication: `AWS_IAM`
 - Ownership tags: `Project=simplifynext-mvp`, `ManagedBy=scripts/deploy.py`
 
-The execution role can write only the function's CloudWatch logs and invoke the explicitly selected Bedrock model. For a cross-region inference profile, the policy includes that exact profile ID and the same exact destination foundation-model ID in the three allowed deployment regions. It does not permit arbitrary models.
+The execution role can write only the function's CloudWatch logs and invoke the selected US geographic inference profile. Preflight calls `GetInferenceProfile`, requires an active `SYSTEM_DEFINED` profile whose exact ARN matches the account and source region, and accepts only matching foundation-model ARNs in the three allowed US regions. The policy is built from the returned destinations, includes the source region, and binds destination-model access to the exact profile ARN with `bedrock:InferenceProfileArn`. It does not permit arbitrary models. An organizer SCP that blocks any profile destination can still prevent invocation and is not changed by this script.
 
 The plan signing key is generated securely only when the function is created. It is placed in the Lambda environment and never printed or written to the package. This deployment path performs no updates. Any future update tool must retrieve and preserve the existing key; replacing it invalidates every outstanding signed plan envelope.
 
@@ -66,7 +79,7 @@ The URL is printed only after a read-back confirms `AuthType=AWS_IAM`. That outp
 
 ## Cost monitoring
 
-Reserved concurrency limits simultaneous Lambda executions; it does not cap total spend. Check the organizer portal balance before deployment and model tests, then monitor current AWS cost and usage through the organizer-provided tools. Configure a low cost alert only if the lease permits it. Stop testing and coordinate with the team if usage differs from the expected synthetic smoke-test scope. No service price or remaining credit amount is asserted here because both require current verification.
+Reserved concurrency, when available, limits simultaneous executions; the explicit account-ceiling fallback relies only on the verified account-wide limit and does not impose a per-function limit. Neither mechanism caps total spend. Check the organizer portal balance before deployment and model tests, then monitor current AWS cost and usage through the organizer-provided tools. `--budget-verified` remains mandatory for `--apply` in either concurrency mode. Configure a low cost alert only if the lease permits it. Stop testing and coordinate with the team if usage differs from the expected synthetic smoke-test scope. No service price or remaining credit amount is asserted here because both require current verification.
 
 ## Finite rollback
 

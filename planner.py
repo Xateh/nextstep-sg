@@ -595,7 +595,6 @@ _TOOL_SPECS = [
                     "type": "object",
                     "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 200}},
                     "required": ["query"],
-                    "additionalProperties": False,
                 }
             },
         }
@@ -609,7 +608,6 @@ _TOOL_SPECS = [
                     "type": "object",
                     "properties": {"resource_id": {"type": "string", "minLength": 1, "maxLength": 100}},
                     "required": ["resource_id"],
-                    "additionalProperties": False,
                 }
             },
         }
@@ -637,7 +635,6 @@ _TOOL_SPECS = [
                         },
                     },
                     "required": ["resource_ids", "question_keys"],
-                    "additionalProperties": False,
                 }
             },
         }
@@ -653,7 +650,6 @@ _TOOL_SPECS = [
                         "question_key": {"type": "string", "enum": list(_QUESTION_TEXT)}
                     },
                     "required": ["question_key"],
-                    "additionalProperties": False,
                 }
             },
         }

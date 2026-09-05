@@ -202,6 +202,30 @@ class PlannerTests(unittest.TestCase):
         self.assertEqual(source["source_url"], result["actions"][0]["source_url"])
         self.assertEqual(3, len([event for event in result["trace"] if event["stage"] == "model"]))
 
+    def test_outbound_tool_schemas_use_only_nova_v1_top_level_fields(self):
+        client = ConverseDouble(
+            [
+                tool_use(
+                    "finish-1",
+                    "finish_plan",
+                    {
+                        "resource_ids": ["skillsfuture-careersfinder"],
+                        "question_keys": [],
+                    },
+                )
+            ]
+        )
+
+        create_plan(BASE_PROFILE, mode="bedrock", client=client)
+
+        schemas = [
+            tool["toolSpec"]["inputSchema"]["json"]
+            for tool in client.calls[0]["toolConfig"]["tools"]
+        ]
+        self.assertTrue(schemas)
+        for schema in schemas:
+            self.assertEqual({"type", "properties", "required"}, set(schema))
+
     def test_invalid_model_arguments_get_one_bounded_repair_then_stop(self):
         client = ConverseDouble(
             [

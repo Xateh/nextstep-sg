@@ -17,13 +17,16 @@ For the agentic demonstration, replace only the mode with Bedrock after access, 
 - Unit/domain tests: input bounds; missing goals; supporter conflict; known time/cost/student conflicts; unknown constraints; catalog provenance; model/tool caps; malformed responses; trusted questions.
 - API/HTTP tests: real local create-review-export; approval/tamper/expiry/caller binding; cross-origin/header/path boundaries; static assets and response headers.
 - Client tests: strict AWS endpoint/route validation; temporary credentials; exact payload signing/hash; no redirects; sanitized errors.
-- Deployment tests: deterministic package allowlist; explicit scope/budget gates; account mismatch; existing-resource refusal; bounded IAM-only function configuration. These are mocks, not live deployment proof.
+- Deployment tests: deterministic package allowlist; explicit scope/budget gates; account mismatch; existing-resource refusal; read-only preflight; verified account-concurrency fallback; exact US inference-profile permissions; bounded IAM-only function configuration. These are mocks, not live deployment proof.
 - JavaScript tests: profile edits discard reviewed envelopes; stale responses cannot restore them; export needs current reviewed actions.
 
 ## Open verification gates
 
-- [ ] Complete saved-password sign-in/MFA in the organizer AWS browser tab.
-- [ ] Verify live usable budget, account, region, approved model and caller permissions.
+- [x] Complete organizer sign-in; verify access to the existing active lease and CloudShell on 6 September 2026.
+- [x] Inspect account limits and candidate profile: Lambda total/unreserved concurrency 10; Nova Lite US profile active. These observations do not prove model invocation or deployment permission.
+- [ ] Resolve AWS account-verification denial and pass one bounded Nova invocation. Haiku was not invoked because its model agreement was unavailable; no new agreement was accepted.
+- [ ] Obtain explicit approval to upload the sanitized project source to organizer CloudShell and create the scoped execution role/function/authenticated URL. Automated source upload was stopped by the approval reviewer; no workaround was attempted.
+- [ ] Run the uploaded read-only preflight, recheck the live usable budget immediately before writes, and verify caller permissions.
 - [ ] Deploy one `AWS_IAM` Function URL; verify unsigned rejection, signed health/resources, one live synthetic plan, review/export and failure handling.
 - [ ] Verify a teammate's organizer session can use that exact endpoint. Do not infer access from the leader's session.
 - [ ] Record the actual endpoint privately and in team docs only after verification; no credentials in repository.
