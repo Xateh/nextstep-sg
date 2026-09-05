@@ -33,7 +33,7 @@ Tech stack: Python 3.12 standard library for validation, HTTP, domain logic and 
 
 Interface implementation in step 3 is complete and served in the HTTP test. Browser client blocked local navigation, so rendered/keyboard checks remain pending. Step 4 is blocked at organizer password/MFA login; no AWS writes or live model calls have occurred.
 
-Approved engineering refinement for this minimal slice: review is bound to an immutable expiring document snapshot. UI edits discard the active review, but retained older reviewed snapshots are not revoked server-side. This deliberately narrows the research skeleton's latest-revision-only guarantee; see `docs/ARCHITECTURE.md` and `docs/API.md`.
+Deliberate engineering refinement for this minimal slice: review is bound to an immutable expiring document snapshot. UI edits discard the active review, but retained older reviewed snapshots are not revoked server-side. This narrows the research skeleton's latest-revision-only guarantee; see `docs/ARCHITECTURE.md` and `docs/API.md`.
 
 ## Blocker policy
 

@@ -2,6 +2,8 @@
 
 A small, synthetic-data transition-planning MVP. Start with a participant's work goal, explore up to three catalog-backed next steps, resolve questions, explicitly review, and download a Markdown plan. The participant's preferences stay in charge.
 
+Private repository: [Xateh/simplifynext-mvp](https://github.com/Xateh/simplifynext-mvp), default branch `mvp`. Repository access must be granted separately to intended teammates; no collaborator invitations were sent and visibility was not made public.
+
 ## Readiness
 
 - Local offline workflow: implemented, including profile form, source cards, questions, review, export and trace.
@@ -47,6 +49,7 @@ For local direct Bedrock testing, leave `MVP_API_URL` unset, set `AWS_DEFAULT_RE
 - [Architecture and deliberate limitations](docs/ARCHITECTURE.md)
 - [Research and existing tools](docs/RESEARCH.md)
 - [Demo and readiness checklist](docs/READINESS.md)
+- [Verification record](docs/VERIFICATION.md)
 
 ## Verify
 
