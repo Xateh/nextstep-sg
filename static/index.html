@@ -15,17 +15,18 @@
   </header>
   <main>
     <section aria-labelledby="profile-title" class="panel">
-      <div class="section-heading"><div><p class="eyebrow">01 / PARTICIPANT DIRECTION</p><h2 id="profile-title">What matters to the young adult?</h2></div><button id="example" class="secondary" type="button">Load fictional example</button></div>
+      <div class="section-heading"><div><p class="eyebrow">01 / PROFILE</p><h2 id="profile-title">What matters to the young adult?</h2></div><div class="button-row"><button id="example" class="secondary" type="button">Load fictional example</button><button id="reset-profile" class="secondary" type="button">Start over</button></div></div>
       <form id="profile-form">
         <fieldset id="profile-fields">
           <legend class="sr-only">Fictional young adult profile</legend>
-          <label for="goal">Young adult's goal</label><textarea id="goal" maxlength="500" rows="2" placeholder="For example: explore office skills at my own pace"></textarea>
-          <p class="hint">It is okay not to know yet. The planner can ask a question first.</p>
+          <label for="goal">Young adult's goal</label><textarea id="goal" maxlength="500" rows="2" placeholder="For example: explore office skills at my own pace" aria-describedby="goal-hint"></textarea>
+          <p id="goal-hint" class="hint">It is okay not to know yet. The planner can ask a question first.</p>
           <label for="strengths">Things they are comfortable doing</label><input id="strengths" maxlength="1000" placeholder="For example: organising files">
-          <label for="interests">Their interests</label><input id="interests" maxlength="2000" placeholder="Office work, organising, computers"><p class="hint">Separate interests with commas.</p>
+          <label for="interests">Their interests</label><input id="interests" maxlength="2000" placeholder="Office work, organising, computers" aria-describedby="interests-hint"><p id="interests-hint" class="hint">Separate interests with commas.</p>
           <div class="fields-row"><div><label for="student">Is the young adult a full-time student?</label><select id="student"><option value="">Not sure</option><option value="true">Yes</option><option value="false">No</option></select></div>
-            <div><label for="hours">Hours they have available per week</label><input id="hours" type="number" min="0" max="168" step="1" placeholder="Not sure"></div>
-            <div><label for="budget">Budget available (SGD)</label><input id="budget" type="number" min="0" max="100000" step="1" placeholder="Not sure"></div></div>
+            <div><label for="hours">Hours they have available per week</label><input id="hours" type="number" min="0" max="168" step="1" placeholder="Not sure" aria-describedby="constraint-hint"></div>
+            <div><label for="budget">Budget available (SGD)</label><input id="budget" type="number" min="0" max="100000" step="1" placeholder="Not sure" aria-describedby="constraint-hint"></div></div>
+          <p id="constraint-hint" class="hint">Leave hours or budget blank only when unknown. Enter 0 when none are available.</p>
           <details><summary>Optional parent, guardian or educator perspective</summary><label for="supporter-goal">Supporter's suggested goal</label><input id="supporter-goal" maxlength="500"><p class="hint">Different goals prompt a conversation; supporter input never overrides the young adult's preferences.</p></details>
           <label for="mode">Planning mode</label><select id="mode"><option value="offline">Offline demo — deterministic, no AI calls</option><option value="bedrock">Organizer AWS Bedrock — requires verified access</option></select>
           <label class="check"><input id="synthetic" type="checkbox" required> I am using an invented profile, not a real person's information.</label>
@@ -34,13 +35,15 @@
       </form>
     </section>
     <section class="panel results" aria-labelledby="plan-title">
-      <p class="eyebrow">02 / EXPLORE &amp; REVIEW</p><h2 id="plan-title">Next-step plan</h2>
+      <p class="eyebrow">02 / REVIEW NEXT STEPS</p><h2 id="plan-title" tabindex="-1">Next-step plan</h2>
       <p id="status" role="status" aria-live="polite">The young adult's preferences stay in charge. Generate a draft when ready.</p>
       <div id="result" hidden><p id="plan-mode" class="badge"></p><h3 id="plan-goal"></h3><div id="questions"></div><div id="actions"></div>
         <details><summary>How this plan was made</summary><pre id="trace"></pre></details>
-        <div class="review-box"><label class="check"><input id="approval" type="checkbox"> I have reviewed these exact next steps and their unresolved checks.</label>
-          <div class="button-row"><button id="review" type="button" disabled>Confirm review</button><button id="export" type="button" class="secondary" disabled>Download reviewed plan</button></div>
-          <p class="hint">Editing the profile clears this draft and review. Review/export permission expires 30 minutes after creation; downloaded files remain. Nothing is sent, booked or applied for.</p></div>
+        <div class="review-box"><p class="eyebrow">03 / DOWNLOAD REVIEWED PLAN</p><h3>Review before download</h3>
+          <label class="check"><input id="approval" type="checkbox" aria-describedby="review-hint plan-expiry"> I have reviewed these exact next steps and their unresolved checks.</label>
+          <p id="plan-expiry" class="hint">Review and download permission expires 30 minutes after plan creation.</p>
+          <div class="button-row"><button id="edit-profile" type="button" class="secondary">Edit profile</button><button id="review" type="button" disabled>Confirm review</button><button id="export" type="button" class="secondary" disabled>Download reviewed plan</button></div>
+          <p id="review-hint" class="hint">Editing the profile clears this draft and review; downloaded files remain. Nothing is sent, booked or applied for.</p></div>
       </div>
     </section>
   </main>

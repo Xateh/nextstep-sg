@@ -83,10 +83,14 @@ The named routes are exactly:
 
 For a generic request, use `METHOD PATH --body private\request.json`. `create` expects a complete `/v1/plans` request object. `review` and `export` expect a saved signed envelope; the client adds the route wrapper, including explicit approval for `review`.
 
-Files passed to `--output` can contain only signed envelopes whose profile is marked `synthetic: true`. They never contain AWS credentials. Store request and envelope files under `private\`; that directory is gitignored, but still treat its contents as private participant working data. Console output may contain the same synthetic plan data.
+Files passed to `--output` can contain only signed envelopes whose profile is marked `synthetic: true`. They never contain AWS credentials. Store request and envelope files under `private\`; that directory is gitignored, but still treat its contents as private synthetic working data. Console output may contain the same synthetic plan data.
 
 ## Browser boundary and failures
 
 The browser interface calls only the loopback application in `app.py`. That local server signs and forwards requests. AWS credentials must never appear in frontend JavaScript, browser storage, URLs, plan files, or logs.
+
+The 7 September refinement changes only local UI assets and tests/docs. Update your authorized `mvp` checkout without overwriting local work, restart the local server and refresh the page. No Lambda redeployment or new endpoint is needed. Keep Offline demo selected for rehearsal. Edit profile retains inputs but clears the draft/review; Start over clears local data and restores offline mode. Downloaded files are not deleted. The expiry notice shows when review/download becomes unavailable; an expired draft remains readable.
+
+Browser requests time out after 95 seconds and are never automatically retried. If a Bedrock creation times out or loses its connection, the server may still complete it. Check with the team before generating again because another request may incur another charge. Malformed responses/downloads are rejected, and expired review/export requests require a fresh plan. This UI update does not verify access from a teammate's own session.
 
 The client uses a 90-second timeout and never follows redirects with signed headers. Refresh temporary credentials after expiry. A `403` usually means that the current role or a function resource policy does not permit both required invoke actions. A rejected endpoint value means `MVP_API_URL` is not the exact verified root Function URL. HTTP error output is reduced to a bounded JSON error and does not include response debug fields or credential material.

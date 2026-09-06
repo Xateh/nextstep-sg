@@ -20,7 +20,7 @@ Deployment evidence:
 - Initial CloudShell verification: 58 Python tests passed using Python 3.13.15 and boto3 1.43.38
 - Historical local Windows verification: 67 Python and 2 JavaScript tests passed
 - Historical independent review: 34 planner tests and an eight-case schema matrix passed
-- Current local verification: 72 Python and 2 JavaScript tests passed; independent review found no Important findings after 39 planner checks, 62 additional checks and tool-choice botocore validation
+- Constrained-package verification on 6 September: 72 Python and 2 JavaScript tests passed; independent review found no Important findings after 39 planner checks, 62 additional checks and tool-choice botocore validation
 - Read-only preflight: fixed names were available, the selected Nova US system profile was active, and the account concurrency limit was 10
 
 The historical initial CloudShell package hash differed from a package built from an LF checkout because the uploaded source archive used CRLF files. The current constrained ZIP was uploaded unchanged and its local, CloudShell and deployed hashes match.
@@ -28,6 +28,8 @@ The historical initial CloudShell package hash differed from a package built fro
 The deployment path is create-only. The role and function now exist, so do not rerun `--apply`; it must halt rather than overwrite them. Packaging remains the default and makes no AWS session, authentication, or network call.
 
 The package contains only `app.py`, `catalog.json`, `lambda_function.py`, and `planner.py`, with stable ordering and timestamps. It intentionally does not package dependencies: the Lambda Python 3.12 runtime supplies the AWS SDK used for Bedrock.
+
+The 7 September UI refinement does not change these four files. Static assets run on teammates' local servers and are not in this package; do not redeploy Lambda for that refinement. Current UI checks and open rendered-browser gates are recorded in [VERIFICATION.md](VERIFICATION.md).
 
 ## Build locally
 

@@ -1,5 +1,6 @@
 import json
 import os
+from html.parser import HTMLParser
 from pathlib import Path
 import socket
 import subprocess
@@ -8,6 +9,41 @@ import time
 import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+
+
+class InterfaceParser(HTMLParser):
+    VOID = {'br', 'hr', 'img', 'input', 'link', 'meta'}
+
+    def __init__(self):
+        super().__init__()
+        self.elements = {}
+        self.stack = []
+        self.text = []
+        self.text_by_id = {}
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        element_id = attrs.get('id')
+        if element_id:
+            self.elements[element_id] = {
+                'tag': tag,
+                'attrs': attrs,
+                'ancestors': {item_id for _, item_id in self.stack if item_id},
+            }
+        if tag not in self.VOID:
+            self.stack.append((tag, element_id))
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
+
+    def handle_data(self, data):
+        self.text.append(data)
+        for _, element_id in self.stack:
+            if element_id:
+                self.text_by_id.setdefault(element_id, []).append(data)
 
 
 class HttpTests(unittest.TestCase):
@@ -56,6 +92,41 @@ class HttpTests(unittest.TestCase):
             self.assertIn(fragment, body)
             self.assertIn("frame-ancestors 'none'", headers['Content-Security-Policy'])
             self.assertEqual(headers['Cache-Control'], 'no-store')
+
+    def test_interface_exposes_three_stages_and_linked_controls(self):
+        status, _, body = self.request('/')
+        self.assertEqual(status, 200)
+        document = InterfaceParser()
+        document.feed(body.decode())
+        text = ' '.join(' '.join(document.text).split())
+
+        for stage in ('01 / PROFILE', '02 / REVIEW NEXT STEPS', '03 / DOWNLOAD REVIEWED PLAN'):
+            self.assertIn(stage, text)
+        self.assertEqual(document.elements['plan-title']['attrs'].get('tabindex'), '-1')
+
+        edit = document.elements['edit-profile']
+        self.assertEqual((edit['tag'], edit['attrs'].get('type')), ('button', 'button'))
+        self.assertIn('result', edit['ancestors'])
+        reset = document.elements['reset-profile']
+        self.assertEqual((reset['tag'], reset['attrs'].get('type')), ('button', 'button'))
+        self.assertNotIn('profile-fields', reset['ancestors'])
+        self.assertIn('result', document.elements['plan-expiry']['ancestors'])
+
+        linked_hints = {
+            'goal': {'goal-hint'},
+            'interests': {'interests-hint'},
+            'hours': {'constraint-hint'},
+            'budget': {'constraint-hint'},
+            'approval': {'review-hint', 'plan-expiry'},
+        }
+        for control, expected in linked_hints.items():
+            described_by = set(document.elements[control]['attrs'].get('aria-describedby', '').split())
+            self.assertTrue(expected.issubset(described_by), control)
+            self.assertTrue(expected.issubset(document.elements), control)
+        constraint_hint = ' '.join(document.text_by_id['constraint-hint']).lower()
+        self.assertIn('blank', constraint_hint)
+        self.assertIn('unknown', constraint_hint)
+        self.assertIn('0', constraint_hint)
 
     def test_actual_create_review_export(self):
         profile = {'goal': 'Explore office skills', 'strengths': 'Organising files',

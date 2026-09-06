@@ -36,6 +36,8 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 
 **Show:** Inspect the draft. Point out that export is unavailable before review. Select the review checkbox, choose **Confirm review**, then **Download reviewed plan**.
 
+Point to the three numbered stages and the expiry notice. **Edit profile** returns to the retained inputs and clears approval; **Start over** also clears the local inputs and restores offline mode. Neither deletes already downloaded files. Rehearse actual keyboard focus and downloading on an allowed browser before presenting; simulated interaction tests do not establish that acceptance.
+
 **Say:**
 
 > The draft cannot be exported as reviewed until a person inspects and explicitly approves this exact plan. Editing the profile discards the displayed approval, so changed inputs require a fresh draft and review. Export creates a Markdown planning artifact only. Nothing is sent, booked, applied for or enrolled in.

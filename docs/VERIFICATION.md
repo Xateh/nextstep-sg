@@ -1,4 +1,24 @@
-# Verification record — 6 September 2026
+# Verification record — 7 September 2026
+
+## Local UI refinement — 7 September; AWS unchanged
+
+The approved UI-only pass adds three labelled stages, linked field hints, a <=480px single-column field/button layout, long-content wrapping, Edit profile, Start over, programmatic focus handoffs and visible plan expiry. No backend contract, catalog, dependency, deployment, IAM, AWS configuration or model call changed in this pass.
+
+Fresh checks:
+
+- **73 Python tests passed**, including real served-HTML semantics and offline HTTP create/review/export and rejection guards.
+- **26 JavaScript tests passed**: state and response validation, exact review-plan preservation despite object-key ordering, timeout/network guidance, local clearing/reset, focus calls, expiry timer/copy, HTTP 410, expiry during in-flight review/export, malformed-download rejection and duplicate-request guards.
+- The actual JavaScript request/state code accepted responses from an isolated real loopback Python server: health, offline draft, review, export, missing-goal clarification and supporter-conflict clarification. The temporary server was stopped afterward. This was an API compatibility check, not a browser test.
+
+Test-first evidence: the new state/response cases initially failed 10/10 while the two existing behaviors passed; event tests then failed on six missing edit/reset/focus/expiry behaviors. A later review reproduced loss of the duplicate-charge warning when a connection failed while reading the response body; its added test failed before the one-line fix. All now pass. Browser/API transport mocks exercise failure handling; they do not measure live AWS availability or model quality.
+
+Independent code review found no remaining Critical/Important issue after that body-read fix. Its minor finding about expiry text promising unavailable actions on clarification/partial plans was reproduced with a failing simulated-event test and corrected to a neutral expiry notice.
+
+Expired drafts remain readable, but client controls and post-response checks prevent review/download after expiry. HTTP 410 also invalidates controls without altering signed data. Client validation checks response shape and exact review state; the backend remains responsible for cryptographic signature/ownership checks. Start over clears local data only; it does not delete downloaded files or revoke retained signed snapshots server-side. There is no automatic request retry, and interrupted Bedrock creation warns of possible completion and another charge.
+
+**Still open:** rendered browser, actual keyboard focus, 320px layout, browser file download and intended-user accessibility checks. The earlier in-app local navigation returned `net::ERR_BLOCKED_BY_CLIENT`; it was not bypassed or reclassified as a pass. Simulated DOM events and served-HTML checks do not close these gates. Teammate AWS-session access also remains unverified.
+
+The shared AWS source stays at `aec4030`; its two approved smoke results below are dated 6 September, not fresh live checks during this pass. Static assets run on each teammate's loopback server and are excluded from the Lambda package. No additional paid test is authorized by this UI approval.
 
 ## Current live evidence — two approved synthetic smoke cases passed
 
