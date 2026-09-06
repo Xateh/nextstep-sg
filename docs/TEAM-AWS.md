@@ -2,23 +2,27 @@
 
 ## Current status
 
-The team uses the existing organizer-provided AWS SSO identity. The leader's sign-in and CloudShell were verified on 6 September 2026. A Lambda Function URL has not yet been deployed or verified, so this repository does not contain or claim an endpoint. Nova invocation is currently blocked by AWS account verification. Add `MVP_API_URL` only after the organizer account, region, deployment, `AWS_IAM` configuration, and signed smoke test have been checked.
+The team uses the existing organizer-provided AWS identity. On 6 September 2026, the leader deployed and verified `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/` with Function URL authentication type `AWS_IAM`. Unsigned health returned 403; signed health and resource listing returned 200. On the prior `f916c959...` revision, the [fully specified fictional Bedrock request](../examples/fictional-bedrock-request.json) returned one actionable draft and passed explicit review and export; it was not rerun after the final update. On the final revision, a broader synthetic request returned HTTP 200 `partial` after reaching the unchanged four-model-call/six-tool limits, without an actionable plan. No offline result was substituted and no cap was raised. The shared API and offline engineering demo are deployed; general AI and general-purpose MVP acceptance remain unresolved.
+
+Access from a teammate's own temporary organizer session has not yet been tested. Leader CloudShell success does not prove a teammate has both required invoke permissions.
 
 Do not create or share permanent IAM access keys. Do not assume that every organizer user or role can invoke the function. The deployed function must require authorization with Function URL authentication type `AWS_IAM`; its URL is internet-addressable, not private-network hosting.
 
 AWS documents that a caller needs both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction` permissions for `AWS_IAM` Function URLs. The applicable resource policy and identity policy must allow the intended call: [AWS Lambda Function URL security and authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html).
 
-## Easiest API check: organizer CloudShell
+Use the local loopback interface below for the main teammate experience once that teammate has their own temporary organizer credentials. CloudShell is an optional direct API check, not a shared workspace.
 
-After the endpoint is deployed and the leader approves the sanitized source upload:
+## Optional direct API check: organizer CloudShell
+
+Each CloudShell environment and session is separate. Do not assume a teammate can access the leader's uploaded repository copy or credentials. To check the existing endpoint without moving credentials:
 
 1. Open the organizer AWS account using the intended existing role, then open CloudShell in `us-east-1`. Use your organizer-issued access; do not create new IAM users or share a personal password.
-2. Obtain the reviewed source archive from the private GitHub repository. Upload only that archive through CloudShell **Actions > Upload file**. Never upload your whole workspace, `.aws`, `.env`, private chats or credentials. Source upload shares project code with the organizer account, so obtain the team's approval first.
-3. Extract into a fresh directory and enter the extracted repository. CloudShell supplies the existing console session's temporary credentials. Do not export or copy those credentials elsewhere. Check the installed SDK with `python3 -c "import boto3; print(boto3.__version__)"`; use the pinned requirements in an isolated environment only if needed.
-4. Once the leader provides the verified root Function URL, run the checks below. Do not use a guessed URL. An access-denied response requires inspection of the existing role permissions, not public access or permanent keys.
+2. Obtain the approved sanitized source archive from the private GitHub repository. This requires the teammate's own repository access; never share a personal GitHub token. Upload only that archive through CloudShell **Actions > Upload file**. Never upload the whole workspace, `.aws`, `.env`, private chats or credentials.
+3. Extract the archive into a fresh directory and change into the extracted repository. Do not use or document a temporary path from another person's session. CloudShell supplies the current console session's temporary AWS credentials; never export or copy them elsewhere.
+4. Run the checks below. An access-denied response requires inspection of the existing role permissions, not public access or permanent keys.
 
 ```bash
-export MVP_API_URL='VERIFIED_FUNCTION_URL'
+export MVP_API_URL='https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/'
 python3 scripts/aws_client.py health
 python3 scripts/aws_client.py resources
 mkdir -p private
@@ -28,7 +32,7 @@ python3 scripts/aws_client.py review --body private/draft.json --output private/
 python3 scripts/aws_client.py export --body private/reviewed.json
 ```
 
-The example is deliberately offline; it checks the authenticated API workflow without invoking a model. A Bedrock test must use an explicit `mode: "bedrock"` private request, an available approved model, and a fresh budget check. Do not repeatedly retry the current AWS account-verification denial. CloudShell is the API-check route; use the local setup below for the browser interface.
+The example above is deliberately offline; it checks the authenticated API workflow without invoking a model. This baseline create-review-export flow is live-verified. The separate committed Bedrock example passed only on the prior revision and was not rerun on the final revision; the final broad-goal result above prevents a general live-planner readiness claim. Do not rerun paid model checks without a fresh reason and budget check. CloudShell is the API-check route; use the local setup below for the browser interface.
 
 ## Local browser interface: private temporary-credential setup
 
@@ -43,11 +47,11 @@ Example using a locally configured AWS CLI SSO profile:
 ```powershell
 aws sso login --profile YOUR_ORGANIZER_PROFILE
 $env:AWS_PROFILE = 'YOUR_ORGANIZER_PROFILE'
-$env:MVP_API_URL = 'VERIFIED_FUNCTION_URL'
+$env:MVP_API_URL = 'https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/'
 .\.venv\Scripts\python.exe scripts\aws_client.py health
 ```
 
-`VERIFIED_FUNCTION_URL` is a placeholder, not a deployed endpoint. Do not save credentials in `.env` files or source code.
+Do not save credentials in `.env` files or source code. Each teammate must use their own temporary organizer session; never copy the leader's CloudShell credentials.
 
 ## Supported calls
 

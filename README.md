@@ -7,8 +7,9 @@ Private repository: [Xateh/simplifynext-mvp](https://github.com/Xateh/simplifyne
 ## Readiness
 
 - Local offline workflow: implemented, including profile form, source cards, questions, review, export and trace.
-- Bedrock tool loop and AWS authenticated client: implemented and tested with test doubles; **not live-verified**.
-- Shared AWS endpoint: **not deployed**. Organizer sign-in and CloudShell work. The 6 September Nova probe was denied because AWS is verifying the sandbox account; source upload, resource creation and teammate access still need their respective checks/approval.
+- Bedrock workflow: model connectivity was live-verified, but general AI acceptance is unresolved. On the prior `f916c959...` revision, the [fully specified fictional smoke request](examples/fictional-bedrock-request.json) returned one actionable draft with no questions, then passed review and export. It was not rerun on the final revision. On the final revision, a broader synthetic request returned HTTP 200 `partial` after reaching the unchanged four-model-call/six-tool limits, with no actionable plan. No offline result was substituted and no cap was raised.
+- Shared AWS endpoint: deployed at `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/` with `AWS_IAM`. Unsigned health returned 403; signed health returned 200, and signed resource listing returned 200 with eight records. Baseline offline create, review and export returned 200; unreviewed export returned 409 and a tampered envelope returned 400.
+- Teammate access: **not yet verified from a teammate's own temporary organizer session**. Leader CloudShell verification does not prove every teammate has both required invoke permissions.
 - Real participant use: **not approved**. Use invented profiles only. No clinical, employment-outcome or accessibility-conformance claim.
 
 ## Run the demo
@@ -25,14 +26,14 @@ If `python` is unavailable on Windows, install Python 3.12 or use `py -3.12 app.
 
 ## Connect to the shared AWS endpoint
 
-Only after the owner has verified a deployed endpoint:
+Using the verified endpoint:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 # Authenticate with the organizer-provided temporary AWS role privately.
 $env:AWS_PROFILE = 'YOUR_ORGANIZER_PROFILE'
-$env:MVP_API_URL = 'VERIFIED_FUNCTION_URL'
+$env:MVP_API_URL = 'https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/'
 .\.venv\Scripts\python.exe scripts\aws_client.py health
 .\.venv\Scripts\python.exe app.py
 ```
@@ -40,6 +41,8 @@ $env:MVP_API_URL = 'VERIFIED_FUNCTION_URL'
 On macOS/Linux the virtual-environment interpreter is `.venv/bin/python`; use your shell's environment-variable syntax. Every teammate runs their own loopback interface. The local server signs calls to the same AWS API using temporary credentials; credentials never enter browser code. A Function URL is internet-addressable but requires AWS IAM authorization—it is not a private-network endpoint. See [teammate AWS access](docs/TEAM-AWS.md).
 
 For local direct Bedrock testing, leave `MVP_API_URL` unset, set `AWS_DEFAULT_REGION` and the explicitly approved `BEDROCK_MODEL_ID`, then choose Bedrock in the interface. Verify the organizer balance first. Offline is always labelled and is never substituted silently for a failed live call.
+
+The committed Bedrock example is the exact fictional input used for the historical prior-revision smoke test. It must not be treated as evidence that the final revision or general planner is ready. No more paid model tests are planned for this handoff; do not rerun it merely to reproduce cost-incurring evidence already recorded.
 
 ## Engineering references
 

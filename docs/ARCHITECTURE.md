@@ -1,6 +1,6 @@
 # First-MVP architecture
 
-Decision: one Python domain/API application, a native HTML/JavaScript interface, and one optional AWS Lambda function. Keep the deterministic offline baseline useful while live access is blocked. This implements the highest-ranked bounded-workflow direction; it does not implement a marketplace or general autonomous agent.
+Decision: one Python domain/API application, a native HTML/JavaScript interface, and one AWS Lambda function. The shared IAM-authenticated API is deployed; the deterministic offline baseline remains separately labelled. This implements the highest-ranked bounded-workflow direction; it does not implement a marketplace or general autonomous agent.
 
 ```text
 Teammate browser (no AWS credentials)
@@ -23,6 +23,8 @@ Without `MVP_API_URL`, the local server runs the same domain/API directly. Witho
 - Domain logic selects resources, not people. It checks known student, time and budget conflicts; unknown facts remain checks for providers.
 - Catalog text is team-authored, with source URL, checked date and provenance. Fictional slots are visibly labelled. No crawler, embeddings, participant database or uploaded proof documents.
 - The model can search, inspect, ask approved clarification questions and select known IDs. Final actions are hydrated from catalog facts, not model-written URLs or claims.
+- Model-requested blocking clarification is restricted to unknown (`null`) student status, weekly hours or budget. `false` and `0` are known values. Provider access/eligibility uncertainty stays in catalog action checks or nonblocking draft questions; it never becomes an eligibility decision. Missing goals and conflicting supporter goals are still handled before model calls.
+- Outgoing tool schemas are isolated per request. A complete profile is not offered a clarification tool; otherwise its question enum contains only the participant constraints that are actually unknown. Runtime validation still applies if a model attempts an unavailable question.
 - Up to four model requests, six tool calls and one repair. Timeouts and malformed outputs stop honestly. Traces contain observable tool activity, not hidden reasoning.
 - The frontend renders text with `textContent`, not model-controlled HTML. No third-party scripts/assets, permissive CORS or credentials in browser storage.
 - Temporary AWS IAM access protects the endpoint. The function execution role is distinct from caller permissions and limited to the selected Bedrock model and function logs.
@@ -44,4 +46,4 @@ The organizer's shared AWS identity is a team development boundary, not a produc
 - Retrieval index: only after the reviewed catalog outgrows simple search and retrieval quality is measured.
 - Broader model routing: only after one permitted model passes the synthetic evaluation and cost is measured.
 
-AWS describes fixed-function HTTPS invocation and IAM signing in [Function URL invocation](https://docs.aws.amazon.com/lambda/latest/dg/urls-invocation.html). Bedrock's [Converse interface](https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html) supports the bounded model/tool exchange. These platform capabilities are not evidence that this account has the necessary access.
+AWS describes fixed-function HTTPS invocation and IAM signing in [Function URL invocation](https://docs.aws.amazon.com/lambda/latest/dg/urls-invocation.html). Bedrock's [Converse interface](https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html) supports the bounded model/tool exchange. Actual leader-session access and the live synthetic workflow are recorded separately in [VERIFICATION.md](VERIFICATION.md); teammate-session access is not inferred from platform documentation.

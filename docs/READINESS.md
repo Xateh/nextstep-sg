@@ -24,13 +24,14 @@ For the agentic demonstration, replace only the mode with Bedrock after access, 
 
 - [x] Complete organizer sign-in; verify access to the existing active lease and CloudShell on 6 September 2026.
 - [x] Inspect account limits and candidate profile: Lambda total/unreserved concurrency 10; Nova Lite US profile active. These observations do not prove model invocation or deployment permission.
-- [ ] Resolve AWS account-verification denial and pass one bounded Nova invocation. Haiku was not invoked because its model agreement was unavailable; no new agreement was accepted.
-- [ ] Obtain explicit source-transfer approval for the sanitized project upload to organizer CloudShell, plus the browser workflow's separate action-time confirmation for creating the scoped execution role/function/authenticated URL. Broad deployment authorization already exists; automated source upload was stopped by the approval reviewer and was not bypassed.
-- [ ] Run the uploaded read-only preflight, recheck the live usable budget immediately before writes, and verify caller permissions.
-- [ ] Deploy one `AWS_IAM` Function URL; verify unsigned rejection, signed health/resources, one live synthetic plan, review/export and failure handling.
+- [x] AWS account-verification denial resolved; bounded Nova calls succeeded. Haiku was not invoked because its model agreement was unavailable; no new agreement was accepted.
+- [x] User explicitly approved sanitized source transfer and action-time creation of the scoped execution role/function/authenticated URL. Browser upload then succeeded after session renewal; no restriction was bypassed.
+- [x] Uploaded preflight and 58 initial-source tests passed in CloudShell; live budget was checked before creation. Leader caller permissions verified by signed endpoint calls.
+- [x] Deployed one `AWS_IAM` Function URL. Unsigned rejection, signed health/resources, offline baseline and review/tamper guards passed. A prior code revision also passed the fictional Bedrock draft-review-export fixture; it was not rerun on the final artifact. See [VERIFICATION.md](VERIFICATION.md).
 - [ ] Verify a teammate's organizer session can use that exact endpoint. Do not infer access from the leader's session.
-- [ ] Record the actual endpoint privately and in team docs only after verification; no credentials in repository.
+- [x] Actual verified endpoint recorded in team docs; no credentials in repository.
+- [ ] Resolve and verify the original broad synthetic goal: after request-local schema alignment, the final run still returned non-actionable `partial` after invalid finish arguments and the tool limit. Stop paid retries; first isolate the trusted validation category and review the bounded workflow. Do not raise caps to conceal the failure.
 - [ ] Visually verify browser workflow, keyboard focus, narrow layout and export. Automated in-app navigation to the local URL was blocked by the browser client; HTTP/state tests are not a substitute for rendered UI testing.
 - [ ] Intended-user usability/accessibility and comparative value evaluation. Not required to run a synthetic engineering demo, but required before stronger claims.
 
-The first local software slice is available; the shared cloud/agentic MVP is not release-ready until its AWS and browser gates pass. Login silence does not authorize credential extraction, password resets, public unauthenticated access or personal paid-provider substitution.
+The shared API/offline engineering demo is live. A fully specified fictional AI create-review-export workflow passed on an earlier revision, but the final deployed revision's broad-goal test failed; full AI MVP acceptance is incomplete. Teammate/browser acceptance remains open: each teammate must test their own organizer session, and the rendered interface still needs visual/keyboard checks. This is not readiness for real participant use. Login silence does not authorize credential extraction, password resets, public unauthenticated access or personal paid-provider substitution.

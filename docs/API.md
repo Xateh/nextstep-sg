@@ -1,12 +1,14 @@
 # API reference — v0.1.0
 
-Status: local API verified by automated HTTP tests; no shared AWS URL has been deployed or verified. Never substitute an invented URL for the pending deployment.
+Status: the local API and shared AWS engineering endpoint were verified on 6 September 2026. Signed health, resources, baseline offline create-review-export, unreviewed rejection and tamper rejection were checked against the deployed function. On the prior `f916c959...` revision, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully; it was not rerun on the final revision. The final revision's broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its unchanged limits. No offline result was substituted. General AI and general-purpose MVP acceptance remain unresolved.
 
 ## Connection
 
 Local base: `http://127.0.0.1:8765`. All POST requests require `Content-Type: application/json` and `X-SimplifyNext-Client: 1`. The local server rejects cross-origin POSTs and unexpected Host headers. It is a single-user development server, not public hosting.
 
-Shared base: the verified root `https://<id>.lambda-url.<region>.on.aws` after deployment. All calls require AWS SigV4 for service `lambda` and the region in the hostname, using temporary organizer credentials. Use `scripts/aws_client.py`; do not put credentials in frontend JavaScript or manually share signed headers. Both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction` must be permitted. [AWS Function URL authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html)
+Shared base: `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/`. All calls require AWS SigV4 for service `lambda` in `us-east-1`, using temporary organizer credentials. Use `scripts/aws_client.py`; do not put credentials in frontend JavaScript or manually share signed headers. Both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction` must be permitted. Access from a teammate's own session is not yet verified. [AWS Function URL authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html)
+
+Live checks returned: unsigned `GET /health` 403; signed `GET /health` 200 with version `0.1.0`, `synthetic-only`, and default mode `bedrock`; signed `GET /v1/resources` 200 with eight records. Baseline offline create, review and export each returned 200. Export before review returned 409, and a changed envelope returned 400.
 
 JSON object responses, UTF-8, no caching. Maximum request body: 65,536 bytes. No streaming, pagination, database, uploads, arbitrary URLs or outbound messaging.
 
@@ -60,7 +62,9 @@ New-Item -ItemType Directory -Force private | Out-Null
 .\.venv\Scripts\python.exe scripts\aws_client.py export --body private\reviewed.json
 ```
 
-The example requests offline mode even against AWS. A live smoke test must explicitly change `mode` to `bedrock` in a private copy and check budget/model access first.
+The first example requests offline mode even against AWS. On the prior `f916c959...` revision, the committed Bedrock example returned 200 with `mode: "bedrock"`, status `draft`, one fictional office-skills taster action and no questions; review and export returned 200 after inspection. Export before review returned 409. The 717-character Markdown export remained labelled synthetic/Bedrock and stated that nothing was sent, enrolled or booked. That historical run used two bounded model calls and was not repeated on the final revision.
+
+The final revision's broader live test used the existing `examples/create-request.json` profile with only the mode changed to `bedrock`. It returned HTTP 200 with status `partial` and no actionable plan. The trace reached all six allowed tools: `search_resources`, three `inspect_resource` calls, another `search_resources`, then an invalid `finish_plan`; model call four stopped at `tool_limit`. No offline fallback was used and neither the four-model-call nor six-tool cap was raised. This application-level failure means the deployed shared API is an engineering demo, not an accepted general-purpose planner. No more paid model tests are planned for this handoff; check budget before any future model request.
 
 ## Plan and approval contracts
 
