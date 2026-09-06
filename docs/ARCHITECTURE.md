@@ -20,6 +20,7 @@ Without `MVP_API_URL`, the local server runs the same domain/API directly. Witho
 
 ## Boundaries
 
+- Primary operators are parents, guardians and educators supporting young adults with disabilities. The young adult is the beneficiary; their stated goals and preferences control the plan, while supporter input remains non-overriding context.
 - Domain logic selects resources, not people. It checks known student, time and budget conflicts; unknown facts remain checks for providers.
 - Catalog text is team-authored, with source URL, checked date and provenance. Fictional slots are visibly labelled. No crawler, embeddings, participant database or uploaded proof documents.
 - The model can search, inspect, ask approved clarification questions and select known IDs. Final actions are hydrated from catalog facts, not model-written URLs or claims.

@@ -25,17 +25,18 @@
     "type": "training_and_employment_support",
     "provider": "SG Enable",
     "source_url": "https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place",
-    "checked_date": "2026-09-05",
-    "summary": "A sector-focused training and employment-support programme with published general participation criteria.",
-    "eligibility": "Published general criteria include Singapore citizenship or permanent residence, verified permanent disability, and not being a full-time student.",
+    "checked_date": "2026-09-06",
+    "summary": "A sector-focused training and employment-support programme. The current intake is closed; the official page offers interest registration for a future run, not a current opening.",
+    "eligibility": "Published criteria include Singapore citizenship or permanent residence, verified permanent disability, not being a full-time student, and readiness to commit to full-time training and subsequent job opportunities. The provider determines eligibility and suitability.",
     "excluded_if_full_time_student": true,
     "required_weekly_hours": null,
     "cost_sgd": null,
     "unknowns": [
-      "Confirm current programme availability and all eligibility criteria with SG Enable.",
-      "Confirm schedule, cost and accessibility support before deciding whether to apply."
+      "The current intake was closed when checked on 6 September 2026; confirm whether a future intake is available.",
+      "The programme requires commitment to full-time training and job opportunities; do not treat it as a confirmed fit for a few weekly hours.",
+      "Exact hours and fees vary by pathway. Confirm schedule, cost, accessibility support and all criteria with the provider."
     ],
-    "next_step": "Read the current criteria on the official page and list questions for SG Enable; this plan does not determine eligibility.",
+    "next_step": "Review the closed-intake notice and full-time commitment with the participant; treat this only as a possible future route. Do not apply or register interest through this demo.",
     "keywords": ["training", "employment support", "sector", "career", "skills"],
     "provenance": "reviewed_public"
   },

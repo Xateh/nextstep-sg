@@ -105,7 +105,7 @@ if (typeof document !== 'undefined') {
     state.edited();
     const revision = state.revision;
     $('result').hidden = true;
-    busy = true; buttons(); say('Preparing a short plan. You can review every next step.');
+    busy = true; buttons(); say('Preparing a short plan to review together.');
     const profile = {goal: $('goal').value.trim(), strengths: $('strengths').value.trim(),
       interests: $('interests').value.split(',').map(value => value.trim()).filter(Boolean),
       full_time_student: $('student').value === '' ? null : $('student').value === 'true',
@@ -115,9 +115,9 @@ if (typeof document !== 'undefined') {
       const result = await request('/v1/plans', {profile, mode: $('mode').value});
       if (state.accept(result, revision)) {
         render();
-        say(result.plan.status === 'needs_clarification' ? 'Answer the questions by updating your profile, then generate again.' :
+        say(result.plan.status === 'needs_clarification' ? "Update the fictional young adult's profile after discussing these questions, then generate again." :
           result.plan.status === 'partial' ? 'The planner reached its limit. Review the unresolved questions; this is not a complete live plan.' :
-          'Draft ready. These are options to explore, not confirmed eligibility or available places.');
+          'Draft ready. Review these options with the young adult; they are not confirmed eligibility or available places.');
       }
     } catch (error) { say(error.message, true); }
     finally { busy = false; buttons(); }
@@ -152,7 +152,7 @@ if (typeof document !== 'undefined') {
     $('interests').value = 'office, organising, computers'; $('student').value = 'false';
     $('hours').value = '3'; $('budget').value = '0'; $('supporter-goal').value = '';
     $('synthetic').checked = true; invalidate();
-    say('Fictional example loaded. Choose Explore next steps to try it.');
+    say('Fictional young adult example loaded. Choose Explore next steps to try it.');
   });
   request('/health').then(result => {
     $('connection').textContent = `Service connected · v${result.version} · synthetic profiles only`;

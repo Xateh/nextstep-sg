@@ -1,6 +1,6 @@
 # SimplifyNext: Supported next steps
 
-A small, synthetic-data transition-planning MVP. Start with a participant's work goal, explore up to three catalog-backed next steps, resolve questions, explicitly review, and download a Markdown plan. The participant's preferences stay in charge.
+A small, synthetic-data transition-planning MVP for parents, guardians and educators to use with young adults with disabilities. Start with the young adult's work goal, explore up to three catalog-backed next steps, resolve questions together, explicitly review, and download a Markdown plan. The participant's preferences stay in charge; a supporter does not make decisions on their behalf.
 
 Private repository: [Xateh/simplifynext-mvp](https://github.com/Xateh/simplifynext-mvp), default branch `mvp`. Repository access must be granted separately to intended teammates; no collaborator invitations were sent and visibility was not made public.
 
@@ -46,12 +46,14 @@ The committed Bedrock example is the exact fictional input used for the historic
 
 ## Engineering references
 
+- [Current team direction and scope boundaries](docs/DIRECTION-UPDATE.md)
 - [API reference and examples](docs/API.md)
 - [Teammate AWS access](docs/TEAM-AWS.md)
 - [Deployment and rollback](docs/DEPLOYMENT.md)
 - [Architecture and deliberate limitations](docs/ARCHITECTURE.md)
 - [Research and existing tools](docs/RESEARCH.md)
 - [Demo and readiness checklist](docs/READINESS.md)
+- [Five-minute rehearsal script](docs/DEMO-SCRIPT.md)
 - [Verification record](docs/VERIFICATION.md)
 
 ## Verify
