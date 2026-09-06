@@ -8,7 +8,7 @@ The current source implementation in `planner.py` provides the first-MVP domain 
 
 `create_plan(profile, mode="offline", client=None)` returns `mode`, `status`, `profile`, `actions`, `questions`, and `trace`. `load_catalog()` returns validated catalog records.
 
-This constrained planner was deployed on 6 September 2026 from source revision `aec4030` using the deterministic archive identified below. Its shared API and offline behavior are verified. It has not yet been exercised against live Nova because the first paid broad case was blocked before execution pending explicit approval.
+This constrained planner was deployed on 6 September 2026 from source revision `aec4030` using the deterministic archive identified below. Its shared API and offline behavior are verified. After explicit approval, one broad and one narrow synthetic Bedrock smoke case passed against that artifact. Those two runs do not establish general reliability, repeatability, real-provider plan quality or full-MVP readiness.
 
 ## Current behavior
 
@@ -62,14 +62,25 @@ Current results:
 
 Tests cover deterministic shortlist order, detailed shortlist delivery, constraint filtering, request-local ID and question enums, cross-request isolation, named and any tool choice, strict shortlist membership, catalog hydration, participant/supporter preflight, known `false`/`0` versus unknown `null`, trusted questions, sanitized failures, exact response shape and stop reason, multiple/truncated/malformed responses, single-turn malformed repair, two-call repair limit, empty-shortlist no-call behavior, explicit model configuration when needed, and no silent offline fallback.
 
+## Current deployed live smoke evidence
+
+At approximately 20:40–20:46 SGT on 6 September, the two explicitly approved synthetic cases ran against unchanged source revision `aec4030` and archive SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`. Fresh AWS readback remained `Active`/`Successful` with matching base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The IAM endpoint and function configuration were unchanged.
+
+- Broad request, using the exact complete profile with `full_time_student: false`, `weekly_hours: 3` and `budget_sgd: 0`: HTTP 200 `bedrock` draft with only `fictional-office-skills-taster`. It retained the permitted nonblocking question “Which current access requirements should be confirmed with the provider?”. For this fictional slot, that question was unnecessary and is a quality limitation. Trace: one model call, 1,537 input tokens, 37 output tokens, 1,574 total tokens, 552 ms.
+- Narrow request, explicitly asking only to rehearse the fictional office-skills taster: HTTP 200 `bedrock` draft with only the same fictional action and no questions. Trace: one model call, 1,359 input tokens, 32 output tokens, 1,391 total tokens, 534 ms.
+- Both profiles retained the exact `false`, `3` and `0` constraints. Both guard sequences returned unreviewed export 409, inspected review 200, export 200 and tamper 400. Export lengths were 664 characters for broad and 717 characters for narrow; fictional labels and warnings remained intact.
+- Combined model use: two calls, 2,896 input tokens, 69 output tokens and 2,965 total tokens. No repair, retry or offline fallback occurred.
+
+This evidence is limited to two synthetic smoke passes. It does not establish repeatability, general live-model reliability, real-provider recommendation quality, participant benefit, eligibility, suitability or full-MVP readiness. No more model calls are planned.
+
 ## Historical live evidence
 
-Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on later packages.
+Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on `50dad254`; its current constrained-package result is recorded separately above.
 
 Historical package `50dad254` preceded the current deployment. Its older free-choice loop exposed search and inspect tools with four-model/six-tool limits. In the recorded broad-profile run, it performed one search, then three inspections plus another search, followed by an invalid `finish_plan`; the next attempt reached the tool limit. Raw invalid arguments were intentionally not retained, so that exact validation failure remains unknown.
 
-Those results describe older deployed code only. They do not verify or disprove the current constrained deployment. Current live-model behavior remains unknown until the user explicitly approves the proposed bounded broad and narrow synthetic cases. No model call was made during deployment or API/offline verification.
+Those results describe older deployed code only. They do not verify or disprove the current constrained deployment. The current deployed evidence is limited to the two synthetic smoke cases above; no model call was made during deployment or API/offline verification.
 
 ## Remaining boundary
 
-No model-routing layer, database, participant login, or external-action capability was added. Deployment and API/offline checks do not establish AI-plan acceptance or real-participant readiness. Live Nova reliability, teammate access, rendered accessibility, and intended-user evaluation remain separate gates.
+No model-routing layer, database, participant login, or external-action capability was added. Deployment, API/offline checks and two synthetic live smoke passes do not establish general AI-plan acceptance or real-participant readiness. Repeatability, real-provider quality, teammate access, rendered accessibility and intended-user evaluation remain separate gates.

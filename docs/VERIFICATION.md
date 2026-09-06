@@ -1,6 +1,31 @@
 # Verification record — 6 September 2026
 
-## Current deployment — constrained workflow, AI acceptance pending
+## Current live evidence — two approved synthetic smoke cases passed
+
+On 6 September 2026, after explicit user approval, the broad and narrow synthetic Nova Lite cases were each run once against the unchanged constrained deployment. Before testing, AWS readback again confirmed `Active` / `Successful`, code hash `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=` and the same `AWS_IAM` / `BUFFERED` URL, Python 3.12, 90-second timeout and 256 MB memory. Expired organizer sessions renewed through normal sign-in; no credentials were extracted and no permissions or function configuration changed.
+
+Checks completed approximately 20:40–20:46 SGT. The organizer lease was refreshed before each paid case and after testing: Active, rounded display `$0 of $30`. The US$20 usable cap remains controlling; rounded and delayed billing is not evidence of zero cost.
+
+| Current-artifact check | Broad goal | Narrow fictional goal |
+|---|---|---|
+| Exact input | `examples/create-request.json`, changing only mode to `bedrock` | Same payload as `examples/fictional-bedrock-request.json` |
+| Create | 200; Bedrock draft, initially unreviewed | 200; Bedrock draft, initially unreviewed |
+| Selected resource | `fictional-office-skills-taster` only | `fictional-office-skills-taster` only |
+| Questions | One nonblocking provider-access question | None |
+| Model calls / repairs | 1 / 0 | 1 / 0 |
+| Input / output tokens | 1,537 / 37 | 1,359 / 32 |
+| Model-reported duration | 552 ms | 534 ms |
+| Export before review | 409 | 409 |
+| Inspect exact draft, then review / export | 200 / 200; 664 characters | 200 / 200; 717 characters |
+| Tampered reviewed-copy export | 400 | 400 |
+
+Both profiles retained known student status `false`, weekly hours `3`, budget `0`, empty supporter goal and `synthetic: true`. Both traces contain model call 1 followed by `finish_plan`, with no repair, retry or offline substitution. Combined usage was **two model calls, 2,896 input tokens and 69 output tokens (2,965 total)**. Duration values are model metadata, not end-to-end request latency. No further paid calls are planned under this completed two-case authorization.
+
+The CloudShell source archive did not contain the later narrow fixture file, so its exact committed payload was reconstructed from the verified baseline fixture by setting mode and its exact goal text. Both complete returned profiles were inspected. Signed envelopes stayed in the private CloudShell directory; only plan content and sanitized status/trace were displayed. Each exact draft was inspected before review. Review preserved the plan, caller binding and expiry; exports preserved the goal, catalog facts, fictional warnings, Bedrock/synthetic labels and no-action disclaimer. The original envelopes were not tampered with.
+
+Independent assessment found no blocking issue against the predefined two-case smoke criteria. **Quality limitation:** the broad result asked which current provider-access requirements should be confirmed, although its only action was fictional. This question is permitted and nonblocking but unnecessary. Both cases selected only fictional content: they do not validate real-provider recommendations, eligibility, availability or outcomes. Two single runs do not establish repeatability, general planning reliability, comparative benefit or full team-facing MVP acceptance. Teammate-session and rendered UI/keyboard/accessibility gates remain open.
+
+## Initial constrained deployment — API/offline checks before paid approval
 
 On 6 September 2026, the user resumed the existing in-app AWS session. The assigned account and role matched the intended sandbox; the lease was active. A refreshed portal balance before deployment and again before the attempted paid check showed $0 of $30. The organizer's **US$20 usable cap** remains controlling; billing may lag. No new lease, permanent credentials or permissions were created.
 
@@ -18,7 +43,7 @@ Current-package checks completed at approximately 19:00–19:06 SGT:
 | Inspect exact offline draft, then review/export | 200 / 200; 2,139-character Markdown with all selected titles |
 | Tampered reviewed envelope export | 400 |
 
-**Paid-check blocker:** auto-review rejected the first broad Bedrock request before execution because explicit approval for that case was required. The user was asked to approve one broad and one narrow synthetic Nova Lite request, at most two model calls each, within the existing US$20 usable budget. No model call occurred during this deployment continuation, and no alternate execution path was used after the rejection. Current AI behavior remains unknown; HTTP/API baseline success is not model acceptance. Teammate-session and rendered UI/keyboard acceptance also remain open.
+**Historical approval blocker, subsequently resolved:** auto-review rejected the first proposed broad Bedrock request before execution because explicit case approval was required. No model call occurred during that initial deployment continuation, and no alternate execution path was used after rejection. The user later explicitly approved the bounded broad/narrow cases, producing the current evidence above. HTTP/API baseline success alone was not treated as model acceptance.
 
 The CloudShell API client and baseline fixture matched the current repository after accounting for the existing CRLF source archive. Fresh release preflight passed all 72 Python and two interface-state tests, verified a clean source tree, ZIP integrity, the four-file allowlist and exact current-file byte equality.
 
@@ -73,7 +98,7 @@ A subsequent broader-goal test used `examples/create-request.json` with only `mo
 
 After deployment of request-local schema alignment (`50dad254`), the same broad request avoided clarification but still returned non-actionable `partial`: search, three inspections, another search, then an invalid `finish_plan` consumed all six tools. The fourth model response was stopped at the tool limit. Usage: four model calls, 8,474 input and 580 output tokens. The result contained no actions and a bounded-stop explanation. Raw invalid arguments were intentionally not logged; the exact invalid finish field is unknown. No higher caps or fabricated fallback were introduced. Further model tuning was stopped for a design/diagnostic review, not declared successful.
 
-This is a bounded engineering smoke test, not a model-quality benchmark, repeatability measurement, real-user acceptance or eligibility assessment. Readiness is **shared authenticated API/offline demo deployed; full AI MVP acceptance incomplete**. Next diagnosis should distinguish trusted finish-validation failure categories without logging model-authored values, reproduce the exact category locally, and review the bounded workflow before any more paid tests. Teammate-session and rendered UI/keyboard/accessibility checks also remain unverified.
+That historical check was a bounded engineering smoke test, not a model-quality benchmark, repeatability measurement, real-user acceptance or eligibility assessment. At that point the shared authenticated API/offline demo was deployed but broad AI acceptance was incomplete. The resulting next step was trusted failure-category diagnosis and review of a constrained workflow; its implementation, deployment and two approved current smoke passes are recorded above. Teammate-session and rendered UI/keyboard/accessibility checks remain unverified.
 
 ## Earlier verification — 5 September 2026
 

@@ -4,11 +4,11 @@
 
 The constrained four-file artifact from source revision `aec4030` is deployed. Its ZIP SHA-256 is `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`; the CloudShell upload matched, and AWS readback reported `Active` / `Successful` with base64 `CodeSha256` `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The existing URL, `AWS_IAM`, `BUFFERED`, Python 3.12 runtime, 90-second timeout and 256 MB memory were preserved.
 
-Current-artifact signed health, resources and the complete offline workflow passed. No model call ran in this deployment turn: the first broad paid request was blocked before execution because explicit case approval was insufficient. One broad and one narrow synthetic check, each capped at two model calls, await explicit approval. Do not infer live-model acceptance from deployment or offline success.
+After explicit approval, one broad and one narrow current-artifact Bedrock smoke test completed on the evening of 6 September. Both returned actionable drafts on their first model call, then passed unreviewed-export rejection, inspected review, export and tamper rejection. Across both runs: two model calls, 2,896 input tokens, 69 output tokens and 2,965 total tokens; no repair, retry or fallback. These are two synthetic smoke passes, not general AI reliability, real-provider suitability or full-MVP acceptance. No further paid tests are planned.
 
 ## Historical model evidence
 
-On `f916c959...`, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully. On the later historical `50dad254...` deployment, the broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its four-call/six-tool limits. Neither result tests the current `aec4030` artifact. No offline result was substituted. General AI and general-purpose MVP acceptance remain unresolved.
+On `f916c959...`, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully. On the later historical `50dad254...` deployment, the broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its four-call/six-tool limits. The current `aec4030` results above supersede that failure only for the two exact smoke profiles; they do not establish general reliability. No offline result was substituted.
 
 ## Connection
 
@@ -70,9 +70,9 @@ New-Item -ItemType Directory -Force private | Out-Null
 .\.venv\Scripts\python.exe scripts\aws_client.py export --body private\reviewed.json
 ```
 
-The first example requests offline mode even against AWS. On historical revision `f916c959...`, the committed Bedrock example returned 200 with `mode: "bedrock"`, status `draft`, one fictional office-skills taster action and no questions; review and export returned 200 after inspection. Export before review returned 409. The 717-character Markdown export remained labelled synthetic/Bedrock and stated that nothing was sent, enrolled or booked. That historical run used two bounded model calls and has not been repeated on the current artifact.
+The first example requests offline mode even against AWS. With only its mode changed to `bedrock`, the exact broad profile (`full_time_student: false`, `weekly_hours: 3`, `budget_sgd: 0`) returned HTTP 200 `draft` on current `aec4030`. It selected only `fictional-office-skills-taster` and included one nonblocking question to confirm current provider access. That question is permitted but unnecessary for the fictional record, so it remains a quality limitation. Model call one used 1,537 input and 37 output tokens (1,574 total) and reported 552 ms. Export before review returned 409; after inspection, review/export returned 200/200 with a 664-character Markdown export; tampered export returned 400.
 
-The historical `50dad254...` broader live test used `examples/create-request.json` with only the mode changed to `bedrock`. It returned HTTP 200 `partial` with no actionable plan after six tools and four model calls. No offline fallback was used and no cap was raised. Current-artifact live acceptance remains untested: one broad and one narrow paid case await explicit approval, with at most two model calls each. Check budget before either request.
+The exact committed narrow Bedrock request, also with known `false` / `3` / `0` constraints, returned HTTP 200 `draft` on current `aec4030`. It selected only the same fictional action and returned no questions. Model call one used 1,359 input and 32 output tokens (1,391 total) and reported 534 ms. Its unreviewed export returned 409; inspected review/export returned 200/200 with a 717-character Markdown export; tampered export returned 400. Both exports retained the synthetic/Bedrock labels and no-send/no-enrolment warnings. No repair, retry or fallback occurred.
 
 ## Plan and approval contracts
 

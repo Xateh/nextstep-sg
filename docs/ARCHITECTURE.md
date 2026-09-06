@@ -2,7 +2,7 @@
 
 Decision: one Python domain/API application, a native HTML/JavaScript interface, and one AWS Lambda function. The shared IAM-authenticated API is deployed; the deterministic offline baseline remains separately labelled. This implements the highest-ranked bounded-workflow direction; it does not implement a marketplace or general autonomous agent.
 
-**The diagram below describes the constrained implementation deployed on 6 September 2026. Its API and offline path are verified. Current live-model acceptance remains pending explicit paid-case approval; rendered-browser verification remains unavailable.**
+**The diagram below describes the constrained implementation deployed on 6 September 2026. Its API and offline path are verified, and two approved synthetic live smoke cases passed. This does not establish general model reliability or real-provider plan quality. Teammate-session access remains unverified; rendered-browser verification remains blocked.**
 
 ```text
 Teammate browser (no AWS credentials)
@@ -34,13 +34,15 @@ Without `MVP_API_URL`, the local server runs the same domain/API directly. Witho
 - Temporary AWS IAM access protects the endpoint. The function execution role is distinct from caller permissions and limited to the selected Bedrock model and function logs.
 - No tools exist for applications, messages, bookings, payments or submission.
 
-## Fixed model-assisted flow — deployed; API/offline verified
+## Fixed model-assisted flow — deployed; bounded smoke verified
 
 The implemented change keeps the API, request/response schema and review/export contract unchanged. Application code validates the profile, removes resources with known recorded constraint conflicts, ranks up to three remaining candidates, and passes those full records to one model call. Remaining on the shortlist does not establish provider eligibility, access or suitability. The model may return valid shortlist IDs or request clarification only for null student status, weekly hours or budget. One validation repair is allowed, for two model calls maximum.
 
 Fresh local verification passed 72 Python tests and two JavaScript tests. The deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. It was deployed from source revision `aec4030` through the existing CloudShell code-only revision guard. AWS readback reported `Active`/`Successful` with matching base64 hash; the `AWS_IAM` endpoint, buffered invoke mode, function configuration and signing-key configuration were unchanged. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. Full evidence is in [VERIFICATION.md](VERIFICATION.md).
 
-Post-deployment checks passed unsigned rejection, signed health and eight-resource listing, three-action offline creation, unreviewed-export rejection, inspected review/export and tamper rejection. No new model call ran: the first paid broad case was blocked before execution because that exact case lacked explicit approval. Current AI acceptance therefore remains pending. Keep the demo offline until the current deployed flow passes approved live cases plus teammate and rendered-interface gates.
+Post-deployment checks passed unsigned rejection, signed health and eight-resource listing, three-action offline creation, unreviewed-export rejection, inspected review/export and tamper rejection. After explicit approval, two synthetic Bedrock smoke cases ran at approximately 20:40–20:46 SGT against the same deployed artifact and retained the exact `false`, `3` and `0` constraints. Both returned HTTP 200 `bedrock` drafts in one model call with the fictional office-skills slot as the only action; the narrow case had no questions. The broad case retained the permitted nonblocking question “Which current access requirements should be confirmed with the provider?”, which was unnecessary for a fictional slot and remains a quality limitation. Both review/export guard sequences passed, including tamper rejection.
+
+Across both smoke cases, Bedrock used 2,896 input tokens, 69 output tokens and 2,965 total tokens, with no repair, retry or fallback. These are two synthetic smoke passes only, not evidence of repeatability, general reliability, real-provider quality, benefit, eligibility, suitability or full-MVP readiness. No more model calls are planned. Keep the demo offline until the presenting teammate and rendered-interface rehearsal gates pass.
 
 ## Deliberate refinements from the research skeleton
 
