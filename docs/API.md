@@ -1,14 +1,14 @@
 # API reference — v0.1.0
 
-## Current source versus shared deployment
+## Current shared deployment
 
-The constrained source candidate passed 72 Python tests and two interface-state tests and has **not been deployed**. Its `bedrock` mode uses an application-generated shortlist of up to three catalog candidates without known recorded constraint conflicts. The model can select only those IDs or clarify genuinely unknown participant constraints. One repair is allowed, for at most two model calls. No matching shortlist produces an honest partial result without calling Bedrock. There is no API/schema change or silent offline fallback; review/export guards remain unchanged. Model behavior in automated tests uses doubles, not live AWS calls.
+The constrained four-file artifact from source revision `aec4030` is deployed. Its ZIP SHA-256 is `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`; the CloudShell upload matched, and AWS readback reported `Active` / `Successful` with base64 `CodeSha256` `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The existing URL, `AWS_IAM`, `BUFFERED`, Python 3.12 runtime, 90-second timeout and 256 MB memory were preserved.
 
-In-app browser control is unavailable in the current session, blocking AWS deployment and paid validation. The following shared-endpoint results and four-call/six-tool history belong to the earlier `50dad254...` deployed artifact. They are not current-source AI acceptance.
+Current-artifact signed health, resources and the complete offline workflow passed. No model call ran in this deployment turn: the first broad paid request was blocked before execution because explicit case approval was insufficient. One broad and one narrow synthetic check, each capped at two model calls, await explicit approval. Do not infer live-model acceptance from deployment or offline success.
 
-## Prior shared deployment evidence
+## Historical model evidence
 
-Status: the local API and shared AWS engineering endpoint were verified on 6 September 2026. Signed health, resources, baseline offline create-review-export, unreviewed rejection and tamper rejection were checked against the deployed function. On the prior `f916c959...` revision, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully; it was not rerun on the final revision. The final revision's broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its unchanged limits. No offline result was substituted. General AI and general-purpose MVP acceptance remain unresolved.
+On `f916c959...`, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully. On the later historical `50dad254...` deployment, the broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its four-call/six-tool limits. Neither result tests the current `aec4030` artifact. No offline result was substituted. General AI and general-purpose MVP acceptance remain unresolved.
 
 ## Connection
 
@@ -16,7 +16,7 @@ Local base: `http://127.0.0.1:8765`. All POST requests require `Content-Type: ap
 
 Shared base: `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/`. All calls require AWS SigV4 for service `lambda` in `us-east-1`, using temporary organizer credentials. Use `scripts/aws_client.py`; do not put credentials in frontend JavaScript or manually share signed headers. Both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction` must be permitted. Access from a teammate's own session is not yet verified. [AWS Function URL authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html)
 
-Live checks returned: unsigned `GET /health` 403; signed `GET /health` 200 with version `0.1.0`, `synthetic-only`, and default mode `bedrock`; signed `GET /v1/resources` 200 with eight records. Baseline offline create, review and export each returned 200. Export before review returned 409, and a changed envelope returned 400.
+Current-artifact checks returned: unsigned `GET /health` 403; signed `GET /health` 200 with version `0.1.0`, `synthetic-only`, and default mode `bedrock`; signed `GET /v1/resources` 200 with eight records. Offline create returned 200 with three actions, including the corrected catalog record. Export before review returned 409; after inspection, review returned 200 and export returned 200 with 2,139 Markdown characters. A changed envelope returned 400.
 
 JSON object responses, UTF-8, no caching. Maximum request body: 65,536 bytes. No streaming, pagination, database, uploads, arbitrary URLs or outbound messaging.
 
@@ -32,7 +32,7 @@ All successful routes return 200. The export response is JSON containing text, n
 
 ## Create a plan
 
-Use [the complete synthetic example](../examples/create-request.json). `mode` is `offline` or `bedrock`. If omitted, the server uses its configured default. Offline uses deterministic catalog search. Bedrock performs actual model-selected bounded tool calls; failure never switches to offline success.
+Use [the complete synthetic example](../examples/create-request.json). `mode` is `offline` or `bedrock`. If omitted, the server uses its configured default. Offline uses deterministic catalog search. Bedrock receives an application-generated shortlist of up to three catalog candidates without known recorded constraint conflicts. The model can select only shortlist IDs or clarify genuinely unknown participant constraints, with one repair and at most two model calls. Failure never switches to offline success.
 
 | Profile field | Type and meaning |
 |---|---|
@@ -70,9 +70,9 @@ New-Item -ItemType Directory -Force private | Out-Null
 .\.venv\Scripts\python.exe scripts\aws_client.py export --body private\reviewed.json
 ```
 
-The first example requests offline mode even against AWS. On the prior `f916c959...` revision, the committed Bedrock example returned 200 with `mode: "bedrock"`, status `draft`, one fictional office-skills taster action and no questions; review and export returned 200 after inspection. Export before review returned 409. The 717-character Markdown export remained labelled synthetic/Bedrock and stated that nothing was sent, enrolled or booked. That historical run used two bounded model calls and was not repeated on the final revision.
+The first example requests offline mode even against AWS. On historical revision `f916c959...`, the committed Bedrock example returned 200 with `mode: "bedrock"`, status `draft`, one fictional office-skills taster action and no questions; review and export returned 200 after inspection. Export before review returned 409. The 717-character Markdown export remained labelled synthetic/Bedrock and stated that nothing was sent, enrolled or booked. That historical run used two bounded model calls and has not been repeated on the current artifact.
 
-The final revision's broader live test used the existing `examples/create-request.json` profile with only the mode changed to `bedrock`. It returned HTTP 200 with status `partial` and no actionable plan. The trace reached all six allowed tools: `search_resources`, three `inspect_resource` calls, another `search_resources`, then an invalid `finish_plan`; model call four stopped at `tool_limit`. No offline fallback was used and neither the four-model-call nor six-tool cap was raised. This application-level failure means the deployed shared API is an engineering demo, not an accepted general-purpose planner. No more paid model tests are planned for this handoff; check budget before any future model request.
+The historical `50dad254...` broader live test used `examples/create-request.json` with only the mode changed to `bedrock`. It returned HTTP 200 `partial` with no actionable plan after six tools and four model calls. No offline fallback was used and no cap was raised. Current-artifact live acceptance remains untested: one broad and one narrow paid case await explicit approval, with at most two model calls each. Check budget before either request.
 
 ## Plan and approval contracts
 
@@ -99,4 +99,4 @@ Application errors are `{ "error": "human-readable explanation" }`. Authenticati
 | 429 | AWS throttling may reject concurrent calls; coordinate tests, do not hammer retries |
 | 503 | Model, credentials or service unavailable; no fabricated live success |
 
-The prior shared deployment allows four model requests and six tools per plan; the undeployed constrained source candidate allows at most two model requests and one accepted tool call per response. Neither is a shared monetary cap. User-approved exports can be repeated without sending anything externally. Failed create requests have no idempotency key; a retry can incur a new model call, so inspect errors before retrying.
+The current deployment allows at most two model requests, including one repair. The historical `50dad254...` deployment allowed four model requests and six tools. Neither is a shared monetary cap. User-approved exports can be repeated without sending anything externally. Failed create requests have no idempotency key; a retry can incur a new model call, so inspect errors before retrying.

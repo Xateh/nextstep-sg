@@ -2,9 +2,11 @@
 
 ## Current status
 
-The constrained planner source passed 72 Python tests and two interface-state tests, but is **not deployed**. The last verified shared endpoint ran the prior `50dad254...` package described below; its current cloud state has not been rechecked in this session. New source allows at most two model calls, including one repair, and restricts selection to an application-generated shortlist. The in-app browser connection is currently unavailable, so deployment and a fresh budget-gated model check remain blocked. Do not assume pulling the repository updates the shared AWS function.
+The constrained four-file package from source revision `aec4030` is deployed at the existing shared endpoint. Its ZIP SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` matched after upload; AWS readback reported `Active` / `Successful` with matching base64 `CodeSha256` `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The same URL, `AWS_IAM`, `BUFFERED`, Python 3.12 runtime, 90-second timeout and 256 MB memory remain. Organizer login and CloudShell access recovered without extracting credentials or restarting/deleting the environment.
 
-The team uses the existing organizer-provided AWS identity. On 6 September 2026, the leader deployed and verified `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/` with Function URL authentication type `AWS_IAM`. Unsigned health returned 403; signed health and resource listing returned 200. On the prior `f916c959...` revision, the [fully specified fictional Bedrock request](../examples/fictional-bedrock-request.json) returned one actionable draft and passed explicit review and export; it was not rerun after the final update. On the final revision, a broader synthetic request returned HTTP 200 `partial` after reaching the unchanged four-model-call/six-tool limits, without an actionable plan. No offline result was substituted and no cap was raised. The shared API and offline engineering demo are deployed; general AI and general-purpose MVP acceptance remain unresolved.
+Current signed health/resources and offline create-review-export guards passed. No model call ran this turn: the first broad paid request was blocked before execution because explicit case approval was insufficient. One broad and one narrow synthetic check, each capped at two model calls, await explicit approval. Do not imply current-artifact live-model acceptance.
+
+The team uses the existing organizer-provided AWS identity. The verified endpoint is `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/`. Current checks returned unsigned health 403; signed health 200, signed resources 200 with eight records, and offline create 200 with three actions including the corrected catalog record. Unreviewed export returned 409; after inspection, review/export returned 200/200 with 2,139 Markdown characters; tampered export returned 400. Historical `f916c959...` passed the narrow fictional Bedrock path, while historical `50dad254...` returned a broad non-actionable partial. Neither is current-artifact live acceptance.
 
 Access from a teammate's own temporary organizer session has not yet been tested. Leader CloudShell success does not prove a teammate has both required invoke permissions.
 
@@ -34,7 +36,7 @@ python3 scripts/aws_client.py review --body private/draft.json --output private/
 python3 scripts/aws_client.py export --body private/reviewed.json
 ```
 
-The example above is deliberately offline; it checks the authenticated API workflow without invoking a model. This baseline create-review-export flow is live-verified. The separate committed Bedrock example passed only on the prior revision and was not rerun on the final revision; the final broad-goal result above prevents a general live-planner readiness claim. Do not rerun paid model checks without a fresh reason and budget check. CloudShell is the API-check route; use the local setup below for the browser interface.
+The example above is deliberately offline; it checks the authenticated API workflow without invoking a model. This baseline create-review-export flow is verified on the current deployment. The committed Bedrock example passed only on a historical revision. Do not run the pending broad or narrow paid checks without explicit case approval and a fresh budget check. CloudShell is the API-check route; use the local setup below for the browser interface.
 
 ## Local browser interface: private temporary-credential setup
 

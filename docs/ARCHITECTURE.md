@@ -2,7 +2,7 @@
 
 Decision: one Python domain/API application, a native HTML/JavaScript interface, and one AWS Lambda function. The shared IAM-authenticated API is deployed; the deterministic offline baseline remains separately labelled. This implements the highest-ranked bounded-workflow direction; it does not implement a marketplace or general autonomous agent.
 
-**The whole diagram below describes the implemented, locally verified source candidate. It is not deployed. Live model acceptance remains pending; rendered-browser verification is currently unavailable.**
+**The diagram below describes the constrained implementation deployed on 6 September 2026. Its API and offline path are verified. Current live-model acceptance remains pending explicit paid-case approval; rendered-browser verification remains unavailable.**
 
 ```text
 Teammate browser (no AWS credentials)
@@ -26,21 +26,21 @@ Without `MVP_API_URL`, the local server runs the same domain/API directly. Witho
 - Primary operators are parents, guardians and educators supporting young adults with disabilities. The young adult is the beneficiary; their stated goals and preferences control the plan, while supporter input remains non-overriding context.
 - Domain logic selects resources, not people. It checks known student, time and budget conflicts; unknown facts remain checks for providers.
 - Catalog text is team-authored, with source URL, checked date and provenance. Fictional slots are visibly labelled. No crawler, embeddings, participant database or uploaded proof documents.
-- In the source candidate, the application deterministically builds up to three catalog candidates with no known recorded constraint conflict and supplies their detailed records to the model. This is not an eligibility, access or suitability determination. The model can finish with shortlist IDs or ask one approved clarification about a genuinely unknown participant constraint. No model-visible source-search or resource-inspection tools exist in this scope, and it cannot select an ID outside the shortlist. Final actions are hydrated from catalog facts, not model-written URLs or claims.
+- The application deterministically builds up to three catalog candidates with no known recorded constraint conflict and supplies their detailed records to the model. This is not an eligibility, access or suitability determination. The model can finish with shortlist IDs or ask one approved clarification about a genuinely unknown participant constraint. No model-visible source-search or resource-inspection tools exist in this scope, and it cannot select an ID outside the shortlist. Final actions are hydrated from catalog facts, not model-written URLs or claims.
 - Model-requested blocking clarification is restricted to unknown (`null`) student status, weekly hours or budget. `false` and `0` are known values. Provider access/eligibility uncertainty stays in catalog action checks or nonblocking draft questions; it never becomes an eligibility decision. Missing goals and conflicting supporter goals are still handled before model calls.
-- In the source candidate, a complete profile is not offered a clarification tool; otherwise its question enum contains only participant constraints that are actually `null`. Runtime validation rejects unavailable questions and non-shortlist IDs.
-- The source candidate allows one initial model call and at most one repair call. Timeouts, malformed outputs and a failed repair stop honestly. Traces contain observable workflow activity, not hidden reasoning.
+- A complete profile is not offered a clarification tool; otherwise its question enum contains only participant constraints that are actually `null`. Runtime validation rejects unavailable questions and non-shortlist IDs.
+- The constrained planner allows one initial model call and at most one repair call. Timeouts, malformed outputs and a failed repair stop honestly. Traces contain observable workflow activity, not hidden reasoning.
 - The frontend renders text with `textContent`, not model-controlled HTML. No third-party scripts/assets, permissive CORS or credentials in browser storage.
 - Temporary AWS IAM access protects the endpoint. The function execution role is distinct from caller permissions and limited to the selected Bedrock model and function logs.
 - No tools exist for applications, messages, bookings, payments or submission.
 
-## Fixed model-assisted flow — locally verified, not deployed
+## Fixed model-assisted flow — deployed; API/offline verified
 
 The implemented change keeps the API, request/response schema and review/export contract unchanged. Application code validates the profile, removes resources with known recorded constraint conflicts, ranks up to three remaining candidates, and passes those full records to one model call. Remaining on the shortlist does not establish provider eligibility, access or suitability. The model may return valid shortlist IDs or request clarification only for null student status, weekly hours or budget. One validation repair is allowed, for two model calls maximum.
 
-Fresh local verification passed 72 Python tests and two JavaScript tests. A deterministic four-file candidate archive was built with SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. Its isolated extraction imported successfully and passed API offline create plus the unreviewed-export guard without model calls. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. Full evidence is in [VERIFICATION.md](VERIFICATION.md).
+Fresh local verification passed 72 Python tests and two JavaScript tests. The deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. It was deployed from source revision `aec4030` through the existing CloudShell code-only revision guard. AWS readback reported `Active`/`Successful` with matching base64 hash; the `AWS_IAM` endpoint, buffered invoke mode, function configuration and signing-key configuration were unchanged. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. Full evidence is in [VERIFICATION.md](VERIFICATION.md).
 
-Deployment and live acceptance remain pending. Earlier deployed runs proved model connectivity but also produced non-actionable broad-goal partial results. Do not describe this source candidate as deployed, live-successful or autonomous-agent acceptance until current evidence confirms it.
+Post-deployment checks passed unsigned rejection, signed health and eight-resource listing, three-action offline creation, unreviewed-export rejection, inspected review/export and tamper rejection. No new model call ran: the first paid broad case was blocked before execution because that exact case lacked explicit approval. Current AI acceptance therefore remains pending. Keep the demo offline until the current deployed flow passes approved live cases plus teammate and rendered-interface gates.
 
 ## Deliberate refinements from the research skeleton
 

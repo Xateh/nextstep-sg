@@ -2,7 +2,7 @@
 
 ## Evidence boundary
 
-Use invented profiles only. Default to the explicitly labelled **Offline demo**. This is a rehearsal script for the implemented interface and tested deterministic catalog workflow, source checks, review guard and export. Rendered-interface verification is still pending; the script does not establish it. Do not claim general AI reliability, real-user acceptance, eligibility decisions, applications, enrolment or messages.
+Use invented profiles only. Default to the explicitly labelled **Offline demo**. The constrained package is deployed and its API/offline path is verified, but current live-model acceptance still awaits explicit paid-case approval. Rendered-interface verification remains pending. Do not claim general AI reliability, real-user acceptance, eligibility decisions, applications, enrolment or messages.
 
 Young adults with disabilities are the beneficiaries. Parents, guardians and educators are the primary operators or supporters. The participant's stated goal, strengths, interests and constraints remain in charge.
 
@@ -54,17 +54,17 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 
 **Say:**
 
-> What is verified today is a shared authenticated API and offline engineering demo with source-backed selection, human review and guarded export. A narrow fictional AI workflow passed on an earlier code revision, but the latest recorded deployed broad AI run before the fixed-flow source candidate ended with a non-actionable partial result at its bounded limits. General AI acceptance is still unresolved.
+> What is verified today is the deployed constrained package's shared authenticated API and offline engineering path with source-backed selection, human review and guarded export. A narrow fictional AI workflow passed on an earlier code revision, while the last broad AI run on the older free-choice package ended with a non-actionable partial result. No model call has yet tested the current deployment, so general AI acceptance is still unresolved.
 
 > Teammates must use their own temporary organizer session; access from a teammate's own session has not yet been verified. Browser access for rendered, keyboard and accessibility verification is currently unavailable, so those acceptance checks remain pending. This remains a synthetic prototype, not readiness for real participant use.
 
-> The new source candidate has the application select up to three catalog records with no known recorded constraint conflict, then gives those detailed records to the model without source-search or resource-inspection tools. The model can only choose valid shortlist IDs or clarify a genuinely unknown participant constraint. Shortlisting is not an eligibility, access or suitability decision. One repair and two model calls are the maximum. The same source hydration and human review guard remain. Local automated, isolated offline and independent review checks pass, but deployment and live acceptance are still pending. Comparative benefit has not been measured. The evidence is recorded in [VERIFICATION.md](VERIFICATION.md).
+> The deployed constrained workflow has the application select up to three catalog records with no known recorded constraint conflict, then gives those detailed records to the model without source-search or resource-inspection tools. The model can only choose valid shortlist IDs or clarify a genuinely unknown participant constraint. Shortlisting is not an eligibility, access or suitability decision. One repair and two model calls are the maximum. Local, independent and deployed API/offline checks pass; current live-model acceptance is pending explicit case approval. Comparative benefit has not been measured. The evidence is recorded in [VERIFICATION.md](VERIFICATION.md).
 
 ## Optional live substitution — gated
 
 Do not use Bedrock in place of the offline segment unless a later verification record confirms all of these:
 
-- The fixed-flow candidate has completed independent review, been deployed through the guarded path, and the deployed artifact passes the agreed broad synthetic acceptance case, not only the earlier narrow fixture.
+- The deployed fixed-flow artifact passes the explicitly approved current broad and narrow synthetic acceptance cases, not only the earlier narrow fixture on historical code.
 - The presenting teammate has verified the endpoint from their own temporary organizer session.
 - Current model access and budget have been checked, and the team has approved a paid live call.
 - The exact live path has been rehearsed without changing API, review or safety boundaries.

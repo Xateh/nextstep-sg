@@ -25,21 +25,23 @@ Brainstorm ideas include credential proof, course credits, employer visibility, 
 
 Current verified status remains a deployed shared API/offline engineering demo. A narrow fictional AI workflow passed on an earlier revision. The latest recorded deployed broad-goal run, before the new fixed-flow source candidate, returned a non-actionable partial result at its bounded limits, with no silent offline fallback. General AI acceptance remains unresolved.
 
-The fixed-flow source candidate is implemented and locally verified: 72 Python tests and two JavaScript tests passed. Its deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. An isolated extraction imported and passed API offline create plus the unreviewed-export guard without model calls. This supersedes the earlier 67-test local snapshot. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. The candidate is not deployed; live model and teammate-session acceptance remain open, and rendered-interface verification is currently unavailable. See [VERIFICATION.md](VERIFICATION.md).
+The fixed-flow implementation is deployed and locally verified: 72 Python tests and two JavaScript tests passed. Its deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. Deployment from source revision `aec4030` used the existing CloudShell code-only revision guard. AWS readback was `Active`/`Successful` with the matching hash; the existing `AWS_IAM` buffered endpoint and configuration remained unchanged. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. Live model and teammate-session acceptance remain open, and rendered-interface verification is currently unavailable. See [VERIFICATION.md](VERIFICATION.md).
+
+Post-deployment checks passed: unsigned 403; signed health and eight-resource listing 200; offline creation 200 with three current-catalog actions; unreviewed export 409; inspected review/export 200 with 2,139 characters; tampered envelope 400. No new model call ran. The first proposed paid broad case was blocked before execution because that exact case lacked explicit approval. The user has been asked to approve at most one broad and one narrow synthetic case, each capped at two model calls within the existing US$20 budget.
 
 The technical notes favor a predictable LangGraph-style flow, AgentCore, Haiku or Sonnet, and Pydantic. These are proposals, not mandatory requirements. Current Lambda, Nova and standard-library validation are documented deadline- and verified-access substitutions. They are not approval to add new services.
 
-## Approved smallest next slice — implemented locally, not deployed
+## Approved smallest next slice — deployed; live AI acceptance pending
 
-The implemented source candidate constrains the existing planner rather than expanding the stack:
+The deployed implementation constrains the existing planner rather than expanding the stack:
 
 1. Application code validates the profile, removes resources with known recorded constraint conflicts and ranks up to three remaining catalog candidates. Inclusion is not an eligibility, access or suitability determination.
 2. The model receives those detailed records only; it has no source-search or resource-inspection tools. It may finish with shortlist IDs or ask an approved clarification only for a genuinely `null` student-status, weekly-hours or budget field.
 3. Runtime validation rejects non-shortlist IDs and unavailable clarification fields. One repair is allowed, for two model calls maximum.
 4. Selected actions are hydrated from catalog facts. Existing API routes, schema, synthetic-data boundary, exact-plan review and export guards remain unchanged.
-5. Local automated, isolated-artifact and independent review checks pass without model calls. Guarded deployment must precede any paid live acceptance check.
+5. Local automated, isolated-artifact, independent review and deployed API/offline checks pass without model calls. Any paid live acceptance check still requires explicit case approval.
 
-The change adds no service, model, dependency, datastore, messaging path, sensitive field or fallback. Local implementation and independent review are complete; deployment and live acceptance remain pending. No deployed success is claimed.
+The change adds no service, model, dependency, datastore, messaging path, sensitive field or fallback. Deployment and API/offline verification are complete; current AI acceptance remains pending. No live-model success is claimed.
 
 The approved pipeline should be described as a **model-assisted workflow**, not a fully autonomous agent. The [official event page](https://hackathon.simplifynext.com/) was read again on 6 September and still describes agents that plan, reason and act. That is a competition-fit risk to state openly, not an acceptance claim. [LangGraph's workflow/agent distinction](https://docs.langchain.com/oss/python/langgraph/workflows-agents) supports this terminology, not hackathon eligibility.
 
@@ -47,7 +49,7 @@ The approved pipeline should be described as a **model-assisted workflow**, not 
 
 | Priority | Direction | Current mapping | Next action |
 |---|---|---|---|
-| P0 | Strengths-to-opportunity navigation | Fixed top-three constraint-filtered source candidate passes local and independent review checks | Guard deployment and live synthetic acceptance when organizer access returns |
+| P0 | Strengths-to-opportunity navigation | Fixed top-three constraint-filtered implementation is deployed; local, independent and API/offline checks pass | Run only explicitly approved bounded live synthetic cases |
 | P0 | Safe operator-led review | Exact-plan review/export guards exist | Keep participant preference, synthetic-only and no-action boundaries visible in demo |
 | P0 | Submission readiness | Engineering demo exists | Resolve frontend/backend ownership; assign deck/video work; run rendered interface and five-minute demo rehearsal |
 | P1 | Pitch narrative | Volunteer identified | Build story around beneficiary, operator journey, source-backed shortlist, review and limitations |
@@ -67,4 +69,4 @@ Per user direction, do not add messaging, real participant data, sensitive proof
 - The NUS Outlook qualification thread was re-read on 6 September; the 27 and 31 August messages remain the latest relevant organizer mail found by the scoped search. The official event page still requests documentation, prototype, solution video and pitch deck. The form could not be freshly read because access was blocked, so form-specific limits remain dated 5 September.
 - Frontend/backend split remains open. Resolve it before parallel edits to avoid duplicated work.
 
-Immediate engineering sequence: use the existing guarded code-only deployment path when organizer access returns. Only after deployment should the team consider one budget-gated broad live acceptance check. Until that evidence exists, preserve the verified offline demo and describe the model-assisted source candidate as locally verified, not live-successful.
+Immediate engineering sequence: await explicit approval for the proposed bounded live cases. Until current live evidence exists, preserve the verified offline demo and describe the deployed workflow as API/offline verified, not AI-accepted or live-model successful.

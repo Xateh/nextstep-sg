@@ -1,22 +1,44 @@
 # Verification record — 6 September 2026
 
-## Current source candidate — not deployed
+## Current deployment — constrained workflow, AI acceptance pending
+
+On 6 September 2026, the user resumed the existing in-app AWS session. The assigned account and role matched the intended sandbox; the lease was active. A refreshed portal balance before deployment and again before the attempted paid check showed $0 of $30. The organizer's **US$20 usable cap** remains controlling; billing may lag. No new lease, permanent credentials or permissions were created.
+
+The exact four-file ZIP below was uploaded through CloudShell's file chooser and its SHA-256 matched. The previous `50dad254...` hash and `Active` / `Successful` state were read before the revision-guarded code-only update. Subsequent AWS readback confirmed `Active`, `Successful` and `CodeSha256=Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. This deploys source commit `aec4030b86e10332afe12d9d5928eb6f9cb99ce6`, including the catalog correction. The URL remained the same `AWS_IAM` / `BUFFERED` endpoint. Environment configuration, signing key, IAM and URL settings were not changed. No CloudShell environment restart or deletion was needed.
+
+Current-package checks completed at approximately 19:00–19:06 SGT:
+
+| Check | Observed result |
+|---|---|
+| Unsigned health | 403 |
+| Signed health | 200; version 0.1.0, synthetic-only, default Bedrock |
+| Signed resource list | 200; eight records |
+| Explicit offline create | 200; three catalog-backed actions, including updated provider checks |
+| Export before review | 409 |
+| Inspect exact offline draft, then review/export | 200 / 200; 2,139-character Markdown with all selected titles |
+| Tampered reviewed envelope export | 400 |
+
+**Paid-check blocker:** auto-review rejected the first broad Bedrock request before execution because explicit approval for that case was required. The user was asked to approve one broad and one narrow synthetic Nova Lite request, at most two model calls each, within the existing US$20 usable budget. No model call occurred during this deployment continuation, and no alternate execution path was used after the rejection. Current AI behavior remains unknown; HTTP/API baseline success is not model acceptance. Teammate-session and rendered UI/keyboard acceptance also remain open.
+
+The CloudShell API client and baseline fixture matched the current repository after accounting for the existing CRLF source archive. Fresh release preflight passed all 72 Python and two interface-state tests, verified a clean source tree, ZIP integrity, the four-file allowlist and exact current-file byte equality.
+
+## Local constrained-source verification — before deployment
 
 At approximately 16:00 SGT on 6 September 2026, fresh root verification passed **72 Python tests and two interface-state tests**. The implementation replaces the free-choice search/inspection loop with an application-generated top-three catalog shortlist, exact shortlist-ID validation and applicable question enums. It permits one initial model call and one repair; malformed, truncated or multiple-tool responses cannot be accepted as complete. Empty shortlists stop without a model call. Participant/supporter, synthetic-only, provenance and exact-plan review/export safeguards remain covered. Automated model tests use doubles, not paid calls or evidence of live model quality.
 
-Candidate ZIP: `dist/simplifynext-mvp-constrained.zip`. SHA-256: `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`; base64 digest: `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The archive contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`. An isolated extraction imported those modules, created an offline draft with three catalog-backed actions and rejected unreviewed export with 409. No model call occurred. The full suite separately exercises actual loopback HTTP create/review/export, tampering and caller boundaries.
+Deployed ZIP: `dist/simplifynext-mvp-constrained.zip`. SHA-256: `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`; base64 digest: `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The archive contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`. Before deployment, an isolated extraction imported those modules, created an offline draft with three catalog-backed actions and rejected unreviewed export with 409. No model call occurred. The full suite separately exercises actual loopback HTTP create/review/export, tampering and caller boundaries.
 
 Independent code review reported no Important findings. Its fresh 39 planner tests and 62 additional checks passed, including all eight null/false/zero schema combinations, malformed-response repair shape, terminal stops and no-client-creation gates. Both named-finish and any-tool request variants passed installed botocore parameter validation. These checks establish local contract compatibility, not a live Nova acceptance result.
 
-The in-app browser reported no available browsers; a normal browser-open request was queued but did not restore the connection. **No AWS write or paid validation occurred during this continuation.** The last verified deployed archive remains the historical `50dad254...` below; its present cloud state has not been read back again. Pulling source does not deploy it. Restore the in-app browser, verify account/balance and prior code, perform a revision-guarded code-only update, then check API guards and the broad/narrow synthetic live cases. Teammate-session and rendered UI/keyboard acceptance remain open.
+During the earlier afternoon source-only continuation, the in-app browser was unavailable and no AWS write or paid validation occurred. That access blocker was subsequently resolved, and the deployment above supersedes the earlier source-only status. Pulling source still does not itself deploy it.
 
 ## Prior deployed verification — request-local schema alignment
 
 Fresh root verification after request-local schema alignment: **67 Python tests and 2 interface-state tests passed**. Independent review reported no Important code findings; its 34 planner tests and separate eight-combination schema matrix passed. Earlier question-applicability review also passed. Whitespace checks passed. Automated tests use cloud doubles; the live observations below are separate evidence.
 
-Current deployed deterministic Lambda archive SHA-256: `50dad2544250a554d150515534e0fd737bfce784ec279e8bb2d9a48d948843d2`. AWS readback reported `Active` / `Successful` and matching base64 `CodeSha256` (`UNrSVEJQpVTRUFFVNOD9c3v854TsJ56LstmkjZSIQ9I=`). The archive contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`.
+Prior deployed deterministic Lambda archive SHA-256: `50dad2544250a554d150515534e0fd737bfce784ec279e8bb2d9a48d948843d2`. AWS readback then reported `Active` / `Successful` and matching base64 `CodeSha256` (`UNrSVEJQpVTRUFFVNOD9c3v854TsJ56LstmkjZSIQ9I=`). The archive contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`.
 
-## Live deployment and API checks
+## Historical live deployment and API checks — before constrained flow
 
 Observed on 6 September 2026 through the organizer's in-app browser CloudShell, using its existing temporary session:
 
@@ -39,9 +61,9 @@ Observed on 6 September 2026 through the organizer's in-app browser CloudShell, 
 | Prior `f916c959` revision: live fictional Bedrock create | 200; `draft`, one fictional action, no questions |
 | Prior `f916c959` revision: live export before review | 409 |
 | Prior `f916c959` revision: inspected live draft, explicit review, export | 200 / 200; `transition-plan.md`, 717 characters |
-| Current `50dad254` revision: original broader goal, mode Bedrock | 200; non-actionable `partial`, tool limit reached |
+| Historical `50dad254` revision: original broader goal, mode Bedrock | 200; non-actionable `partial`, tool limit reached |
 
-Final current-artifact regression checks were repeated after all code updates, without model calls: signed health/resources/offline create each 200; eight resources and three source-backed actions; export before review 409; inspected offline draft review/export both 200 (1,883-character Markdown); tampered export 400; review of the non-actionable live partial plan 409; unsigned health 403. URL readback remained the same `AWS_IAM`/`BUFFERED` endpoint. These establish current API/baseline guard behavior, not current live-AI success.
+Regression checks on historical revision `50dad254` were repeated after its code update, without model calls: signed health/resources/offline create each 200; eight resources and three source-backed actions; export before review 409; inspected offline draft review/export both 200 (1,883-character Markdown); tampered export 400; review of the non-actionable live partial plan 409; unsigned health 403. URL readback remained the same `AWS_IAM`/`BUFFERED` endpoint. These establish API/baseline guard behavior at that revision, not current live-AI success.
 
 The exact earlier live fixture is [fictional-bedrock-request.json](../examples/fictional-bedrock-request.json). Its trace was `search_resources` then `finish_plan`, with two actual model calls: 2,693 input tokens and 265 output tokens in total. Export preserved the synthetic-only label, Bedrock mode, fictional source and warnings that the slot cannot be enrolled in/contacted. It was not rerun on the final schema-aligned artifact; do not treat the prior revision's result as current-artifact live acceptance. No application, message or booking occurred.
 

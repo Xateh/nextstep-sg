@@ -8,11 +8,11 @@ The current source implementation in `planner.py` provides the first-MVP domain 
 
 `create_plan(profile, mode="offline", client=None)` returns `mode`, `status`, `profile`, `actions`, `questions`, and `trace`. `load_catalog()` returns validated catalog records.
 
-This constrained planner is locally verified source code. It has not been deployed or exercised against live Nova. The last verified shared AWS function ran the historical `50dad254` package described below; the current cloud state has not been read back in this continuation.
+This constrained planner was deployed on 6 September 2026 from source revision `aec4030` using the deterministic archive identified below. Its shared API and offline behavior are verified. It has not yet been exercised against live Nova because the first paid broad case was blocked before execution pending explicit approval.
 
 ## Current behavior
 
-- Profile validation rejects non-synthetic data, unknown fields, wrong types, negative or oversized constraints, oversized text, and unsupported modes.
+- Profile validation requires the caller's explicit `synthetic: true` declaration and rejects unknown fields, wrong types, negative or oversized constraints, oversized text, and unsupported modes. It cannot detect real personal information in free text; invented inputs remain an operator responsibility.
 - Missing participant goals and differing participant/supporter goals stop before catalog selection or any model/client work. Supporter input never overrides participant preferences.
 - Offline planning remains deterministic, explicitly labelled, limited to three catalog-backed actions, and never represented as a model run.
 - Known student, weekly-hours, and budget conflicts are removed before ranking. `false` and `0` are known values; `null` remains an unresolved participant constraint.
@@ -57,6 +57,8 @@ Current results:
 - JavaScript state tests: 2 passed.
 - Independent review: 62 checks passed; no Important findings.
 - Both named-finish and any-tool request shapes passed installed botocore parameter validation.
+- Deployed artifact readback: `Active`/`Successful`, with matching base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=` for archive SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`.
+- Post-deployment API checks: unsigned request 403; signed health 200; signed resources 200 with eight records; offline create 200 with three actions; unreviewed export 409; inspected review/export 200 with a 2,139-character document; tampered envelope 400.
 
 Tests cover deterministic shortlist order, detailed shortlist delivery, constraint filtering, request-local ID and question enums, cross-request isolation, named and any tool choice, strict shortlist membership, catalog hydration, participant/supporter preflight, known `false`/`0` versus unknown `null`, trusted questions, sanitized failures, exact response shape and stop reason, multiple/truncated/malformed responses, single-turn malformed repair, two-call repair limit, empty-shortlist no-call behavior, explicit model configuration when needed, and no silent offline fallback.
 
@@ -64,10 +66,10 @@ Tests cover deterministic shortlist order, detailed shortlist delivery, constrai
 
 Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on later packages.
 
-Historical package `50dad254` was the last verified deployment. Its older free-choice loop exposed search and inspect tools with four-model/six-tool limits. In the recorded broad-profile run, it performed one search, then three inspections plus another search, followed by an invalid `finish_plan`; the next attempt reached the tool limit. Raw invalid arguments were intentionally not retained, so that exact validation failure remains unknown.
+Historical package `50dad254` preceded the current deployment. Its older free-choice loop exposed search and inspect tools with four-model/six-tool limits. In the recorded broad-profile run, it performed one search, then three inspections plus another search, followed by an invalid `finish_plan`; the next attempt reached the tool limit. Raw invalid arguments were intentionally not retained, so that exact validation failure remains unknown.
 
-Those results describe older deployed code only. They do not verify or disprove the current constrained source implementation. Current live behavior remains unknown until the deployment owner packages, deploys, and performs a separately approved bounded Nova check.
+Those results describe older deployed code only. They do not verify or disprove the current constrained deployment. Current live-model behavior remains unknown until the user explicitly approves the proposed bounded broad and narrow synthetic cases. No model call was made during deployment or API/offline verification.
 
 ## Remaining boundary
 
-No model-routing layer, database, participant login, or external-action capability was added. Local passing tests establish engineering readiness for review, not deployment or real-participant readiness. Live Nova reliability, teammate access, rendered accessibility, and intended-user evaluation remain separate gates.
+No model-routing layer, database, participant login, or external-action capability was added. Deployment and API/offline checks do not establish AI-plan acceptance or real-participant readiness. Live Nova reliability, teammate access, rendered accessibility, and intended-user evaluation remain separate gates.
