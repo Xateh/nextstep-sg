@@ -18,35 +18,36 @@ Brainstorm ideas include credential proof, course credits, employer visibility, 
 
 ## Implemented now
 
-- Synthetic-only profile, reviewed catalog, resource search/inspection, explicit plan review and Markdown export.
+- Synthetic-only profile, reviewed catalog, catalog shortlisting and evidence display, explicit plan review and Markdown export.
 - Deterministic offline workflow with tested API, validation and review guards.
 - Shared `AWS_IAM` Lambda API using the organizer-approved Nova access path. Standard-library validators keep the small contract explicit.
 - No applications, messages, bookings, payments, participant database, employer integration or sensitive proof collection.
 
-Current status is a deployed shared API/offline engineering demo. A narrow fictional AI workflow passed on a prior revision but was not rerun on the final artifact. The final broad-goal AI test returned a non-actionable partial result at unchanged tool/model-call limits, with no silent offline fallback. General AI acceptance remains unresolved.
+Current verified status remains a deployed shared API/offline engineering demo. A narrow fictional AI workflow passed on an earlier revision. The latest recorded deployed broad-goal run, before the new fixed-flow source candidate, returned a non-actionable partial result at its bounded limits, with no silent offline fallback. General AI acceptance remains unresolved.
 
-The audience wording, catalog correction and rehearsal script in this refresh were checked locally; 67 Python tests and two JavaScript tests passed after these changes. The catalog correction also appeared in a generated offline plan. These edits have not yet been deployed to the shared endpoint. Rendered-interface, teammate-session and general AI acceptance remain open.
+The fixed-flow source candidate is implemented and locally verified: 72 Python tests and two JavaScript tests passed. Its deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. An isolated extraction imported and passed API offline create plus the unreviewed-export guard without model calls. This supersedes the earlier 67-test local snapshot. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. The candidate is not deployed; live model and teammate-session acceptance remain open, and rendered-interface verification is currently unavailable. See [VERIFICATION.md](VERIFICATION.md).
 
 The technical notes favor a predictable LangGraph-style flow, AgentCore, Haiku or Sonnet, and Pydantic. These are proposals, not mandatory requirements. Current Lambda, Nova and standard-library validation are documented deadline- and verified-access substitutions. They are not approval to add new services.
 
-## Proposed smallest next slice
+## Approved smallest next slice — implemented locally, not deployed
 
-Pending the user's design response, constrain the existing planner rather than expand the stack:
+The implemented source candidate constrains the existing planner rather than expanding the stack:
 
-1. Deterministically produce a small catalog shortlist from the validated profile.
-2. Give the model only those resource IDs and require it to select valid IDs or return a bounded, validated reason.
-3. Hydrate selected actions from catalog facts, preserving the existing schema, API routes, synthetic-data boundary, call limits, exact-document review and export guards.
-4. Test broad and constrained fictional cases locally before considering another paid model run.
+1. Application code validates the profile, removes resources with known recorded constraint conflicts and ranks up to three remaining catalog candidates. Inclusion is not an eligibility, access or suitability determination.
+2. The model receives those detailed records only; it has no source-search or resource-inspection tools. It may finish with shortlist IDs or ask an approved clarification only for a genuinely `null` student-status, weekly-hours or budget field.
+3. Runtime validation rejects non-shortlist IDs and unavailable clarification fields. One repair is allowed, for two model calls maximum.
+4. Selected actions are hydrated from catalog facts. Existing API routes, schema, synthetic-data boundary, exact-plan review and export guards remain unchanged.
+5. Local automated, isolated-artifact and independent review checks pass without model calls. Guarded deployment must precede any paid live acceptance check.
 
-This proposal adds no service, model, datastore, messaging path, sensitive field or fallback. Implementation remains pending the user's design response or the user's previously authorized 30-minute no-response fallback; neither permits new services or relaxed safeguards.
+The change adds no service, model, dependency, datastore, messaging path, sensitive field or fallback. Local implementation and independent review are complete; deployment and live acceptance remain pending. No deployed success is claimed.
 
-The fixed pipeline should be described as a **model-assisted workflow**, not a fully autonomous agent. The [official event page](https://hackathon.simplifynext.com/) was read again on 6 September and still describes agents that plan, reason and act. That is a competition-fit risk to state openly, not an acceptance claim. [LangGraph's workflow/agent distinction](https://docs.langchain.com/oss/python/langgraph/workflows-agents) supports this terminology, not hackathon eligibility.
+The approved pipeline should be described as a **model-assisted workflow**, not a fully autonomous agent. The [official event page](https://hackathon.simplifynext.com/) was read again on 6 September and still describes agents that plan, reason and act. That is a competition-fit risk to state openly, not an acceptance claim. [LangGraph's workflow/agent distinction](https://docs.langchain.com/oss/python/langgraph/workflows-agents) supports this terminology, not hackathon eligibility.
 
 ## Priority map
 
 | Priority | Direction | Current mapping | Next action |
 |---|---|---|---|
-| P0 | Strengths-to-opportunity navigation | Profile, catalog and offline plan exist | Confirm constrained-shortlist design; then fix broad-goal reliability inside current contract |
+| P0 | Strengths-to-opportunity navigation | Fixed top-three constraint-filtered source candidate passes local and independent review checks | Guard deployment and live synthetic acceptance when organizer access returns |
 | P0 | Safe operator-led review | Exact-plan review/export guards exist | Keep participant preference, synthetic-only and no-action boundaries visible in demo |
 | P0 | Submission readiness | Engineering demo exists | Resolve frontend/backend ownership; assign deck/video work; run rendered interface and five-minute demo rehearsal |
 | P1 | Pitch narrative | Volunteer identified | Build story around beneficiary, operator journey, source-backed shortlist, review and limitations |
@@ -66,4 +67,4 @@ Per user direction, do not add messaging, real participant data, sensitive proof
 - The NUS Outlook qualification thread was re-read on 6 September; the 27 and 31 August messages remain the latest relevant organizer mail found by the scoped search. The official event page still requests documentation, prototype, solution video and pitch deck. The form could not be freshly read because access was blocked, so form-specific limits remain dated 5 September.
 - Frontend/backend split remains open. Resolve it before parallel edits to avoid duplicated work.
 
-Immediate decision needed: approve, revise or reject the constrained shortlist-to-model-ID-to-review flow. Until then, preserve the deployed API/schema/guards and prepare the verified offline demo, pitch structure and submission assets without expanding scope.
+Immediate engineering sequence: use the existing guarded code-only deployment path when organizer access returns. Only after deployment should the team consider one budget-gated broad live acceptance check. Until that evidence exists, preserve the verified offline demo and describe the model-assisted source candidate as locally verified, not live-successful.

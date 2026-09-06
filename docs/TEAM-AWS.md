@@ -2,6 +2,8 @@
 
 ## Current status
 
+The constrained planner source passed 72 Python tests and two interface-state tests, but is **not deployed**. The last verified shared endpoint ran the prior `50dad254...` package described below; its current cloud state has not been rechecked in this session. New source allows at most two model calls, including one repair, and restricts selection to an application-generated shortlist. The in-app browser connection is currently unavailable, so deployment and a fresh budget-gated model check remain blocked. Do not assume pulling the repository updates the shared AWS function.
+
 The team uses the existing organizer-provided AWS identity. On 6 September 2026, the leader deployed and verified `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/` with Function URL authentication type `AWS_IAM`. Unsigned health returned 403; signed health and resource listing returned 200. On the prior `f916c959...` revision, the [fully specified fictional Bedrock request](../examples/fictional-bedrock-request.json) returned one actionable draft and passed explicit review and export; it was not rerun after the final update. On the final revision, a broader synthetic request returned HTTP 200 `partial` after reaching the unchanged four-model-call/six-tool limits, without an actionable plan. No offline result was substituted and no cap was raised. The shared API and offline engineering demo are deployed; general AI and general-purpose MVP acceptance remain unresolved.
 
 Access from a teammate's own temporary organizer session has not yet been tested. Leader CloudShell success does not prove a teammate has both required invoke permissions.

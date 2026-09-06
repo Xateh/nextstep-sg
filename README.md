@@ -6,6 +6,8 @@ Private repository: [Xateh/simplifynext-mvp](https://github.com/Xateh/simplifyne
 
 ## Readiness
 
+**Locally verified source candidate, not deployed:** 72 Python tests and two interface-state tests passed. The constrained planner passes up to three constraint-filtered catalog records to the model, accepts only shortlist IDs or applicable clarification, and permits at most two model calls including one repair. API routes and review/export guards are unchanged. The in-app browser connection is currently unavailable, so no new AWS deployment or paid validation has occurred. The deployed observations below describe the earlier `50dad254...` package, not acceptance of this source candidate. See [verification evidence](docs/VERIFICATION.md).
+
 - Local offline workflow: implemented, including profile form, source cards, questions, review, export and trace.
 - Bedrock workflow: model connectivity was live-verified, but general AI acceptance is unresolved. On the prior `f916c959...` revision, the [fully specified fictional smoke request](examples/fictional-bedrock-request.json) returned one actionable draft with no questions, then passed review and export. It was not rerun on the final revision. On the final revision, a broader synthetic request returned HTTP 200 `partial` after reaching the unchanged four-model-call/six-tool limits, with no actionable plan. No offline result was substituted and no cap was raised.
 - Shared AWS endpoint: deployed at `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/` with `AWS_IAM`. Unsigned health returned 403; signed health returned 200, and signed resource listing returned 200 with eight records. Baseline offline create, review and export returned 200; unreviewed export returned 409 and a tampered envelope returned 400.
@@ -42,7 +44,7 @@ On macOS/Linux the virtual-environment interpreter is `.venv/bin/python`; use yo
 
 For local direct Bedrock testing, leave `MVP_API_URL` unset, set `AWS_DEFAULT_REGION` and the explicitly approved `BEDROCK_MODEL_ID`, then choose Bedrock in the interface. Verify the organizer balance first. Offline is always labelled and is never substituted silently for a failed live call.
 
-The committed Bedrock example is the exact fictional input used for the historical prior-revision smoke test. It must not be treated as evidence that the final revision or general planner is ready. No more paid model tests are planned for this handoff; do not rerun it merely to reproduce cost-incurring evidence already recorded.
+The committed Bedrock example is the exact fictional input used for the historical prior-revision smoke test. It must not be treated as evidence that the current source candidate or general planner is ready. After local verification and deployment, the broad and narrow synthetic cases need a fresh budget-gated check; do not rerun paid requests merely to reproduce historical evidence.
 
 ## Engineering references
 

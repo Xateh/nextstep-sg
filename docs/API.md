@@ -1,5 +1,13 @@
 # API reference — v0.1.0
 
+## Current source versus shared deployment
+
+The constrained source candidate passed 72 Python tests and two interface-state tests and has **not been deployed**. Its `bedrock` mode uses an application-generated shortlist of up to three catalog candidates without known recorded constraint conflicts. The model can select only those IDs or clarify genuinely unknown participant constraints. One repair is allowed, for at most two model calls. No matching shortlist produces an honest partial result without calling Bedrock. There is no API/schema change or silent offline fallback; review/export guards remain unchanged. Model behavior in automated tests uses doubles, not live AWS calls.
+
+In-app browser control is unavailable in the current session, blocking AWS deployment and paid validation. The following shared-endpoint results and four-call/six-tool history belong to the earlier `50dad254...` deployed artifact. They are not current-source AI acceptance.
+
+## Prior shared deployment evidence
+
 Status: the local API and shared AWS engineering endpoint were verified on 6 September 2026. Signed health, resources, baseline offline create-review-export, unreviewed rejection and tamper rejection were checked against the deployed function. On the prior `f916c959...` revision, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully; it was not rerun on the final revision. The final revision's broader Bedrock test returned HTTP 200 `partial` without an actionable plan after reaching its unchanged limits. No offline result was substituted. General AI and general-purpose MVP acceptance remain unresolved.
 
 ## Connection
@@ -91,4 +99,4 @@ Application errors are `{ "error": "human-readable explanation" }`. Authenticati
 | 429 | AWS throttling may reject concurrent calls; coordinate tests, do not hammer retries |
 | 503 | Model, credentials or service unavailable; no fabricated live success |
 
-Live calls are capped at four model requests and six tools per plan. This is not a shared monetary cap. User-approved exports can be repeated without sending anything externally. Failed create requests have no idempotency key; a retry can incur a new model call, so inspect errors before retrying.
+The prior shared deployment allows four model requests and six tools per plan; the undeployed constrained source candidate allows at most two model requests and one accepted tool call per response. Neither is a shared monetary cap. User-approved exports can be repeated without sending anything externally. Failed create requests have no idempotency key; a retry can incur a new model call, so inspect errors before retrying.

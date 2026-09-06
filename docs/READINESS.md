@@ -12,7 +12,7 @@ Primary demo operators are parents, guardians and educators supporting young adu
 6. Enter a different supporter goal. Show participant clarification, not automatic supporter override.
 7. Show the trace; offline is a deterministic baseline, not an AI run.
 
-For the agentic demonstration, replace only the mode with Bedrock after access, model and budget verification. Show actual tool decisions and token metadata. If live access fails, label the blocker; do not record offline output as a live AI result.
+For the model-assisted demonstration, replace only the mode with Bedrock after current-artifact acceptance, access, model and budget verification. Show actual tool decisions and token metadata. If live access fails, label the blocker; do not record offline output as a live AI result.
 
 ## Engineering checks
 
@@ -24,6 +24,10 @@ For the agentic demonstration, replace only the mode with Bedrock after access, 
 
 ## Open verification gates
 
+- [x] Implement and locally verify the constrained source: 72 Python tests and two interface-state tests passed. The extracted four-file package imports and creates a guarded offline draft without model calls.
+- [ ] Deploy the reviewed candidate and check the broad and narrow synthetic cases. The last verified shared deployment was `50dad254...`; current source work is not live acceptance.
+- [ ] Restore the in-app browser connection. This session returned no available browsers, so no AWS update or paid validation has occurred.
+
 - [x] Complete organizer sign-in; verify access to the existing active lease and CloudShell on 6 September 2026.
 - [x] Inspect account limits and candidate profile: Lambda total/unreserved concurrency 10; Nova Lite US profile active. These observations do not prove model invocation or deployment permission.
 - [x] AWS account-verification denial resolved; bounded Nova calls succeeded. Haiku was not invoked because its model agreement was unavailable; no new agreement was accepted.
@@ -32,7 +36,7 @@ For the agentic demonstration, replace only the mode with Bedrock after access, 
 - [x] Deployed one `AWS_IAM` Function URL. Unsigned rejection, signed health/resources, offline baseline and review/tamper guards passed. A prior code revision also passed the fictional Bedrock draft-review-export fixture; it was not rerun on the final artifact. See [VERIFICATION.md](VERIFICATION.md).
 - [ ] Verify a teammate's organizer session can use that exact endpoint. Do not infer access from the leader's session.
 - [x] Actual verified endpoint recorded in team docs; no credentials in repository.
-- [ ] Resolve and verify the original broad synthetic goal: after request-local schema alignment, the final run still returned non-actionable `partial` after invalid finish arguments and the tool limit. Stop paid retries; first isolate the trusted validation category and review the bounded workflow. Do not raise caps to conceal the failure.
+- [ ] Verify the original broad synthetic goal on the new artifact. The previous deployed run returned non-actionable `partial` after invalid finish arguments and the tool limit. The local replacement uses a top-three shortlist, trusted validation categories and at most two model calls, but its live behavior is unverified. Do not raise caps to conceal failures.
 - [ ] Visually verify browser workflow, keyboard focus, narrow layout and export. Automated in-app navigation to the local URL was blocked by the browser client; HTTP/state tests are not a substitute for rendered UI testing.
 - [ ] Operator usability/accessibility, beneficiary agency and comparative value evaluation. Not required to run a synthetic engineering demo, but required before stronger claims.
 

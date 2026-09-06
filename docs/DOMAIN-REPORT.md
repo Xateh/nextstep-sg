@@ -1,42 +1,41 @@
 # Domain and planner implementation report
 
-Date: 5 September 2026
-
-Last domain fix: 6 September 2026
+Date: 6 September 2026
 
 ## Outcome
 
-The first MVP domain slice is implemented in `planner.py`, backed by a versioned `catalog.json` and standard-library tests in `tests/test_planner.py`.
+The current source implementation in `planner.py` provides the first-MVP domain contract, backed by the versioned `catalog.json` and tests in `tests/test_planner.py`.
 
-`create_plan(profile, mode="offline", client=None)` returns the planned contract fields: `mode`, `status`, `profile`, `actions`, `questions`, and `trace`. `load_catalog()` returns validated catalog records.
+`create_plan(profile, mode="offline", client=None)` returns `mode`, `status`, `profile`, `actions`, `questions`, and `trace`. `load_catalog()` returns validated catalog records.
 
-## Behavior implemented
+This constrained planner is locally verified source code. It has not been deployed or exercised against live Nova. The last verified shared AWS function ran the historical `50dad254` package described below; the current cloud state has not been read back in this continuation.
 
-- Profile validation rejects non-synthetic data, unknown fields, wrong types, negative integer constraints, oversized text, and unsupported modes with `ValueError`.
-- A missing goal or differing participant/supporter goals returns `needs_clarification` without choosing for the participant.
-- Offline planning is deterministic, visibly labelled `offline fixture mode`, limited to three catalog-backed actions, and does not claim a model run.
-- A full-time student cannot receive the catalog programme whose published general criteria exclude full-time students. The result retains a visible question about future or school-mediated routes.
-- Catalog records carry structured `required_weekly_hours` and `cost_sgd` constraints. Known time or budget conflicts are filtered in both offline selection and Bedrock `finish_plan`; unknown real-resource values remain visible checks rather than claimed matches.
-- Missing weekly availability or budget produces a clarification question. Profile input is capped at 168 weekly hours and S$100,000.
-- Every action's ID, title, next step, URL, and checks are hydrated from the catalog. Bedrock may select resource IDs but cannot supply these facts.
-- Bedrock Converse uses only four allowlisted tools: `search_resources`, `inspect_resource`, `finish_plan`, and `clarification`. Search is local catalog search; there is no web, messaging, submission, execution, or arbitrary-URL tool.
-- Outbound tool-input schemas use only the Nova v1-supported top-level fields `type`, `properties`, and `required`, following the [official Amazon Nova tool-definition documentation](https://docs.aws.amazon.com/nova/latest/userguide/tool-use-definition.html). Exact-key and type checks remain enforced by application code, including rejection of unknown arguments.
-- Model arguments are validated with exact keys, bounded strings and catalog IDs. One invalid response may be repaired; a second stops with `partial`.
-- Model-authored question text is never returned. `finish_plan` and `clarification` accept only allowlisted question keys, which the server hydrates to trusted text; generated links, email addresses, or requests for identity data cannot pass through those tools.
-- Constraint question keys are accepted only when the corresponding profile value is `null`. Boolean `false` and numeric `0` are treated as known values in both `clarification` and `finish_plan`, preventing contradictory questions after a live model call.
-- `clarification` exposes only the three null-capable participant inputs: student status, weekly hours, and budget. Provider access, participant priority, and supporter preference remain available as nonblocking `finish_plan` follow-ups for compatibility; catalog-hydrated action checks retain provider uncertainty.
-- Outbound tool specs are request-local. Complete profiles omit `clarification`; incomplete profiles expose exactly the keys whose mapped values are `null`. The global specs are deep-copied, so one profile cannot change another request's schema. Search, inspect, finish, runtime validation, and execution limits are unchanged.
-- Unknown tool names and unknown resource IDs are recorded only as generic failure types, so invented or adversarial labels are not echoed into the plan trace.
-- Limits are global per plan: four model requests and six tool calls. Reaching either limit returns an honest `partial` result.
-- Bedrock client/request failures raise a sanitized `RuntimeError("Bedrock planning request failed")`. They never fall back to offline output. Client construction failures raise `RuntimeError("Bedrock client is unavailable")`.
-- Malformed Converse response, content, tool-use, usage, and metrics shapes stop through a bounded `partial` result or sanitized `RuntimeError`, never an unhandled shape-specific exception. Invalid assistant blocks are not retained in the repair transcript.
-- When the module creates the AWS client, SDK retries are disabled and connection/read timeouts are finite. `boto3` remains a lazy runtime dependency, so offline mode and tests need only the Python standard library.
+## Current behavior
+
+- Profile validation rejects non-synthetic data, unknown fields, wrong types, negative or oversized constraints, oversized text, and unsupported modes.
+- Missing participant goals and differing participant/supporter goals stop before catalog selection or any model/client work. Supporter input never overrides participant preferences.
+- Offline planning remains deterministic, explicitly labelled, limited to three catalog-backed actions, and never represented as a model run.
+- Known student, weekly-hours, and budget conflicts are removed before ranking. `false` and `0` are known values; `null` remains an unresolved participant constraint.
+- Bedrock planning uses the existing deterministic catalog search to build a profile-grounded shortlist of at most three records with no known recorded constraint conflict before client creation. Inclusion does not establish eligibility or suitability. If no resource matches, it returns an honest `partial` result without requiring model configuration, constructing a client, or making a paid call.
+- When a shortlist exists, live mode requires an explicit `BEDROCK_MODEL_ID`. Client/request failures remain sanitized `RuntimeError` values and never trigger an offline fallback.
+- The model receives the fictional profile and detailed shortlisted catalog records. It cannot search or inspect the wider catalog.
+- Outbound tools contain `finish_plan` only for a complete profile. Profiles with a null student-status, weekly-hours, or budget field also receive `clarification`, restricted to exactly the applicable null fields.
+- Complete profiles force the named `finish_plan` tool. Profiles with an applicable clarification use Nova's `any` tool choice. Tool schemas are deep-copied per request.
+- `finish_plan.resource_ids` is restricted in both its request-local schema and runtime validation to the exact shortlist. Applicable question-key enums are also request-local.
+- Every returned action is hydrated from the selected catalog record. Model-authored titles, steps, URLs, checks, questions, identity requests, and external links cannot reach the plan.
+- Responses must have `stopReason="tool_use"` and exactly one complete tool call. Malformed, text-only, multiple-tool, truncated, unknown-tool, out-of-shortlist, and invalid-question responses receive at most one repair. The entire plan uses at most two model calls.
+- A malformed assistant response is discarded. Trusted repair text is appended to the existing user request, preserving one valid user turn with the original profile and shortlist. A valid tool-error repair retains the normal user/assistant/tool-result sequence.
+- Trace and tool-result failures use trusted categories such as `invalid_model_response`, `invalid_tool_arguments`, `invalid_question_keys`, `resource_outside_shortlist`, `unknown_tool`, `no_shortlist`, and `repair_limit`. Raw invalid arguments, invented IDs, tool names, URLs, and identity prompts are not copied into the plan trace.
+- Provider access, availability, eligibility, cost, time, and suitability uncertainty remains in catalog-hydrated checks or approved nonblocking follow-up questions. The planner does not make eligibility or suitability decisions and has no application, booking, messaging, payment, or submission tool.
+- SDK retries remain disabled and connection/read timeouts remain finite. `boto3` is still lazy, so offline use needs only the Python standard library.
+
+Outbound tool schemas retain only Nova v1-supported top-level fields `type`, `properties`, and `required`, following the [official Amazon Nova tool-definition documentation](https://docs.aws.amazon.com/nova/latest/userguide/tool-use-definition.html). Application validation remains stricter than the schema boundary.
 
 ## Catalog
 
-The catalog contains six reviewed public records drawn from the reviewed MVP research plus two explicitly fictional demonstration slots. Fictional records say so in their titles, providers, summaries, eligibility, checks, and `.invalid` URLs. The office-skills slot requires two weekly hours and costs S$0; a second paid fixture makes budget filtering executable in tests. Public summaries are short original summaries; no proprietary text was copied.
+The catalog contains six reviewed public resources and two explicitly fictional demonstration slots. Fictional records identify themselves in titles, providers, summaries, eligibility, checks, and `.invalid` URLs. The office-skills slot requires two weekly hours and costs S$0; the second fictional fixture supports budget filtering.
 
-Reviewed links represented:
+Reviewed public resources represented:
 
 - SG Enable School-to-Work Transition Programme
 - SG Enable Sector-specific Train-and-Place Programme
@@ -45,28 +44,30 @@ Reviewed links represented:
 - Mentra Partner Platform
 - Inclusively Retain Navigator
 
-Catalog facts were checked for this prototype on 5 September 2026. They must be refreshed before real-world use. The catalog and planner do not determine eligibility, availability, accessibility, fees, or suitability.
+The Sector-specific Train-and-Place record was corrected and checked on 6 September 2026. All other records retain their 5 September 2026 checked date. These dates are per-record review metadata, not a claim that current eligibility, intake, access, fees, availability, accessibility, or suitability is known.
 
 ## Verification
 
-Test-first cycle was used. The initial planner suite failed because the module did not exist; the implementation then made it green. Later malformed-tool-ID and Nova-schema tests failed against their preceding implementations, followed by narrow fixes and green reruns. One live regression was reproduced with Nova-shaped `clarification` and `finish_plan` calls: known `budget_sgd=0`, `weekly_hours=0`, and `full_time_student=false` were incorrectly accepted as unanswered. The shared applicability guard fixed both tool paths while retaining questions for `null` values. Package `f916` then produced the requested fictional rehearsal draft in two model calls, before the final dynamic-schema package; that case has not been rerun against the final package. The original broad office-skills profile still returned `partial` under the static schema after Nova twice selected clarification keys that runtime validation rejected. Red tests captured that schema/validator mismatch; request-local omission or narrowing made them green.
+The constrained behavior was developed test-first. Red tests demonstrated that the preceding implementation exposed search/inspect tools, lacked shortlist ID enums, accepted an eligible fourth-ranked ID, called the model for an empty shortlist, accepted multiple tool calls, accepted a truncated `max_tokens` response, and created consecutive user turns after malformed output. Narrow production changes made those tests green.
 
-The final dynamic-schema package, identified by deployment prefix `50dad254`, was deployed and tested with the broad profile. It still returned `partial` with no actions. The trace recorded one search, then three resource inspections plus another search for five tool calls total, followed by an invalid `finish_plan` as the sixth tool call. On the fourth model request, the application stopped at `tool_limit` before executing a seventh tool. The trace intentionally does not store raw invalid arguments, so the exact `finish_plan` validation failure is unknown. The clarification loop was removed and all configured call, tool, validation, and no-fallback guards behaved as designed, but general live-AI acceptance remains unresolved.
+Current results:
 
-Final commands:
+- Planner tests: 39 passed.
+- Full Python suite: 72 passed.
+- JavaScript state tests: 2 passed.
+- Independent review: 62 checks passed; no Important findings.
+- Both named-finish and any-tool request shapes passed installed botocore parameter validation.
 
-```text
-python -m unittest discover -s tests -p test_planner.py -v
-python -m py_compile planner.py tests/test_planner.py
-```
+Tests cover deterministic shortlist order, detailed shortlist delivery, constraint filtering, request-local ID and question enums, cross-request isolation, named and any tool choice, strict shortlist membership, catalog hydration, participant/supporter preflight, known `false`/`0` versus unknown `null`, trusted questions, sanitized failures, exact response shape and stop reason, multiple/truncated/malformed responses, single-turn malformed repair, two-call repair limit, empty-shortlist no-call behavior, explicit model configuration when needed, and no silent offline fallback.
 
-Result after request-local schema alignment: 34 tests passed. Tests cover catalog provenance and structured constraints, profile validation and upper bounds, missing inputs, supporter conflict, student/time/budget exclusions, offline labelling, source hydration, Nova-compatible outbound tool schemas, complete-profile clarification omission, exact null-key subsets, cross-request schema isolation, broad-profile schema-aware completion, clarification-versus-finish key separation, exact search-repair-finish behavior for fictional rehearsal, retained provider checks, allowlisted and profile-applicable question hydration, known `false`/`0` versus unknown `null`, rejection of model-authored phishing/identity prompts, non-echoing unknown tools/resources, strict model arguments including unknown and unhashable values, malformed response shapes and repair transcripts, global call/tool caps, explicit model configuration, and sanitized live failure.
+## Historical live evidence
 
-## Integration notes and remaining checks
+Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on later packages.
 
-- Required profile fields are `strengths`, `interests`, `full_time_student`, `weekly_hours`, `budget_sgd`, and `synthetic`; `goal` may be absent or blank to trigger clarification; `supporter_goal` is optional.
-- The API should map domain `ValueError` to HTTP 400 and Bedrock `RuntimeError` to HTTP 503, as agreed with the API owner.
-- Live mode requires an explicit `BEDROCK_MODEL_ID` before creating an SDK client. Deployment should set the organizer-approved model or inference-profile ID only after account, region, access, and budget verification; there is no implicit model fallback.
-- No model-routing layer was added. The domain implementation work did not invoke a live model; the deployment owner performed the bounded Nova Lite deployment checks described above.
-- Package and runtime guards are complete for the current MVP. General AI-plan acceptance is not established: the explicit fictional case passed on pre-final package `f916`, while the broad case remained partial on final dynamic package `50dad254`.
-- Do not raise the four-model or six-tool caps to conceal this failure. The next diagnostic, if work resumes, is to record a bounded trusted validation-failure category without retaining raw model arguments, then reproduce that category with a captured test fixture before considering any code change or another live request.
+Historical package `50dad254` was the last verified deployment. Its older free-choice loop exposed search and inspect tools with four-model/six-tool limits. In the recorded broad-profile run, it performed one search, then three inspections plus another search, followed by an invalid `finish_plan`; the next attempt reached the tool limit. Raw invalid arguments were intentionally not retained, so that exact validation failure remains unknown.
+
+Those results describe older deployed code only. They do not verify or disprove the current constrained source implementation. Current live behavior remains unknown until the deployment owner packages, deploys, and performs a separately approved bounded Nova check.
+
+## Remaining boundary
+
+No model-routing layer, database, participant login, or external-action capability was added. Local passing tests establish engineering readiness for review, not deployment or real-participant readiness. Live Nova reliability, teammate access, rendered accessibility, and intended-user evaluation remain separate gates.

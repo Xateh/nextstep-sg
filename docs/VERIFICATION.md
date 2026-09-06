@@ -1,6 +1,16 @@
 # Verification record — 6 September 2026
 
-## Current verification
+## Current source candidate — not deployed
+
+At approximately 16:00 SGT on 6 September 2026, fresh root verification passed **72 Python tests and two interface-state tests**. The implementation replaces the free-choice search/inspection loop with an application-generated top-three catalog shortlist, exact shortlist-ID validation and applicable question enums. It permits one initial model call and one repair; malformed, truncated or multiple-tool responses cannot be accepted as complete. Empty shortlists stop without a model call. Participant/supporter, synthetic-only, provenance and exact-plan review/export safeguards remain covered. Automated model tests use doubles, not paid calls or evidence of live model quality.
+
+Candidate ZIP: `dist/simplifynext-mvp-constrained.zip`. SHA-256: `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`; base64 digest: `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The archive contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`. An isolated extraction imported those modules, created an offline draft with three catalog-backed actions and rejected unreviewed export with 409. No model call occurred. The full suite separately exercises actual loopback HTTP create/review/export, tampering and caller boundaries.
+
+Independent code review reported no Important findings. Its fresh 39 planner tests and 62 additional checks passed, including all eight null/false/zero schema combinations, malformed-response repair shape, terminal stops and no-client-creation gates. Both named-finish and any-tool request variants passed installed botocore parameter validation. These checks establish local contract compatibility, not a live Nova acceptance result.
+
+The in-app browser reported no available browsers; a normal browser-open request was queued but did not restore the connection. **No AWS write or paid validation occurred during this continuation.** The last verified deployed archive remains the historical `50dad254...` below; its present cloud state has not been read back again. Pulling source does not deploy it. Restore the in-app browser, verify account/balance and prior code, perform a revision-guarded code-only update, then check API guards and the broad/narrow synthetic live cases. Teammate-session and rendered UI/keyboard acceptance remain open.
+
+## Prior deployed verification — request-local schema alignment
 
 Fresh root verification after request-local schema alignment: **67 Python tests and 2 interface-state tests passed**. Independent review reported no Important code findings; its 34 planner tests and separate eight-combination schema matrix passed. Earlier question-applicability review also passed. Whitespace checks passed. Automated tests use cloud doubles; the live observations below are separate evidence.
 

@@ -54,17 +54,17 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 
 **Say:**
 
-> What is verified today is a shared authenticated API and offline engineering demo with source-backed selection, human review and guarded export. A narrow fictional AI workflow passed on an earlier code revision, but the final deployed revision's broader AI test ended with a non-actionable partial result at its bounded limits. General AI acceptance is still unresolved.
+> What is verified today is a shared authenticated API and offline engineering demo with source-backed selection, human review and guarded export. A narrow fictional AI workflow passed on an earlier code revision, but the latest recorded deployed broad AI run before the fixed-flow source candidate ended with a non-actionable partial result at its bounded limits. General AI acceptance is still unresolved.
 
-> Teammates must use their own temporary organizer session; access from a teammate's own session has not yet been verified. Rendered browser, keyboard and accessibility acceptance are also pending. This remains a synthetic prototype, not readiness for real participant use.
+> Teammates must use their own temporary organizer session; access from a teammate's own session has not yet been verified. Browser access for rendered, keyboard and accessibility verification is currently unavailable, so those acceptance checks remain pending. This remains a synthetic prototype, not readiness for real participant use.
 
-> The next engineering decision is whether to constrain the existing flow to a deterministic shortlist, bounded model ID selection and the same human review guard. The observable properties remain visible catalog sources, explicit unresolved checks and participant-controlled review. Comparative benefit has not been measured.
+> The new source candidate has the application select up to three catalog records with no known recorded constraint conflict, then gives those detailed records to the model without source-search or resource-inspection tools. The model can only choose valid shortlist IDs or clarify a genuinely unknown participant constraint. Shortlisting is not an eligibility, access or suitability decision. One repair and two model calls are the maximum. The same source hydration and human review guard remain. Local automated, isolated offline and independent review checks pass, but deployment and live acceptance are still pending. Comparative benefit has not been measured. The evidence is recorded in [VERIFICATION.md](VERIFICATION.md).
 
 ## Optional live substitution — gated
 
 Do not use Bedrock in place of the offline segment unless a later verification record confirms all of these:
 
-- The final/current artifact passes the agreed broad synthetic acceptance case, not only the earlier narrow fixture.
+- The fixed-flow candidate has completed independent review, been deployed through the guarded path, and the deployed artifact passes the agreed broad synthetic acceptance case, not only the earlier narrow fixture.
 - The presenting teammate has verified the endpoint from their own temporary organizer session.
 - Current model access and budget have been checked, and the team has approved a paid live call.
 - The exact live path has been rehearsed without changing API, review or safety boundaries.

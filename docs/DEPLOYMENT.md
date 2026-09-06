@@ -2,6 +2,8 @@
 
 ## Status and boundary
 
+**Locally verified source candidate, not deployed:** 72 Python tests and two interface-state tests passed. The four-file candidate ZIP has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` (base64 digest `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`). The in-app browser connection currently reports no available browser, so this session has made no AWS update or paid validation call. The deployment history below describes the prior `50dad254...` artifact. Use the code-only update runbook only after local tests/review and live account/budget checks succeed. See [VERIFICATION.md](VERIFICATION.md) for the evidence boundary.
+
 The approved source and scoped AWS resources were deployed through organizer CloudShell on 6 September 2026. The verified `AWS_IAM` Function URL is `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/`. Unsigned health returned 403; signed health and resource listing returned 200. Baseline offline create-review-export and its review/tamper guards are verified. On the prior `f916c959...` revision, the [fully specified fictional Bedrock smoke request](../examples/fictional-bedrock-request.json) completed create, explicit review and export successfully; it was not rerun on the final revision. The final revision's broader Bedrock goal returned HTTP 200 `partial` without an actionable plan after reaching the unchanged four-model-call/six-tool limits. No offline fallback was used. The shared API and offline engineering demo are deployed; general AI and general-purpose MVP acceptance remain unresolved.
 
 Deployment evidence:
@@ -36,6 +38,8 @@ Get-FileHash dist\simplifynext-mvp.zip -Algorithm SHA256
 
 ## Preflight controls used for the initial deployment
 
+For an update of the existing function, use the code-only procedure below instead of this initial-create path.
+
 Deployment changes the shared organizer AWS account. Before running it, verify all of these from current organizer sources:
 
 1. The temporary organizer AWS session is active and includes a session token. Permanent access keys are rejected.
@@ -69,6 +73,32 @@ The initial deployment used the following guarded shape after budget and action-
 ```
 
 The script verifies the current STS account before any AWS write. It halts if the fixed role or function name already exists, whether owned by this project or unrelated. It never updates or overwrites existing resources. This makes reruns intentionally fail until the existing deployment is inspected and rolled back.
+
+## Code-only update of the existing function
+
+This is a manual runbook, not evidence that a candidate has been deployed. Confirm the existing organizer account/region privately, check the current lease balance against the US$20 usable cap, review the code, and run all local checks first. Do not run `scripts/deploy.py --apply` against the existing resources.
+
+1. In the prepared Python environment, build the four-file allowlisted package with `python scripts/deploy.py --package --output dist/simplifynext-mvp-constrained.zip`. Record its SHA-256 in the verification record. Upload only that ZIP through organizer CloudShell's file-upload control; never upload credentials or the entire workspace.
+2. In CloudShell, verify the uploaded file with `sha256sum simplifynext-mvp-constrained.zip`. It must exactly match the locally verified artifact.
+3. Read current function state without printing environment variables or the signing key:
+
+```bash
+aws lambda get-function-configuration --function-name simplifynext-mvp --region us-east-1 --query '{State:State,Update:LastUpdateStatus,RevisionId:RevisionId,CodeSha256:CodeSha256}' --output json --no-cli-pager
+```
+
+Proceed only when state is `Active`, the previous update is `Successful`, and the observed code matches the last recorded deployment. Any unexpected revision or code change requires inspection before continuing. Copy the freshly read revision into the placeholder below; never reuse a historical revision ID.
+
+```bash
+aws lambda update-function-code --function-name simplifynext-mvp --region us-east-1 --zip-file fileb://simplifynext-mvp-constrained.zip --revision-id FRESH_REVISION_ID --query '{State:State,Update:LastUpdateStatus,CodeSha256:CodeSha256}' --output json --no-cli-pager
+```
+
+AWS documents the [revision guard for code updates](https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-code.html). A conflict means stop and inspect, not retry without the guard. This command does not update environment configuration, IAM, Function URL settings or the signing key.
+
+4. Read the same selected configuration fields again until the update reports `Successful` and state `Active`; stop and investigate if it fails or remains incomplete. Compare `CodeSha256` with the **base64 encoding of the ZIP's SHA-256 digest**, not the hexadecimal string.
+5. Read Function URL configuration and require the same URL, `AWS_IAM`, and `BUFFERED`. Check unsigned rejection, signed health/resources and explicit offline create/review/export guards before any paid validation. Preserve the exact draft for review and never approve a non-actionable partial result.
+6. Only after a fresh budget check, run the agreed broad and narrow synthetic Bedrock cases. Record actual status, selected IDs, call counts and failure categories. Do not infer success from HTTP 200 or substitute offline output.
+
+Keep the prior verified package for recovery. If rollback is authorized, use the same guarded code-update procedure with that exact prior ZIP; do not delete/recreate the function or rotate its signing key merely to undo a code change.
 
 ## Resources created
 
