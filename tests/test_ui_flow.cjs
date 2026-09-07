@@ -21,7 +21,7 @@ function envelope(overrides = {}) {
 }
 const response = (body, status = 200) => ({ok: status >= 200 && status < 300, status, json: async () => body});
 
-function harness() {
+function harness(serviceVersion = '0.1.1') {
   let now = start, timerId = 0;
   const timers = new Map(), nodes = new Map(), calls = [], replies = [], downloads = [], blobs = [], focus = [];
   const document = {activeElement: null};
@@ -53,7 +53,7 @@ function harness() {
     setTimeout(callback, delay) { timers.set(++timerId, {callback, due: now + delay}); return timerId; },
     clearTimeout(id) { timers.delete(id); },
     fetch: async (url, options) => {
-      if (url === '/health') return response({status: 'ok', version: '0.1.0', data_policy: 'synthetic-only', default_mode: 'offline'});
+      if (url === '/health') return response({status: 'ok', version: serviceVersion, data_policy: 'synthetic-only', default_mode: 'offline'});
       calls.push({url, body: JSON.parse(options.body)});
       assert.ok(replies.length, `Unexpected request: ${url}`);
       return replies.shift();
@@ -107,6 +107,31 @@ test('creation moves focus to the plan heading', async () => {
   const ui = harness(); await ui.create();
   assert.equal(ui.el('result').hidden, false);
   assert.equal(ui.document.activeElement, ui.el('plan-title'));
+});
+
+test('an older connected service cannot be mistaken for the Singapore catalogue update', async () => {
+  const older = harness('0.1.0'); await older.create();
+  assert.match(older.el('connection').textContent, /different content version/i);
+  assert.match(older.el('connection').textContent, /updated local service/i);
+  const current = harness(); await current.create();
+  assert.match(current.el('connection').textContent, /v0\.1\.1/);
+  assert.doesNotMatch(current.el('connection').textContent, /different content version/i);
+});
+
+test('expiry shows Singapore date and time even on an overseas device', async () => {
+  const previous = process.env.TZ;
+  try {
+    for (const timezone of ['UTC', 'America/Los_Angeles']) {
+      process.env.TZ = timezone;
+      const ui = harness();
+      await ui.create(envelope({expires_at: Date.parse('2030-01-01T16:30:00Z') / 1000}));
+      assert.match(ui.el('plan-expiry').textContent, /2 Jan 2030.*00:30 SGT/);
+      assert.equal(ui.el('approval').disabled, false);
+    }
+  } finally {
+    if (previous === undefined) delete process.env.TZ;
+    else process.env.TZ = previous;
+  }
 });
 
 test('clarification and partial plans show expiry without promising review or download', async () => {

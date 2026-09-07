@@ -20,9 +20,12 @@ class InterfaceParser(HTMLParser):
         self.stack = []
         self.text = []
         self.text_by_id = {}
+        self.language = None
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if tag == 'html':
+            self.language = attrs.get('lang')
         element_id = attrs.get('id')
         if element_id:
             self.elements[element_id] = {
@@ -86,7 +89,7 @@ class HttpTests(unittest.TestCase):
             return response.status, response.headers, response.read()
 
     def test_interface_and_assets_are_served_with_safe_headers(self):
-        for path, fragment in [('/', b'Supported next steps'), ('/app.js', b'fetch('), ('/style.css', b'focus-visible')]:
+        for path, fragment in [('/', b'NextStep SG'), ('/app.js', b'fetch('), ('/style.css', b'focus-visible')]:
             status, headers, body = self.request(path)
             self.assertEqual(status, 200, path)
             self.assertIn(fragment, body)
@@ -99,6 +102,10 @@ class HttpTests(unittest.TestCase):
         document = InterfaceParser()
         document.feed(body.decode())
         text = ' '.join(' '.join(document.text).split())
+        self.assertEqual(document.language, 'en-SG')
+        self.assertIn('NRIC/FIN', text)
+        self.assertIn('Singpass', text)
+        self.assertIn('Singapore dollars', text)
 
         for stage in ('01 / PROFILE', '02 / REVIEW NEXT STEPS', '03 / DOWNLOAD REVIEWED PLAN'):
             self.assertIn(stage, text)

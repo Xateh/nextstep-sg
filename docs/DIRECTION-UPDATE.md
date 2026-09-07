@@ -1,6 +1,12 @@
 # SWE direction update — 6 September 2026
 
-## Evidence basis
+## Approved Singapore localisation — 7 September
+
+The user approved a Singapore-focused content update and chose a simpler name: **NextStep SG**, private repo [Xateh/nextstep-sg](https://github.com/Xateh/nextstep-sg). This does not change the supported transition-planner anchor or introduce additional features. Current local **v0.1.1** replaces overseas catalogue entries with SG Enable employment support and Enabling Academy course discovery, refreshes all six public sources, uses S$ and dated SGT display, and retains participant agency and unknown provider conditions. Overseas tools stay labelled international research comparators.
+
+This is a user-approved localisation, not a newly retrieved team-document revision. The 6 September document/chat snapshot below remains historical. CareersFinder now links to the accessible official MySkillsFuture page; [RESEARCH.md](RESEARCH.md) records the 7 September source refresh and correct SWDA name. AWS remains **v0.1.0 / `aec4030`**, not this newer local content. No cloud configuration, region, credentials, permissions, resource or paid call changed. See [VERIFICATION.md](VERIFICATION.md) for latest local checks and remaining gates.
+
+## Historical evidence basis — 6 September snapshot
 
 This refresh uses live checks completed at approximately 14:35 SGT on 6 September 2026. The Google document **simplifyNext Hackathon Brainstorm** was last modified on 4 September at 05:55 UTC; revision 1063 was current, after revision 1062. All four tabs were read, comments were empty, and no newer accessible related document was found. This records the latest accessible direction, not proof that no private or inaccessible update exists.
 
@@ -8,7 +14,7 @@ The team-chat snapshot shows one member offering to prepare the pitch deck and t
 
 Existing research in [RESEARCH.md](RESEARCH.md) was not newly reviewed for this update. No new evidence, model-performance or user-benefit claim is inferred.
 
-A separate catalog spot-check on 6 September found one material omission: SG Enable's [Sector Train-and-Place page](https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place) states that the current intake is closed and describes a full-time commitment. The catalog now surfaces both facts as provider checks and a possible future route, not a current opening or a confirmed fit for a few weekly hours. Exact hours and cost remain unknown because they vary by pathway. The SWDA source could not be freshly read because of an access gate; its earlier checked date remains unchanged. This is a source correction, not evidence that the page itself changed after the previous review.
+A separate catalogue spot-check on 6 September found one material omission: SG Enable's [Sector Train-and-Place page](https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place) stated that intake was closed and described a full-time commitment. The catalogue correction surfaced both facts as provider checks and a possible future route, not a current opening or a confirmed fit for a few weekly hours. Exact hours and cost remained unknown. The SWDA source could not be freshly read on 6 September because of an access gate, so its checked date was retained at that time. The 7 September localisation supersedes that source/date status with the verified MySkillsFuture page, without bypassing the blocked page. These are source corrections, not evidence of when the underlying pages changed.
 
 ## Product direction
 
@@ -27,7 +33,7 @@ Current verified status remains a deployed shared API/offline engineering demo. 
 
 The fixed-flow implementation is deployed and locally verified: 72 Python tests and two JavaScript tests passed. Its deterministic four-file archive has SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` and base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. Deployment from source revision `aec4030` used the existing CloudShell code-only revision guard. AWS readback was `Active`/`Successful` with the matching hash; the existing `AWS_IAM` buffered endpoint and configuration remained unchanged. Independent review found no Important findings; 39 planner checks, 62 additional checks and tool-choice botocore validation passed. General live-model reliability and teammate-session acceptance remain open, and rendered-interface verification is currently unavailable. See [VERIFICATION.md](VERIFICATION.md).
 
-Post-deployment checks passed: unsigned 403; signed health and eight-resource listing 200; offline creation 200 with three current-catalog actions; unreviewed export 409; inspected review/export 200 with 2,139 characters; tampered envelope 400.
+Post-deployment checks on 6 September passed: unsigned 403; signed health and eight-resource listing 200; offline creation 200 with three then-current v0.1.0 catalogue actions; unreviewed export 409; inspected review/export 200 with 2,139 characters; tampered envelope 400.
 
 After explicit approval, one broad and one narrow synthetic Bedrock case ran at approximately 20:40–20:46 SGT against unchanged source revision `aec4030` and the same verified artifact. Both returned HTTP 200 `bedrock` drafts in one model call, retained `full_time_student: false`, `weekly_hours: 3` and `budget_sgd: 0`, and selected only `fictional-office-skills-taster`. The narrow case returned no questions. The broad case retained the allowed nonblocking provider-access question; it was unnecessary for the fictional slot and remains a quality limitation. Both review/export guard sequences passed, with 664- and 717-character exports and intact fictional warnings. Combined use was two model calls, 2,896 input tokens, 69 output tokens and 2,965 total tokens, with no repair, retry or fallback. No more model calls are planned.
 

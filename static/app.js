@@ -121,7 +121,10 @@ if (typeof document !== 'undefined') {
     $('review').disabled = busy || !state.canReview() || !$('approval').checked || state.canExport();
     $('export').disabled = busy || !state.canExport();
     $('plan-expiry').textContent = !state.envelope ? '' : state.isExpired() ? expiryMessage :
-      `This plan expires at ${new Date(state.envelope.expires_at * 1000).toLocaleTimeString()}. Expiry does not delete downloaded files.`;
+      `This plan expires at ${new Date(state.envelope.expires_at * 1000).toLocaleString('en-SG', {
+        timeZone: 'Asia/Singapore', day: 'numeric', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', hour12: false,
+      })} SGT. Expiry does not delete downloaded files.`;
   };
   const clearPlan = () => {
     clearTimeout(expiryTimer);
@@ -259,7 +262,7 @@ if (typeof document !== 'undefined') {
 
   $('example').addEventListener('click', () => {
     if (busy) return;
-    $('goal').value = 'Explore office skills at my own pace'; $('strengths').value = 'Organising files and following a checklist';
+    $('goal').value = 'Explore office skills in Singapore at my own pace'; $('strengths').value = 'Organising files and following a checklist';
     $('interests').value = 'office, organising, computers'; $('student').value = 'false';
     $('hours').value = '3'; $('budget').value = '0'; $('supporter-goal').value = '';
     $('synthetic').checked = true; invalidate();
@@ -275,7 +278,9 @@ if (typeof document !== 'undefined') {
     say('Local profile and draft cleared. Offline mode restored. Downloaded files are unchanged.');
   });
   request('/health').then(result => {
-    $('connection').textContent = `Service connected · v${result.version} · synthetic profiles only`;
+    $('connection').textContent = result.version === '0.1.1' ?
+      `Service connected · v${result.version} · synthetic profiles only` :
+      `Service connected · v${result.version} · Different content version. Use the updated local service for the Singapore catalogue.`;
   }).catch(() => { $('connection').textContent = 'Service unavailable. Check the local server and, if configured, your AWS session.'; });
   buttons();
 }

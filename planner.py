@@ -186,7 +186,7 @@ def _offline_plan(profile: dict, catalog: list[dict]) -> dict:
     ]
     if not selected:
         questions.append(
-            "No catalog resource matched the stated goal and interests. Which task or work area should be tried next?"
+            "No catalogue resource matched the stated goal and interests. Which task or work area should be tried next?"
         )
         return _result("offline", "partial", profile, [], questions, trace)
     return _result(
@@ -239,7 +239,7 @@ def _constraint_questions(profile: dict) -> list[str]:
     questions = []
     if profile["full_time_student"] is True:
         questions.append(
-            "A catalog programme excludes full-time students, so it was not selected. Should a future or school-mediated route be checked?"
+            "A catalogue programme excludes full-time students, so it was not selected. Should a future or school-mediated route be checked?"
         )
     elif profile["full_time_student"] is None:
         questions.append(
@@ -256,10 +256,10 @@ def _catalog_action(item: dict) -> dict:
     checks = list(item["unknowns"])
     if item["required_weekly_hours"] is None:
         checks.append(
-            "Required weekly hours are not published in this catalog; confirm the current time requirement."
+            "Required weekly hours are not published in this catalogue; confirm the current time requirement."
         )
     if item["cost_sgd"] is None:
-        checks.append("Cost is not published in this catalog; confirm current fees or charges.")
+        checks.append("Cost is not published in this catalogue; confirm current fees or charges.")
     return {
         "resource_id": item["id"],
         "title": item["title"],

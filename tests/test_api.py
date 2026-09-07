@@ -30,6 +30,25 @@ class ApiTests(unittest.TestCase):
         status, _ = self.api.dispatch('POST', '/v1/plans/export', {'envelope': envelope}, 'alice')
         self.assertEqual(status, 409)
 
+    def test_export_keeps_singapore_zero_and_unknown_constraints_distinct(self):
+        for budget, hours, expected_budget, expected_hours in [
+            (0, 0, 'S$0', '0 hours'),
+            (2500, 4, 'S$2,500', '4 hours'),
+            (None, None, 'Not sure', 'Not sure'),
+        ]:
+            with self.subTest(budget=budget, hours=hours):
+                plan = copy.deepcopy(self.plan)
+                plan['profile'].update(budget_sgd=budget, weekly_hours=hours, synthetic=True)
+                envelope = self.api.seal(plan, reviewed=True)
+                status, exported = self.api.dispatch('POST', '/v1/plans/export', {'envelope': envelope})
+                self.assertEqual(status, 200)
+                self.assertEqual(exported['filename'], 'transition-plan.md')
+                self.assertIn('NextStep SG', exported['content'])
+                self.assertIn('Singapore', exported['content'])
+                self.assertIn('Budget: ' + expected_budget, exported['content'])
+                self.assertIn('Weekly time available: ' + expected_hours, exported['content'])
+                self.assertIn('Nothing was sent', exported['content'])
+
     def test_review_binds_exact_document_and_principal(self):
         envelope = self.api.seal(self.plan, principal='alice')
         status, result = self.api.dispatch('POST', '/v1/plans/review',

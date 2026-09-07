@@ -1,5 +1,26 @@
 # Verification record — 7 September 2026
 
+## NextStep SG Singapore localisation — v0.1.1, local only
+
+The private GitHub repository was renamed from `Xateh/simplifynext-mvp` to [Xateh/nextstep-sg](https://github.com/Xateh/nextstep-sg). Readback confirmed the same repository identity, private visibility and default branch `mvp`; local `origin` uses the new URL. The local directory, AWS resource names, routes, JSON contracts, catalogue schema, signing/review contract, legacy client header and export filename are unchanged.
+
+The approved update adds NextStep SG branding, Singapore English, NRIC/FIN and Singpass privacy reminders, S$ export constraints and dated SGT expiry display. All six public catalogue resources are Singapore services checked on 7 September; two synthetic Singapore slots remain visibly fictional. Overseas products remain labelled international research comparators only. Unknown fees, hours, provider access and suitability remain unknown; S$0 and zero hours remain known values. See [RESEARCH.md](RESEARCH.md) and `catalog.json` for sources and boundaries.
+
+Fresh checks after the final planner-copy correction:
+
+- **76 Python tests passed**, including real loopback HTTP, catalogue filtering, API/review/export and deployment/client guards.
+- **28 JavaScript tests passed**, including older-service warnings and Singapore date rollover on simulated UTC and Los Angeles devices. DOM events are simulated, not a rendered-browser check.
+- Test-first failures demonstrated the missing SG catalogue scenarios, export formatting, locale/privacy copy, old-service warning and dated SGT display before the corresponding changes; all now pass.
+- Independent code review found no Critical or Important code defects. Its minor user-visible `catalog` spelling finding was corrected to `catalogue`, leaving identifiers unchanged. Independent handoff review caught an old ZIP filename in the future runbook and ambiguous historical source-status wording; both were corrected.
+- The new school-transition fixture completes create/review/export on the isolated packaged API, selecting School-to-Work, Job Placement and Job Support, and Enabling Academy courses. It retains unknown budget/time, exact-plan review and no-action wording; unreviewed export returns 409 and a tampered reviewed envelope returns 400. No model call was made.
+- ZIP verification passed the exact four-file allowlist and byte equality against current source. `git diff --check` passed; Git's LF/CRLF notices are not whitespace errors.
+
+Local package: `dist/nextstep-sg-localisation.zip`. SHA-256: `349d0dc694e03f40c4de9ec32083be0035b9007fd6df9ff63be5a748afa3a2ed`; base64: `NJ0NxpTgP0DE3p7DIIO+ADW5AH/W35/2O+WnSK+jou0=`. The package contains only `app.py`, `catalog.json`, `lambda_function.py` and `planner.py`. The original two 6 September paid-smoke input fixtures remain unchanged as historical evidence; `examples/singapore-school-transition.json` is a separate invented offline scenario.
+
+**Not deployed:** the shared AWS endpoint still uses **v0.1.0 / `aec4030`**, last verified on 6 September. The historical live evidence below does not validate this new content. No AWS deployment/configuration, credentials, permissions, region, inference profile, service, dependency or paid call changed during localisation. Singapore content makes no Singapore-hosting or data-residency claim. Unset `MVP_API_URL`, restart and confirm v0.1.1 to use the new local catalogue; offline mode alone does not disable a configured remote forwarder.
+
+**Still open:** rendered-browser, keyboard, 320px layout, real download/accessibility, intended-user evaluation and teammate-own-session checks. The earlier local in-app preview restriction was not bypassed. Local tests and two historical fictional AI smoke passes are not evidence of real-participant readiness or comparative benefit.
+
 ## Local UI refinement — 7 September; AWS unchanged
 
 The approved UI-only pass adds three labelled stages, linked field hints, a <=480px single-column field/button layout, long-content wrapping, Edit profile, Start over, programmatic focus handoffs and visible plan expiry. No backend contract, catalog, dependency, deployment, IAM, AWS configuration or model call changed in this pass.
@@ -20,7 +41,7 @@ Expired drafts remain readable, but client controls and post-response checks pre
 
 The shared AWS source stays at `aec4030`; its two approved smoke results below are dated 6 September, not fresh live checks during this pass. Static assets run on each teammate's loopback server and are excluded from the Lambda package. No additional paid test is authorized by this UI approval.
 
-## Current live evidence — two approved synthetic smoke cases passed
+## Latest recorded live evidence — 6 September v0.1.0 only
 
 On 6 September 2026, after explicit user approval, the broad and narrow synthetic Nova Lite cases were each run once against the unchanged constrained deployment. Before testing, AWS readback again confirmed `Active` / `Successful`, code hash `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=` and the same `AWS_IAM` / `BUFFERED` URL, Python 3.12, 90-second timeout and 256 MB memory. Expired organizer sessions renewed through normal sign-in; no credentials were extracted and no permissions or function configuration changed.
 

@@ -1,14 +1,14 @@
 # Domain and planner implementation report
 
-Date: 6 September 2026
+Date: 7 September 2026
 
 ## Outcome
 
-The current source implementation in `planner.py` provides the first-MVP domain contract, backed by the versioned `catalog.json` and tests in `tests/test_planner.py`.
+The local NextStep SG v0.1.1 source implementation in `planner.py` provides the first-MVP domain contract, backed by the versioned `catalog.json` and tests in `tests/test_planner.py`. The private repository is `Xateh/nextstep-sg` on the unchanged `mvp` branch; the existing local folder name remains historical. Display-name and Singapore catalog changes do not alter Python identifiers or the API contract.
 
 `create_plan(profile, mode="offline", client=None)` returns `mode`, `status`, `profile`, `actions`, `questions`, and `trace`. `load_catalog()` returns validated catalog records.
 
-This constrained planner was deployed on 6 September 2026 from source revision `aec4030` using the deterministic archive identified below. Its shared API and offline behavior are verified. After explicit approval, one broad and one narrow synthetic Bedrock smoke case passed against that artifact. Those two runs do not establish general reliability, repeatability, real-provider plan quality or full-MVP readiness.
+The AWS deployment remains v0.1.0 from source revision `aec4030`, deployed on 6 September 2026 using the deterministic archive identified below. Its shared API, offline behavior and two approved synthetic Bedrock smoke cases were verified against that artifact. The local v0.1.1 Singapore catalog and content update has not been deployed or exercised in a paid model call. The 6 September smoke results therefore do not verify current local catalog content and do not establish general reliability, repeatability, real-provider plan quality or full-MVP readiness.
 
 ## Current behavior
 
@@ -35,22 +35,22 @@ Outbound tool schemas retain only Nova v1-supported top-level fields `type`, `pr
 
 The catalog contains six reviewed public resources and two explicitly fictional demonstration slots. Fictional records identify themselves in titles, providers, summaries, eligibility, checks, and `.invalid` URLs. The office-skills slot requires two weekly hours and costs S$0; the second fictional fixture supports budget filtering.
 
-Reviewed public resources represented:
+Current reviewed Singapore public services:
 
 - SG Enable School-to-Work Transition Programme
-- SG Enable Sector-specific Train-and-Place Programme
+- SG Enable Sector Train-and-Place Programme
 - CareersFinder and Careers & Skills Passport
 - Career Kaki
-- Mentra Partner Platform
-- Inclusively Retain Navigator
+- SG Enable Job Placement and Job Support
+- Enabling Academy Vocational and Independent Living Skills Courses
 
-The Sector-specific Train-and-Place record was corrected and checked on 6 September 2026. All other records retain their 5 September 2026 checked date. These dates are per-record review metadata, not a claim that current eligibility, intake, access, fees, availability, accessibility, or suitability is known.
+All six public-service records were checked on 7 September 2026. The two fictional Singapore demonstration records retain their 5 September 2026 checked date. Dates are per-record review metadata, not a claim that current eligibility, intake, access, fees, availability, accessibility or suitability is known. Exact fees, hours and intakes remain unknown where the records say so; providers assess eligibility and suitability.
 
 ## Verification
 
 The constrained behavior was developed test-first. Red tests demonstrated that the preceding implementation exposed search/inspect tools, lacked shortlist ID enums, accepted an eligible fourth-ranked ID, called the model for an empty shortlist, accepted multiple tool calls, accepted a truncated `max_tokens` response, and created consecutive user turns after malformed output. Narrow production changes made those tests green.
 
-Current results:
+Historical 6 September constrained-package results:
 
 - Planner tests: 39 passed.
 - Full Python suite: 72 passed.
@@ -60,9 +60,11 @@ Current results:
 - Deployed artifact readback: `Active`/`Successful`, with matching base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=` for archive SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`.
 - Post-deployment API checks: unsigned request 403; signed health 200; signed resources 200 with eight records; offline create 200 with three actions; unreviewed export 409; inspected review/export 200 with a 2,139-character document; tampered envelope 400.
 
+Current local v0.1.1 verification is recorded in [VERIFICATION.md](VERIFICATION.md). Its newer test counts apply to the local Singapore catalog and content; they are not AWS deployment or live-model evidence.
+
 Tests cover deterministic shortlist order, detailed shortlist delivery, constraint filtering, request-local ID and question enums, cross-request isolation, named and any tool choice, strict shortlist membership, catalog hydration, participant/supporter preflight, known `false`/`0` versus unknown `null`, trusted questions, sanitized failures, exact response shape and stop reason, multiple/truncated/malformed responses, single-turn malformed repair, two-call repair limit, empty-shortlist no-call behavior, explicit model configuration when needed, and no silent offline fallback.
 
-## Current deployed live smoke evidence
+## Deployed v0.1.0 live smoke evidence — 6 September
 
 At approximately 20:40–20:46 SGT on 6 September, the two explicitly approved synthetic cases ran against unchanged source revision `aec4030` and archive SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`. Fresh AWS readback remained `Active`/`Successful` with matching base64 SHA-256 `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The IAM endpoint and function configuration were unchanged.
 
@@ -71,16 +73,16 @@ At approximately 20:40–20:46 SGT on 6 September, the two explicitly approved s
 - Both profiles retained the exact `false`, `3` and `0` constraints. Both guard sequences returned unreviewed export 409, inspected review 200, export 200 and tamper 400. Export lengths were 664 characters for broad and 717 characters for narrow; fictional labels and warnings remained intact.
 - Combined model use: two calls, 2,896 input tokens, 69 output tokens and 2,965 total tokens. No repair, retry or offline fallback occurred.
 
-This evidence is limited to two synthetic smoke passes. It does not establish repeatability, general live-model reliability, real-provider recommendation quality, participant benefit, eligibility, suitability or full-MVP readiness. No more model calls are planned.
+This evidence is limited to two synthetic smoke passes against the earlier deployed v0.1.0 content. It does not verify the local v0.1.1 Singapore catalog and does not establish repeatability, general live-model reliability, real-provider recommendation quality, participant benefit, eligibility, suitability or full-MVP readiness. No more model calls are planned.
 
 ## Historical live evidence
 
-Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on `50dad254`; its current constrained-package result is recorded separately above.
+Historical package `f916` produced the explicitly requested fictional rehearsal draft in two model calls. That case was not rerun on `50dad254`; its deployed v0.1.0 constrained-package result is recorded separately above.
 
 Historical package `50dad254` preceded the current deployment. Its older free-choice loop exposed search and inspect tools with four-model/six-tool limits. In the recorded broad-profile run, it performed one search, then three inspections plus another search, followed by an invalid `finish_plan`; the next attempt reached the tool limit. Raw invalid arguments were intentionally not retained, so that exact validation failure remains unknown.
 
-Those results describe older deployed code only. They do not verify or disprove the current constrained deployment. The current deployed evidence is limited to the two synthetic smoke cases above; no model call was made during deployment or API/offline verification.
+Those results describe older deployed code only. They do not verify or disprove the v0.1.0 constrained deployment. Deployed live evidence is limited to the two synthetic smoke cases above; no model call was made during deployment or API/offline verification.
 
 ## Remaining boundary
 
-No model-routing layer, database, participant login, or external-action capability was added. Deployment, API/offline checks and two synthetic live smoke passes do not establish general AI-plan acceptance or real-participant readiness. Repeatability, real-provider quality, teammate access, rendered accessibility and intended-user evaluation remain separate gates.
+No model-routing layer, database, participant login or external-action capability was added. The local v0.1.1 Singapore catalog/content update did not deploy to AWS and made no model call. The existing deployment remains in `us-east-1` using the approved US inference profile; the NextStep SG display name makes no Singapore-hosting or data-residency claim. Historical deployment, API/offline checks and two synthetic live smoke passes do not establish current-content AI acceptance or real-participant readiness. Repeatability, real-provider quality, teammate access, rendered accessibility and intended-user evaluation remain separate gates.

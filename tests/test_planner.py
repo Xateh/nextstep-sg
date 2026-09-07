@@ -144,6 +144,62 @@ class PlannerTests(unittest.TestCase):
             source = catalog_by_id[action["resource_id"]]
             self.assertEqual(source["title"], action["title"])
             self.assertEqual(source["source_url"], action["source_url"])
+        careers = next(
+            action for action in result["actions"]
+            if action["resource_id"] == "skillsfuture-careersfinder"
+        )
+        self.assertEqual("https://www.myskillsfuture.gov.sg/csp", careers["source_url"])
+
+    def test_singapore_job_support_draft_keeps_provider_checks_for_zero_budget_and_hours(self):
+        result = create_plan(
+            {
+                **BASE_PROFILE,
+                "goal": "Explore job coaching and workplace accessibility",
+                "strengths": "",
+                "interests": ["job support", "workplace support"],
+                "full_time_student": False,
+                "weekly_hours": 0,
+                "budget_sgd": 0,
+            }
+        )
+
+        actions = {action["resource_id"]: action for action in result["actions"]}
+        self.assertEqual("draft", result["status"])
+        self.assertIn("sg-enable-job-placement-support", actions)
+        action = actions["sg-enable-job-placement-support"]
+        self.assertEqual(
+            "https://www.enablingguide.sg/im-looking-for-disability-support/"
+            "training-employment/job-placement-and-job-support",
+            action["source_url"],
+        )
+        for unresolved in ("eligibility", "weekly hours", "cost"):
+            self.assertTrue(any(unresolved in check.lower() for check in action["checks"]))
+
+    def test_student_can_explore_singapore_course_directory_with_unconfirmed_access(self):
+        result = create_plan(
+            {
+                **BASE_PROFILE,
+                "goal": "Explore vocational courses and independent living skills",
+                "strengths": "",
+                "interests": ["work readiness"],
+                "full_time_student": True,
+                "weekly_hours": 0,
+                "budget_sgd": 0,
+            }
+        )
+
+        actions = {action["resource_id"]: action for action in result["actions"]}
+        self.assertEqual("draft", result["status"])
+        self.assertIn("enabling-academy-courses", actions)
+        self.assertNotIn("sg-enable-sector-train-place", actions)
+        action = actions["enabling-academy-courses"]
+        self.assertEqual(
+            "https://www.sgenable.sg/your-first-stop/training-consultancy/"
+            "enabling-academy/training/persons-with-disabilities/programmes",
+            action["source_url"],
+        )
+        for unresolved in ("eligibility", "student", "weekly hours", "cost", "intake"):
+            self.assertTrue(any(unresolved in check.lower() for check in action["checks"]))
 
     def test_offline_filters_known_time_and_budget_conflicts(self):
         result = create_plan(

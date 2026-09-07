@@ -1,18 +1,18 @@
-# Five-minute demo rehearsal script
+# NextStep SG — five-minute demo rehearsal
 
 ## Evidence boundary
 
-Use invented profiles only. Default to the explicitly labelled **Offline demo**. The constrained package is deployed, its API/offline path is verified, and two approved synthetic live smoke cases passed. These do not establish repeatability, general AI reliability or real-provider quality. Teammate-session and rendered-interface verification remain pending. Do not claim real-user acceptance, eligibility decisions, applications, enrolment or messages.
+Use invented profiles only. Unset `MVP_API_URL`, restart `python app.py`, confirm service **v0.1.1**, and select **Offline demo**. This is the updated local Singapore version, not the older AWS content. Selecting offline mode without removing a configured forwarding URL still uses that remote catalogue. The shared v0.1.0 API and its two approved synthetic AI smoke cases were verified on 6 September; they do not validate this newer content. Teammate-session and rendered-interface verification remain pending. No eligibility decisions, applications, enrolment or messages.
 
-Young adults with disabilities are the beneficiaries. Parents, guardians and educators are the primary operators or supporters. The participant's stated goal, strengths, interests and constraints remain in charge.
+Young adults with disabilities in Singapore are the beneficiaries. Parents, caregivers, guardians and educators they choose can operate or support the tool. The participant's stated goal, strengths, interests and constraints remain in charge. NextStep SG is an independent SimplifyNext hackathon prototype, not a government service or provider partnership.
 
 ## 0:00–0:35 — Problem and promise
 
-**Show:** SimplifyNext home screen.
+**Show:** NextStep SG home screen.
 
 **Say:**
 
-> A young adult and their supporter may have strengths and a goal, but still face a scattered set of courses, services and eligibility details. SimplifyNext turns those inputs into a small, source-backed set of next steps for them to review together. It supports the conversation; it does not decide eligibility or act for the participant.
+> A young adult and their supporter may have strengths and a goal, but still face a scattered set of courses, services and eligibility details in Singapore. NextStep SG turns those inputs into a few source-backed next steps to review together. It supports the conversation; it does not decide eligibility or act for the participant.
 
 ## 0:35–1:15 — Load a safe profile
 
@@ -20,7 +20,7 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 
 **Say:**
 
-> This profile is fictional. The young adult is the beneficiary, while a parent, guardian or educator can help operate the tool. We ask only for a few planning inputs. Do not enter names, diagnoses, certificates, contact details or proof documents; the free-text fields are not an automatic personal-data detector.
+> This profile is fictional. The young adult chooses their goal and supporter. We ask only for a few planning inputs. Budget is in Singapore dollars: zero means S$0 available, while blank means not sure. Never enter real names, NRIC/FIN, Singpass details, diagnoses, certificates or contact details. Free-text fields do not automatically detect personal data.
 
 ## 1:15–2:20 — Explore source-backed options
 
@@ -28,7 +28,7 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 
 **Say:**
 
-> Offline mode is a deterministic, tested baseline. It searches the reviewed catalog and returns catalog-backed actions. Each option keeps its source and unresolved provider checks visible. A source link is not a promise of access, suitability or a place; the participant or supporter must verify current details with the provider.
+> Offline mode is a deterministic, tested baseline. The catalogue contains six reviewed Singapore public services and two clearly fictional demonstration slots. Each option keeps its source and unresolved checks visible. A listing is not a promise of eligibility, suitability, subsidy or a place. Confirm current intake, hours, fees and support with the provider.
 
 > The trace shows what the workflow did. This output is not being presented as a live model result, and the system never silently relabels offline output as AI.
 
@@ -37,6 +37,8 @@ Young adults with disabilities are the beneficiaries. Parents, guardians and edu
 **Show:** Inspect the draft. Point out that export is unavailable before review. Select the review checkbox, choose **Confirm review**, then **Download reviewed plan**.
 
 Point to the three numbered stages and the expiry notice. **Edit profile** returns to the retained inputs and clears approval; **Start over** also clears the local inputs and restores offline mode. Neither deletes already downloaded files. Rehearse actual keyboard focus and downloading on an allowed browser before presenting; simulated interaction tests do not establish that acceptance.
+
+Point out the expiry's Singapore date/time (**SGT**) and the downloaded plan's **S$** budget and explicit unknowns. No citizenship/residency or supporting-document proof is collected. For a separate school-transition rehearsal, use the invented API fixture [singapore-school-transition.json](../examples/singapore-school-transition.json), which keeps unknown hours and budget as `null`.
 
 **Say:**
 
@@ -48,7 +50,7 @@ Point to the three numbered stages and the expiry notice. **Edit profile** retur
 
 **Say:**
 
-> A supporter can help, but cannot silently override the participant. When their goals conflict, SimplifyNext stops and asks for clarification instead of inventing agreement or producing actions. This failure is meaningful: preserving participant agency matters more than forcing a complete-looking answer.
+> A supporter can help, but cannot silently override the participant. When their goals conflict, NextStep SG stops and asks for clarification. The young adult stays in control of the plan.
 
 ## 4:15–5:00 — Limits and close
 
@@ -56,17 +58,17 @@ Point to the three numbered stages and the expiry notice. **Edit profile** retur
 
 **Say:**
 
-> What is verified today is the deployed constrained package's shared authenticated API and offline engineering path with source-backed selection, human review and guarded export. A narrow fictional AI workflow passed on an earlier code revision, while a broad AI run on the older free-choice package ended with a non-actionable partial result. On the current package, one broad and one narrow synthetic smoke case each returned a one-action fictional draft in one model call. The narrow case had no questions; the broad case kept an unnecessary provider-access question, which is a quality limitation. Two smoke passes do not establish repeatability, general AI reliability or real-provider quality.
+> This Singapore update passes 76 Python and 28 JavaScript checks locally. It keeps source-backed selection, explicit unknowns, human review and guarded export. It is not yet on the shared AWS endpoint. Two earlier fictional AI smoke cases passed on the older deployed content; that is not evidence of reliability, real-provider suitability or benefit from this update.
 
-> Teammates must use their own temporary organizer session; access from a teammate's own session has not yet been verified. Browser access for rendered, keyboard and accessibility verification is currently unavailable, so those acceptance checks remain pending. This remains a synthetic prototype, not readiness for real participant use.
+> Shared AWS access still needs a teammate's own temporary organiser session check. Actual browser, keyboard and accessibility checks remain pending. Singapore content does not mean Singapore hosting: the existing AWS region and inference profile are US-based. This is a synthetic prototype, not readiness for real participant use.
 
-> The deployed constrained workflow has the application select up to three catalog records with no known recorded constraint conflict, then gives those detailed records to the model without source-search or resource-inspection tools. The model can only choose valid shortlist IDs or clarify a genuinely unknown participant constraint. Shortlisting is not an eligibility, access or suitability decision. One repair and two model calls are the maximum. Local, independent and deployed API/offline checks pass, and two synthetic live smoke cases passed without repair, retry or fallback. Comparative benefit has not been measured. The evidence is recorded in [VERIFICATION.md](VERIFICATION.md).
+> Model mode remains bounded: the application shortlists at most three records, and the model can choose only from those records or clarify an unknown constraint. It cannot apply, book or message. One repair and two model calls are the maximum; no new paid test was run for this update. Comparative benefit has not been measured. See [VERIFICATION.md](VERIFICATION.md) for the separate local and historical AWS evidence.
 
 ## Optional live substitution — not planned and gated
 
 No live substitution is currently planned. If the team later reconsiders it, do not use Bedrock in place of the offline segment unless a later verification record confirms all of these:
 
-- The deployed fixed-flow artifact remains the artifact that passed the approved broad and narrow synthetic smoke cases.
+- The exact intended content version has an approved deployment and current-artifact acceptance; the historical v0.1.0 smoke passes alone do not validate v0.1.1.
 - The presenting teammate has verified the endpoint from their own temporary organizer session.
 - Current model access and budget have been checked, and the team has approved a paid live call.
 - The exact live path has been rehearsed without changing API, review or safety boundaries.

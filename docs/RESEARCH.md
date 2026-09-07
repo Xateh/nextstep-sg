@@ -1,6 +1,6 @@
-# Why this MVP: evidence and existing tools
+# Why NextStep SG: evidence and existing services
 
-Research snapshot: 5 September 2026. This is a targeted narrative synthesis, not a statistical meta-analysis, systematic review, market validation or proof of benefit for this prototype. Product capabilities were checked on official pages, not through paid trials. Clinical and employment outcomes were not measured here.
+Research snapshot: 5 September 2026. Singapore service localisation was updated on 7 September from the official pages represented in the current catalog. This remains a targeted narrative synthesis, not a statistical meta-analysis, systematic review, market validation or proof of benefit for this prototype. Product capabilities were checked on official pages, not through paid trials. Clinical and employment outcomes were not measured here.
 
 ## Ranked anchors
 
@@ -17,17 +17,32 @@ This ranking is sensitive to priorities: increasing evidence weight to 40% and l
 
 Architecture ranking: (1) bounded Python workflow, (2) the same workflow in LangGraph if the team already has working expertise or needs persisted pauses, (3) open-ended multi-agent orchestration. Framework complexity is not a measure of agentic quality. [LangGraph workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents), [Deep Agents overview](https://docs.langchain.com/oss/python/deepagents/overview).
 
-## Existing capabilities to complement
+## Singapore services to complement
+
+NextStep SG is a co-planning layer around Singapore's existing service ecosystem, not a replacement for it. The reviewed local services span school transition, sector training, career and skills guidance, employment support and course discovery. The MVP helps a participant and supporter compare a few source-backed possibilities, retain unknowns and decide what to verify next. It does not apply, enrol, determine eligibility or claim a place.
+
+The current agency name used for the career-and-skills service is **Skills and Workforce Development Agency (SWDA)**. MOM's [24 June 2026 press release](https://www.mom.gov.sg/newsroom/press-releases/2026/0624-appointment-of-inaugural-board-for-swda) records the appointment of its inaugural Board. The catalog links CareersFinder and Careers & Skills Passport to the official [MySkillsFuture service page](https://www.myskillsfuture.gov.sg/csp), replacing the previously blocked SWDA career-health page.
 
 | Tool/service | Advertised or published overlap | MVP implication |
 |---|---|---|
-| [Mentra partner platform](https://www.mentra.com/partners) | Profiles, upskilling, matches, partner progress tracking | Broad platform combination already exists; do not claim novelty or access to its data |
-| [Inclusively](https://inclusively.com/) | Employer support/resource navigation | Learn the resource-navigation pattern; enterprise access and effectiveness remain unverified |
 | [SG Enable School-to-Work](https://www.enablingguide.sg/im-looking-for-disability-support/training-employment/school-to-work-%28s2w%29-transition-programme) | School-mediated transition pathways and support | Prepare questions and link to providers; never promise referral, eligibility or a place |
-| [SG Enable Sector Train-and-Place](https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place) | Training/employment support with published criteria including full-time-student exclusion | Deterministic life-stage checks matter; missing criteria require provider verification |
-| [CareersFinder / Careers & Skills Passport](https://www.swda.gov.sg/about-swda/career-health-individuals) | Career/upskilling recommendations and credentials | Link out; no new credential-verification system |
-| [Career Kaki](https://careerkaki.gov.sg/) | Singapore-focused conversational career guidance | Generic career chat is not enough differentiation |
-| [SIMmersion youth interview training](https://www.simmersion.com/jobinterviewtraining) | Structured virtual interview practice | Coaching is a real alternative; do not copy proprietary curricula |
+| [SG Enable Sector Train-and-Place](https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/sector-train-and-place) | Sector-focused training and employment support; current intake was closed when checked | Treat it only as a possible future route. Provider determines eligibility and suitability; confirm intake, full-time commitment, hours and fees |
+| [CareersFinder and Careers & Skills Passport](https://www.myskillsfuture.gov.sg/csp) | Career and upskilling recommendations plus a repository for employment, skills, qualifications and certifications | Link to the official service; do not build a duplicate credential store or infer access and suitability |
+| [Career Kaki](https://careerkaki.gov.sg/) | Singapore-focused AI career guidance and job-search support | Generic career chat is not a differentiator. Review data choices and guidance with the participant |
+| [SG Enable Job Placement and Job Support](https://www.enablingguide.sg/im-looking-for-disability-support/training-employment/job-placement-and-job-support) | Job-readiness assessment, job matching, worksite accessibility assessment and short-term workplace coaching through appointed partners | Complement the official route with preparation and questions; never collect supporting documents or decide eligibility in the demo |
+| [Enabling Academy courses](https://www.sgenable.sg/your-first-stop/training-consultancy/enabling-academy/training/persons-with-disabilities/programmes) | Directory of vocational, independent-living and work-readiness courses from listed providers | Let the participant choose interests, then verify the selected provider's intake, schedule, fees, subsidies, access and suitability |
+
+Across these services, exact hours, payable fees, current intakes, access arrangements and accessibility support remain unknown unless a record says otherwise. A catalog listing is not an available place. Providers assess eligibility and suitability.
+
+## International comparators, not local recommendations
+
+These products informed the 5 September landscape review only. Their Singapore availability was not verified, they are not recommended as local resources, and they are not present in the current NextStep SG catalog.
+
+| International comparator | Published overlap | Limited research implication |
+|---|---|---|
+| [Mentra partner platform](https://www.mentra.com/partners) | Profiles, upskilling, matches and partner progress tracking | Broad platform combinations already exist; do not claim novelty, Singapore availability, integration or access to its data |
+| [Inclusively](https://inclusively.com/) | Employer support and resource navigation | Resource-navigation patterns have precedents; Singapore availability, enterprise access and effectiveness remain unverified |
+| [SIMmersion youth interview training](https://www.simmersion.com/jobinterviewtraining) | Structured virtual interview practice | Coaching is an alternative product direction; Singapore availability is unverified and proprietary curricula must not be copied |
 
 The differentiation hypothesis is participant-controlled co-planning: a few source-backed options, explicit unknowns, review and a human handoff. Each component has precedents. No claim of market uniqueness, patent novelty, superiority, vendor integration or partnership.
 

@@ -7,7 +7,7 @@ from pathlib import Path
 import secrets
 import time
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 MAX_BODY = 65536
 LOCAL_KEY = secrets.token_bytes(32)
 
@@ -55,8 +55,17 @@ def verify(envelope, principal):
 
 
 def export_markdown(plan):
-    lines = ['# My next-step plan', '', 'Synthetic demonstration only. Not an eligibility or employment assessment.',
-             '', 'Mode: ' + str(plan['mode']), '', '## Goal', '', str(plan['profile'].get('goal', '')), '']
+    profile = plan['profile']
+    budget = profile.get('budget_sgd')
+    hours = profile.get('weekly_hours')
+    lines = ['# NextStep SG — My next-step plan', '',
+             'Synthetic Singapore demonstration only. Not an eligibility or employment assessment.',
+             'Independent hackathon prototype, not a government service or provider referral.',
+             '', 'Mode: ' + str(plan['mode']), '', '## Goal', '', str(profile.get('goal', '')), '',
+             '## Planning constraints', '',
+             'Weekly time available: ' + ('Not sure — confirm together' if hours is None else f'{hours} hours'),
+             'Budget: ' + ('Not sure — confirm together' if budget is None else f'S${budget:,}'),
+             'Amounts are Singapore dollars, not confirmed programme fees or subsidy entitlements.', '']
     for index, action in enumerate(plan['actions'], 1):
         lines += [f"## {index}. {action['title']}", '', action['next_step'], '',
                   'Source: ' + action['source_url'], '', 'Checks before acting:']
@@ -172,7 +181,7 @@ def serve(port=8765):
             return self.reply(*self.api('POST', urlsplit(self.path).path, payload))
 
     server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
-    print(f'SimplifyNext MVP: http://127.0.0.1:{port} (synthetic data only)', flush=True)
+    print(f'NextStep SG: http://127.0.0.1:{port} (synthetic Singapore demo only)', flush=True)
     server.serve_forever()
 
 

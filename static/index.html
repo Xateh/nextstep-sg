@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-SG">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Supported next steps · SimplifyNext</title>
+  <title>NextStep SG · Supported next steps</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <header><p class="eyebrow">SIMPLIFYNEXT / FIRST MVP</p><h1>Supported next steps</h1>
-    <p class="intro">Use an invented young adult's stated goal to explore a few options together. Their preferences decide what happens next.</p>
-    <p class="notice">Synthetic demo only. Do not enter names, diagnoses, certificates or real participant information.</p>
+  <header><p class="eyebrow">SIMPLIFYNEXT HACKATHON / SINGAPORE PROTOTYPE</p><h1>NextStep SG</h1>
+    <p class="intro">Explore learning and work options in Singapore with an invented young adult. Their goals guide every next step, with support from a parent, caregiver or educator they choose.</p>
+    <p class="notice">Synthetic demo only. Do not enter real names, NRIC/FIN numbers, Singpass details, diagnoses, certificates or other real participant information.</p>
     <p id="connection" role="status">Checking service…</p>
   </header>
   <main>
@@ -19,16 +19,16 @@
       <form id="profile-form">
         <fieldset id="profile-fields">
           <legend class="sr-only">Fictional young adult profile</legend>
-          <label for="goal">Young adult's goal</label><textarea id="goal" maxlength="500" rows="2" placeholder="For example: explore office skills at my own pace" aria-describedby="goal-hint"></textarea>
+          <label for="goal">Young adult's goal</label><textarea id="goal" maxlength="500" rows="2" placeholder="For example: explore office skills in Singapore at my own pace" aria-describedby="goal-hint"></textarea>
           <p id="goal-hint" class="hint">It is okay not to know yet. The planner can ask a question first.</p>
           <label for="strengths">Things they are comfortable doing</label><input id="strengths" maxlength="1000" placeholder="For example: organising files">
           <label for="interests">Their interests</label><input id="interests" maxlength="2000" placeholder="Office work, organising, computers" aria-describedby="interests-hint"><p id="interests-hint" class="hint">Separate interests with commas.</p>
           <div class="fields-row"><div><label for="student">Is the young adult a full-time student?</label><select id="student"><option value="">Not sure</option><option value="true">Yes</option><option value="false">No</option></select></div>
             <div><label for="hours">Hours they have available per week</label><input id="hours" type="number" min="0" max="168" step="1" placeholder="Not sure" aria-describedby="constraint-hint"></div>
-            <div><label for="budget">Budget available (SGD)</label><input id="budget" type="number" min="0" max="100000" step="1" placeholder="Not sure" aria-describedby="constraint-hint"></div></div>
-          <p id="constraint-hint" class="hint">Leave hours or budget blank only when unknown. Enter 0 when none are available.</p>
-          <details><summary>Optional parent, guardian or educator perspective</summary><label for="supporter-goal">Supporter's suggested goal</label><input id="supporter-goal" maxlength="500"><p class="hint">Different goals prompt a conversation; supporter input never overrides the young adult's preferences.</p></details>
-          <label for="mode">Planning mode</label><select id="mode"><option value="offline">Offline demo — deterministic, no AI calls</option><option value="bedrock">Organizer AWS Bedrock — requires verified access</option></select>
+            <div><label for="budget">Budget available (S$)</label><input id="budget" type="number" min="0" max="100000" step="1" placeholder="Not sure" aria-describedby="constraint-hint"></div></div>
+          <p id="constraint-hint" class="hint">Budget is in Singapore dollars (SGD). Leave hours or budget blank only when unknown. Enter 0 when none are available. Subsidies and payable fees need provider confirmation.</p>
+          <details><summary>Optional parent, caregiver or educator perspective</summary><label for="supporter-goal">Supporter's suggested goal</label><input id="supporter-goal" maxlength="500"><p class="hint">Different goals prompt a conversation; supporter input never overrides the young adult's preferences.</p></details>
+          <label for="mode">Planning mode</label><select id="mode"><option value="offline">Offline demo — deterministic, no AI calls</option><option value="bedrock">Organiser AWS Bedrock — requires verified access</option></select>
           <label class="check"><input id="synthetic" type="checkbox" required> I am using an invented profile, not a real person's information.</label>
           <button id="generate" type="submit">Explore next steps</button>
         </fieldset>
@@ -47,6 +47,6 @@
       </div>
     </section>
   </main>
-  <footer>Planning support, not medical advice, an eligibility decision or a job guarantee. Public resource summaries need provider confirmation.</footer>
+  <footer>Planning support, not medical advice, an eligibility decision, referral or job guarantee. Programme details and access need provider confirmation. Independent hackathon prototype, not a government service.</footer>
 </body>
 </html>

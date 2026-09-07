@@ -1,6 +1,14 @@
 # Guarded AWS deployment
 
-## Status and boundary
+## NextStep SG localisation — 7 September 2026
+
+The renamed private repository is [Xateh/nextstep-sg](https://github.com/Xateh/nextstep-sg). Local version **0.1.1** contains the Singapore catalogue, branding and export content; it has **not been deployed to AWS**. The existing endpoint still runs **0.1.0**, source `aec4030`, last verified on 6 September. No AWS session, configuration, resource, permission or model call changed during localisation.
+
+Unlike the earlier UI-only pass, this update changes files inside the Lambda package. Build `dist/nextstep-sg-localisation.zip` with the command below; its verified digest is in [VERIFICATION.md](VERIFICATION.md). A future approved code-only deployment must upload that freshly verified artifact, not the older constrained ZIP. Preserve the existing function/role names, URL, region, signing key and inference profile. `NextStep SG` is a product name, not a Singapore-hosting claim: the existing region remains `us-east-1` with the approved US inference profile.
+
+For the latest local demo, unset `MVP_API_URL` and restart the local server. Selecting offline mode alone does not disable forwarding to the older AWS API. No deployment or paid validation is authorised by the localisation approval.
+
+## Existing AWS deployment — evidence from 6 September
 
 **Current constrained artifact deployed:** source revision `aec4030`; deterministic four-file ZIP SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef`. The CloudShell checksum matched before a revision-guarded code-only update. AWS readback reported `Active` / `Successful` and base64 `CodeSha256` `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The same URL, `AWS_IAM`, `BUFFERED`, Python 3.12 runtime, 90-second timeout, 256 MB memory, environment, signing key and IAM configuration were preserved. Normal organizer SSO renewal restored CloudShell access without credential extraction or environment restart/deletion. See [VERIFICATION.md](VERIFICATION.md) for the evidence boundary.
 
@@ -29,15 +37,15 @@ The deployment path is create-only. The role and function now exist, so do not r
 
 The package contains only `app.py`, `catalog.json`, `lambda_function.py`, and `planner.py`, with stable ordering and timestamps. It intentionally does not package dependencies: the Lambda Python 3.12 runtime supplies the AWS SDK used for Bedrock.
 
-The 7 September UI refinement does not change these four files. Static assets run on teammates' local servers and are not in this package; do not redeploy Lambda for that refinement. Current UI checks and open rendered-browser gates are recorded in [VERIFICATION.md](VERIFICATION.md).
+The earlier 7 September UI-only refinement did not change these four files. The later Singapore localisation does, as explained above. Static assets still run on teammates' local servers and are not in this package. Local checks and open rendered-browser gates are recorded in [VERIFICATION.md](VERIFICATION.md).
 
 ## Build locally
 
 From the repository root:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\deploy.py
-Get-FileHash dist\simplifynext-mvp.zip -Algorithm SHA256
+.\.venv\Scripts\python.exe scripts\deploy.py --package --output dist/nextstep-sg-localisation.zip
+Get-FileHash dist\nextstep-sg-localisation.zip -Algorithm SHA256
 ```
 
 `--package` is an explicit synonym for the default. Use `--output PATH` to choose another package path.
@@ -84,8 +92,8 @@ The script verifies the current STS account before any AWS write. It halts if th
 
 This manual runbook was used for the current constrained artifact and remains the guarded procedure for future updates. Confirm the existing organizer account/region privately, check the current lease balance against the US$20 usable cap, review the code, and run all local checks first. Do not run `scripts/deploy.py --apply` against the existing resources.
 
-1. In the prepared Python environment, build the four-file allowlisted package with `python scripts/deploy.py --package --output dist/simplifynext-mvp-constrained.zip`. Record its SHA-256 in the verification record. Upload only that ZIP through organizer CloudShell's file-upload control; never upload credentials or the entire workspace.
-2. In CloudShell, verify the uploaded file with `sha256sum simplifynext-mvp-constrained.zip`. It must exactly match the locally verified artifact.
+1. After approval for this deployment, build the four-file allowlisted package with `python scripts/deploy.py --package --output dist/nextstep-sg-localisation.zip`. Record its SHA-256 in the verification record. Upload only that freshly verified ZIP through organiser CloudShell's file-upload control; never upload credentials or the entire workspace.
+2. In CloudShell, verify the uploaded file with `sha256sum nextstep-sg-localisation.zip`. It must exactly match the locally verified artifact.
 3. Read current function state without printing environment variables or the signing key:
 
 ```bash
@@ -95,7 +103,7 @@ aws lambda get-function-configuration --function-name simplifynext-mvp --region 
 Proceed only when state is `Active`, the previous update is `Successful`, and the observed code matches the last recorded deployment. Any unexpected revision or code change requires inspection before continuing. Copy the freshly read revision into the placeholder below; never reuse a historical revision ID.
 
 ```bash
-aws lambda update-function-code --function-name simplifynext-mvp --region us-east-1 --zip-file fileb://simplifynext-mvp-constrained.zip --revision-id FRESH_REVISION_ID --query '{State:State,Update:LastUpdateStatus,CodeSha256:CodeSha256}' --output json --no-cli-pager
+aws lambda update-function-code --function-name simplifynext-mvp --region us-east-1 --zip-file fileb://nextstep-sg-localisation.zip --revision-id FRESH_REVISION_ID --query '{State:State,Update:LastUpdateStatus,CodeSha256:CodeSha256}' --output json --no-cli-pager
 ```
 
 AWS documents the [revision guard for code updates](https://docs.aws.amazon.com/cli/latest/reference/lambda/update-function-code.html). A conflict means stop and inspect, not retry without the guard. This command does not update environment configuration, IAM, Function URL settings or the signing key.
@@ -128,7 +136,7 @@ IAM role propagation retries are bounded to six Lambda-create attempts and at mo
 
 The script never calls `AddPermission` and never creates a public function resource policy. Before teammates can use the `AWS_IAM` URL, their existing identity and, when applicable, the function resource policy must grant both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction`: [AWS Lambda Function URL security and authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html).
 
-The current update changed code only and preserved the existing endpoint, `AWS_IAM`/`BUFFERED` settings, Python 3.12 runtime, 90-second timeout, 256 MB memory, IAM permissions, environment configuration and signing key. Current checks returned signed health 200 (`synthetic-only`, default `bedrock`), resources 200 with eight records, offline create 200 with three actions including the corrected catalog record, unreviewed export 409, inspected review/export 200/200 with 2,139 Markdown characters, tampered export 400 and unsigned health 403.
+The 6 September deployed update changed code only and preserved the existing endpoint, `AWS_IAM`/`BUFFERED` settings, Python 3.12 runtime, 90-second timeout, 256 MB memory, IAM permissions, environment configuration and signing key. Checks on that v0.1.0 artifact returned signed health 200 (`synthetic-only`, default `bedrock`), resources 200 with eight records, offline create 200 with three actions including the then-corrected catalogue record, unreviewed export 409, inspected review/export 200/200 with 2,139 Markdown characters, tampered export 400 and unsigned health 403.
 
 The current broad Bedrock request used `examples/create-request.json` with only mode changed. It returned 200 `draft`, selected only `fictional-office-skills-taster`, and included one permitted but unnecessary current-provider-access question. Model call one used 1,537 input and 37 output tokens (1,574 total) and reported 552 ms; review/export passed and produced 664 Markdown characters. The exact committed narrow request returned 200 `draft`, the same single fictional action and no questions. Its first call used 1,359 input and 32 output tokens (1,391 total) and reported 534 ms; review/export passed and produced 717 Markdown characters. Both known profiles used `false` / `3` / `0`; both unreviewed exports returned 409 and tampered exports 400. Labels and warnings remained intact. General reliability, provider suitability, full-MVP acceptance, teammate-session access and local rendered-interface acceptance remain unverified.
 

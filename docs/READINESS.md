@@ -1,16 +1,19 @@
 # Demo and readiness checklist
 
-Primary demo operators are parents, guardians and educators supporting young adults with disabilities. The young adult is the beneficiary, and their stated goals and preferences control the plan; supporter input remains context and never overrides them. Continue to use invented profiles only.
+NextStep SG supports young adults with disabilities in Singapore, with parents, caregivers, guardians or educators they choose. The young adult's stated goals and preferences control the plan; supporter input remains context and never overrides them. Continue to use invented profiles only, never real NRIC/FIN, Singpass details or participant records.
+
+The local v0.1.1 catalogue/export update is not on AWS. The live v0.1.0 evidence below belongs to source `aec4030`. Singapore content is not Singapore-hosted infrastructure.
 
 ## First local demo
 
-1. Start `python app.py`, open `http://127.0.0.1:8765`, select **Load fictional example**.
+1. Unset `MVP_API_URL` in this shell and start `python app.py`. Open `http://127.0.0.1:8765`, confirm service v0.1.1, select **Load fictional example**.
 2. Keep **Offline demo** selected. Generate a draft; show the mode badge, resource source and unresolved checks.
 3. Review and download the plan. Explain that no application or message is sent.
 4. Change available hours to `0`. Regenerate; the fictional two-hour slot must not appear.
 5. Clear the goal. Regenerate; show the question instead of an invented goal.
 6. Enter a different supporter goal. Show participant clarification, not automatic supporter override.
 7. Show the trace; offline is a deterministic baseline, not an AI run.
+8. Check the SGT date/time and exported S$ budget. Explain that blank means unknown, not S$0, and that programme fees, subsidies, citizenship/residency criteria and available places require the provider's confirmation.
 
 For the model-assisted demonstration, replace only the mode with Bedrock after current-artifact acceptance, access, model and budget verification. Show actual tool decisions and token metadata. If live access fails, label the blocker; do not record offline output as a live AI result.
 
@@ -26,6 +29,8 @@ For the model-assisted demonstration, replace only the mode with Bedrock after c
 
 - [x] Implement and locally verify the constrained source on 6 September: 72 Python tests and two interface-state tests passed. The extracted four-file package imports and creates a guarded offline draft without model calls.
 - [x] Implement the approved 7 September UI-only refinement. Fresh 73 Python and 26 JavaScript checks pass, including served-HTML semantics and simulated interaction tests. The real loopback API compatibility check passes. No AWS deployment/configuration or paid calls.
+- [x] Rename the private repo to `nextstep-sg` and implement local v0.1.1 Singapore content. Current checks: 76 Python and 28 JavaScript tests pass; public-source verification is dated 7 September. The same repo identity/default branch and AWS identifiers were preserved.
+- [ ] If the team wants the Singapore content on the shared endpoint, obtain and carry out a separate reviewed code-only deployment. Until then use updated local offline mode; the two historical paid smoke passes do not validate v0.1.1.
 - [x] Deploy the reviewed `5328bcb3...` package with a revision-guarded code-only update. AWS readback is `Active` / `Successful`; same IAM-authenticated URL and unchanged environment/signing-key configuration.
 - [x] Restore the in-app browser and CloudShell session; verify current signed routes, offline create-review-export, unsigned rejection and tamper/review guards on the new package.
 - [x] Obtain explicit approval and run one broad and one narrow synthetic Nova Lite request on the current artifact. Both passed once, with one model call each and no repairs/retries/fallback. The earlier approval blocker is resolved; its rejected attempt made no model call. These results do not authorize extra paid calls or establish general reliability.

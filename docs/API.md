@@ -14,6 +14,10 @@ On `f916c959...`, the [fully specified fictional Bedrock smoke request](../examp
 
 Local base: `http://127.0.0.1:8765`. All POST requests require `Content-Type: application/json` and `X-SimplifyNext-Client: 1`. The local server rejects cross-origin POSTs and unexpected Host headers. It is a single-user development server, not public hosting.
 
+NextStep SG v0.1.1 localises catalogue content and Markdown exports to Singapore. The JSON contracts, legacy client header and `transition-plan.md` filename remain unchanged. `budget_sgd` is Singapore dollars; `null` remains unknown and `0` means none. The UI displays expiry dates/times in `Asia/Singapore` (SGT); the signed `expires_at` Unix timestamp is unchanged. No NRIC/FIN, Singpass, citizenship or disability-document field was added. Providers verify their own access criteria outside this prototype.
+
+The shared deployment below is still v0.1.0 / source `aec4030`, not the local Singapore-content revision. Unset `MVP_API_URL` for the updated local catalogue; otherwise even an offline request is forwarded to the older shared service. Localisation does not move the AWS endpoint or inference profile to Singapore.
+
 Shared base: `https://54hpz6viwadtysmbdmj2i3gi5e0lcjoz.lambda-url.us-east-1.on.aws/`. All calls require AWS SigV4 for service `lambda` in `us-east-1`, using temporary organizer credentials. Use `scripts/aws_client.py`; do not put credentials in frontend JavaScript or manually share signed headers. Both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction` must be permitted. Access from a teammate's own session is not yet verified. [AWS Function URL authentication](https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html)
 
 Current-artifact checks returned: unsigned `GET /health` 403; signed `GET /health` 200 with version `0.1.0`, `synthetic-only`, and default mode `bedrock`; signed `GET /v1/resources` 200 with eight records. Offline create returned 200 with three actions, including the corrected catalog record. Export before review returned 409; after inspection, review returned 200 and export returned 200 with 2,139 Markdown characters. A changed envelope returned 400.

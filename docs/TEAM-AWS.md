@@ -1,6 +1,14 @@
 # Teammate access to the shared AWS MVP
 
-## Current status
+## NextStep SG rename and local Singapore update — 7 September
+
+The private repository is now [Xateh/nextstep-sg](https://github.com/Xateh/nextstep-sg), still on `mvp`. Update an existing clone with `git remote set-url origin https://github.com/Xateh/nextstep-sg.git`; keep local changes safe when updating the checkout. No local-folder move, collaborator invitation, AWS-resource rename or credential change is required.
+
+The new local app is v0.1.1. The shared API below remains source `aec4030` / v0.1.0: its catalogue and exports have **not** received the Singapore update. A different-content-version warning appears in the new UI when it connects to that service. For the updated synthetic Singapore rehearsal, unset `MVP_API_URL` in the local shell, restart `app.py`, confirm v0.1.1 and keep Offline demo selected. Merely selecting Offline demo does not stop a configured server from forwarding requests to AWS.
+
+The existing endpoint and approved inference profile remain US-based. Singapore English, S$ amounts and SGT display are content choices, not a Singapore data-residency guarantee. Never enter real NRIC/FIN numbers, Singpass details or participant documents. No deployment or paid call was made for this update.
+
+## Existing AWS deployment — evidence from 6 September
 
 The constrained four-file package from source revision `aec4030` is deployed at the existing shared endpoint. Its ZIP SHA-256 `5328bcb33ecab0fe7ef09961adf7b31170ddd30e7bdc0ca7300bcf2305898aef` matched after upload; AWS readback reported `Active` / `Successful` with matching base64 `CodeSha256` `Uyi8sz7KsP5+8JlhrfezEXDd0w573AynMAvPIwWJiu8=`. The same URL, `AWS_IAM`, `BUFFERED`, Python 3.12 runtime, 90-second timeout and 256 MB memory remain. Normal organizer SSO renewal restored CloudShell access without extracting credentials or restarting/deleting the environment.
 
@@ -89,7 +97,7 @@ Files passed to `--output` can contain only signed envelopes whose profile is ma
 
 The browser interface calls only the loopback application in `app.py`. That local server signs and forwards requests. AWS credentials must never appear in frontend JavaScript, browser storage, URLs, plan files, or logs.
 
-The 7 September refinement changes only local UI assets and tests/docs. Update your authorized `mvp` checkout without overwriting local work, restart the local server and refresh the page. No Lambda redeployment or new endpoint is needed. Keep Offline demo selected for rehearsal. Edit profile retains inputs but clears the draft/review; Start over clears local data and restores offline mode. Downloaded files are not deleted. The expiry notice shows when review/download becomes unavailable; an expired draft remains readable.
+The earlier 7 September UI-only refinement did not require Lambda redeployment. The later Singapore localisation also changes the backend catalogue and export text; that content remains local until a separately approved deployment. Edit profile retains inputs but clears the draft/review; Start over clears local data and restores offline mode. Downloaded files are not deleted. Expiry is shown with the date in SGT; an expired draft remains readable.
 
 Browser requests time out after 95 seconds and are never automatically retried. If a Bedrock creation times out or loses its connection, the server may still complete it. Check with the team before generating again because another request may incur another charge. Malformed responses/downloads are rejected, and expired review/export requests require a fresh plan. This UI update does not verify access from a teammate's own session.
 

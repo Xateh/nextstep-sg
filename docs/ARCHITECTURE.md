@@ -1,5 +1,13 @@
 # First-MVP architecture
 
+## Singapore content revision — 7 September 2026
+
+**NextStep SG** is the supported transition planner for Singapore learning and work. Local **v0.1.1** uses six reviewed Singapore public services and two fictional Singapore slots, S$ amounts and dated SGT expiry notices. Young adults retain agency; parents, caregivers, guardians and educators are chosen supporters. International tools remain research comparators, not catalogue recommendations.
+
+The architecture, JSON contracts, catalogue schema and dependencies are unchanged. The private repository is [Xateh/nextstep-sg](https://github.com/Xateh/nextstep-sg); legacy technical identifiers are retained for compatibility. AWS still serves **v0.1.0 / `aec4030`**; this content update is not deployed. Unset `MVP_API_URL` and restart to run the latest local version. The existing US region and inference profile are unchanged, with no Singapore data-residency claim. Current local evidence and separate live/browser gates are in [VERIFICATION.md](VERIFICATION.md).
+
+## Existing architecture and 6 September deployment evidence
+
 Decision: one Python domain/API application, a native HTML/JavaScript interface, and one AWS Lambda function. The shared IAM-authenticated API is deployed; the deterministic offline baseline remains separately labelled. This implements the highest-ranked bounded-workflow direction; it does not implement a marketplace or general autonomous agent.
 
 **The diagram below describes the constrained implementation deployed on 6 September 2026. Its API and offline path are verified, and two approved synthetic live smoke cases passed. This does not establish general model reliability or real-provider plan quality. Teammate-session access remains unverified; rendered-browser verification remains blocked.**
